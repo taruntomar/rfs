@@ -3,9 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title - Resideo Facility</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link href="~/_frameworks/bootstrap-datetimepicker-4.17.45/bootstrap-datetimepicker.min.js" rel="stylesheet" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link href="~/Content/css/Site.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -16,27 +20,49 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <img src="~/Content/img/resideo-company-name-logo-black-170-x-39.png" style="
+    height: 30px;
+    margin-top: 8px;
+    margin-right: 10px;
+" />
+                @*@Html.ActionLink("Resideo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Rooms", "Rooms", "Rooms")</li>
+                    <li>@Html.ActionLink("Travel", "Travel", "Travel")</li>
+                    <li>@Html.ActionLink("Stationary", "Stationary", "Stationary")</li>
+                    <li>@Html.ActionLink("Security", "Security", "Security")</li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" flex-sm-xs>
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Resideo</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/_frameworks/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="~/_frameworks/moment-2.9.0.js/moment-with-locales.min.js"></script>
+    <script src="~/_frameworks/bootstrap-4.2.1/js/bootstrap.min.js"></script>
+    <script src="~/_frameworks/bootstrap-datetimepicker-4.17.45/bootstrap-datetimepicker.min.js"></script>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+
+    <script src="~/Scripts/ctrl/RoomController.js"></script>
+    <script src="~/Scripts/site.js"></script>
+
+
 </body>
 </html>
