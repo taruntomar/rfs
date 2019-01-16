@@ -20,8 +20,8 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -139,6 +139,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\RoomBookingController.cs" />
     <Compile Include="Global.asax.cs">
@@ -242,6 +243,10 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="_frameworks\angular-material\js\angular-animate.min.js.map" />
     <Content Include="_frameworks\angular-material\js\angular-aria.min.js.map" />
+    <Content Include="Views\Identity\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Identity\Signup.cshtml" />
+    <Content Include="Views\Shared\_SignupLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

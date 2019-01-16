@@ -17,4 +17,13 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
 
     };
 
+
+}]);
+
+
+
+myApp.controller('IdentityController', ['$scope', '$http', function ($scope, $http) {
+    $scope.username = "";
+    $scope.password = "";
+
 }]);
