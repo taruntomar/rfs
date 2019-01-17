@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,21 @@ namespace RFS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            string username = "";
+            HttpCookie myCookie = new HttpCookie("rfs.username");
+            myCookie = Request.Cookies["rfs.username"];
+            if (myCookie != null)
+            {
+                username = Server.HtmlEncode(myCookie.Value);
+                if(Session[username].ToString() == "loggedIn")
+                {
+                    return View();
+                }
+                
+            }
+            return RedirectToAction("Index", "Identity");
+
+            //return new IdentityController().Index();
         }
 
         public ActionResult About()
