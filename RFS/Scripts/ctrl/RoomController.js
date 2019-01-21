@@ -22,8 +22,35 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
 
 
 
-myApp.controller('IdentityController', ['$scope', '$http', function ($scope, $http) {
-    $scope.username = "";
-    $scope.password = "";
+myApp.controller('IdentityController', ['$window', '$scope', '$http', function ($window,$scope, $http) {
+
+   
+    $scope.login = function () {
+        let credentials = {
+            username: $scope.username,
+            password: $scope.password
+        };
+        $http.post('/api/Login', credentials ).
+            then(function (response) {
+                if (response.status === 200) {
+                    $window.location.href = '/';
+
+                }
+            });        
+    };
+
+    $scope.signup = function () {
+        let userdata = {
+            username: $scope.username,
+            password: $scope.password
+        };
+        $http.post('/api/Signup', userdata).
+            then(function (response) {
+                $scope.locations = response.data;
+            });     
+        
+
+    };
+
 
 }]);

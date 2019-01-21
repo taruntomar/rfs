@@ -29,18 +29,21 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav mr-auto">
-                    <li >@Html.ActionLink("Rooms", "Rooms", "Rooms")</li>
-                    <li >@Html.ActionLink("Travel", "Travel", "Travel")</li>
-                    <li >@Html.ActionLink("Stationary", "Stationary", "Stationary")</li>
-                    <li >@Html.ActionLink("Security", "Security", "Security")</li>
+                    <li>@Html.ActionLink("Rooms", "Rooms", "Rooms")</li>
+                    <li>@Html.ActionLink("Travel", "Travel", "Travel")</li>
+                    <li>@Html.ActionLink("Stationary", "Stationary", "Stationary")</li>
+                    <li>@Html.ActionLink("Security", "Security", "Security")</li>
                     <li></li>
                 </ul>
                 <ul class="nav navbar-nav" style="    float: right;
     margin-top: 15px;">
                     <li>
-                        @System.Security.Principal.WindowsIdentity.GetCurrent().Name
+                        Welcome @ViewBag.username
+
                     </li>
+
                 </ul>
+                
             </div>
         </div>
     </div>

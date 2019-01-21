@@ -2,7 +2,10 @@
 using DataLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -22,37 +25,7 @@ namespace RFS.Controllers
 
             return View("Signup", "~/Views/Shared/_SignupLayout.cshtml", null);
         }
-        [System.Web.Http.HttpPost]
-        public ActionResult Login([FromBody]UserCredential c)
-        {
-
-            IdentityValidation idv = new IdentityValidation();
-
-            if (idv.ValidateUserCredential(c))
-            {
-                // create cookie 
-                HttpCookie myCookie = new HttpCookie("rfs.username");
-                DateTime now = DateTime.Now;
-
-                // Set the cookie value.
-                myCookie.Value = c.username;
-                // Set the cookie expiration date.
-                myCookie.Expires = now.AddMinutes(30);
-
-                // Add the cookie.
-                Response.Cookies.Add(myCookie);
-                //=========================================
-                // create session
-                Session[c.username] = "loggedIn";
-                // redirect to home page
-                RedirectToAction("Index", "Home");
-            }
-
-
-            string error = "Invalid Credential";
-            return View("Index", error);
-
-        }
+        
 
         [System.Web.Http.HttpGet]
         public ActionResult Logout()
@@ -74,6 +47,77 @@ namespace RFS.Controllers
             return View("Index", message);
 
 
+        }
+    }
+
+
+    public class LoginController:ApiController
+    {
+        // GET api/<controller>
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage Login([FromBody]UserCredential c)
+        {
+            string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
+            IdentityValidation idv = new IdentityValidation(connectionstring);
+            var resp = new HttpResponseMessage();
+
+            if (idv.ValidateUserCredential(c))
+            {
+                var cookie = new CookieHeaderValue("rfs.username", c.username);
+                // create cookie 
+                cookie.Expires = DateTimeOffset.Now.AddMinutes(30);
+                cookie.Domain = Request.RequestUri.Host;
+                cookie.Path = "/";
+
+                // generate login-code
+                string loginCode = Guid.NewGuid().ToString();
+                idv.SetLoginCode(c.username, loginCode);
+
+                var cookie2 = new CookieHeaderValue("rfs.logincode", loginCode);
+                cookie2.Expires = DateTimeOffset.Now.AddMinutes(30);
+                cookie2.Domain = Request.RequestUri.Host;
+                cookie2.Path = "/";
+                resp.Headers.AddCookies(new CookieHeaderValue[] { cookie,cookie2 });
+                resp.ReasonPhrase = "Login Successful.";
+                resp.StatusCode = System.Net.HttpStatusCode.OK;
+                //resp.Headers.Location = new Uri(HttpContext.Current.Request.Url.Authority);
+            }
+            else
+            {
+
+            }
+
+            string error = "Invalid Credential";
+            return resp;
+        }
+    }
+
+    public class SignupController : ApiController
+    {
+        // GET api/<controller>
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage Signup([FromBody]UserCredential c)
+        {
+            string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
+            IdentityValidation idv = new IdentityValidation(connectionstring);
+            var resp = new HttpResponseMessage();
+
+            if (idv.UserExist(c))
+            {
+                string error1 = "error: user already exist with same email id. Try resetting password.";
+                resp.StatusCode = System.Net.HttpStatusCode.NotModified;
+                resp.ReasonPhrase = error1;
+            } else {
+                // reegister user
+                idv.RegisterUser(c);
+             
+                resp.StatusCode = System.Net.HttpStatusCode.OK;
+                resp.ReasonPhrase = "User successfully created.";
+            }
+                
+            // show message to check inbox for activation link.
+            
+            return resp;
         }
     }
 }

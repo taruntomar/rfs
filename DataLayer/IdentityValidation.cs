@@ -1,7 +1,10 @@
 ﻿using DataLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,9 +12,196 @@ namespace DataLayer
 {
     public class IdentityValidation
     {
+        private string _dbConnectionString;
+        public IdentityValidation(string dbConnectionString)
+        {
+            _dbConnectionString = dbConnectionString;
+        }
         public bool ValidateUserCredential(UserCredential c)
         {
-            throw new NotImplementedException();
+            bool loginsuccessful = false;
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command;
+            string sql = "select * from users where email like '" + c.username + "'";
+            SqlDataReader dataReader;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                dataReader = command.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    string id = dataReader.GetValue(0).ToString();
+                    string email = dataReader.GetValue(1).ToString();
+                    string salt = dataReader.GetValue(3).ToString();
+                    string password = dataReader.GetValue(2).ToString();
+
+                    if (password == GetHashedPassword(c.password, salt))
+                    {
+                        // password matched.
+                        loginsuccessful = true;
+                    }
+                    break;
+
+                }
+
+                dataReader.Close();
+                command.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return loginsuccessful;
+        }
+
+        public bool CheckLoginCode(string username, string logincode)
+        {
+            bool loginsuccessful = false;
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command;
+            string sql = "select * from users where email like '" + username + "'";
+            SqlDataReader dataReader;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                dataReader = command.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    string logincode2 = dataReader.GetValue(4).ToString();
+                    
+
+                    if (logincode == logincode2)
+                    {
+                        // password matched.
+                        loginsuccessful = true;
+                    }
+                    break;
+
+                }
+
+                dataReader.Close();
+                command.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return loginsuccessful;
+        }
+
+        static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
+        {
+            HashAlgorithm algorithm = new SHA256Managed();
+
+            byte[] plainTextWithSaltBytes =
+              new byte[plainText.Length + salt.Length];
+
+            for (int i = 0; i < plainText.Length; i++)
+            {
+                plainTextWithSaltBytes[i] = plainText[i];
+            }
+            for (int i = 0; i < salt.Length; i++)
+            {
+                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
+            }
+
+            return algorithm.ComputeHash(plainTextWithSaltBytes);
+        }
+
+        public void SetLoginCode(string username, string loginCode)
+        {
+            string sql = "update users set logincode = '"+ loginCode + "' where email like '"+username+"'";
+
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command = null;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (command != null)
+                command.Dispose();
+            sqlConnection.Close();
+
+        }
+
+        public void RegisterUser(UserCredential c)
+        {
+            // generate salt 
+            string salt = Guid.NewGuid().ToString();
+            // has password
+            string hashedPassword = GetHashedPassword(c.password, salt);
+
+            string sql = "INSERT into users (Id,email,password,salt,logincode) VALUES (@Id,@email,@password,@salt,@logincode)";
+
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command;
+            SqlDataReader dataReader;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                command.Parameters.Add("@Id", SqlDbType.NVarChar, 50).Value = Guid.NewGuid().ToString();
+                command.Parameters.Add("@email", SqlDbType.NVarChar, 150).Value = c.username;
+                command.Parameters.Add("@password", SqlDbType.Text).Value = hashedPassword;
+                command.Parameters.Add("@salt", SqlDbType.NVarChar, 50).Value = salt;
+                command.Parameters.Add("@logincode", SqlDbType.NVarChar, 50).Value = "";
+                command.ExecuteNonQuery();
+                command.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        private static string GetHashedPassword(string password, string salt)
+        {
+            byte[] passwordHashByte = GenerateSaltedHash(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt));
+            string hashedPassword = Convert.ToBase64String(passwordHashByte);
+            return hashedPassword;
+        }
+
+        public bool UserExist(UserCredential c)
+        {
+            bool userrExist = false;
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command;
+            string sql = "select * from users where email like '" + c.username + "'";
+            SqlDataReader dataReader;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    userrExist = true;
+                }
+
+                dataReader.Close();
+                command.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return userrExist;
         }
     }
 }
