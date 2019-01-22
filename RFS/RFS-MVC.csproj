@@ -148,6 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\homepage.jpg" />
     <Content Include="Scripts\ctrl\RoomController.js" />
     <Content Include="_frameworks\angular-material\css\angular-material.css" />
     <Content Include="_frameworks\angular-material\css\angular-material.layout-attributes.css" />

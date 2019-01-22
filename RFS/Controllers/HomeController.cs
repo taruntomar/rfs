@@ -61,5 +61,30 @@ namespace RFS.Controllers
 
             return View();
         }
+
+        [System.Web.Http.HttpGet]
+        public ActionResult Logout()
+        {
+            HttpCookie myCookie = new HttpCookie("rfs.username");
+            myCookie = Request.Cookies["rfs.username"];
+            if (myCookie != null)
+            {
+                Session[myCookie.Value] = "";
+            }
+
+            HttpCookie currentUserCookie = Request.Cookies["rfs.username"];
+            Response.Cookies.Remove("rfs.username");
+            if (currentUserCookie != null)
+            {
+                currentUserCookie.Expires = DateTime.Now.AddDays(-10);
+                currentUserCookie.Value = null;
+                Response.SetCookie(currentUserCookie);
+            }
+            //================================
+            string message = "you have successfully logged out.";
+            return RedirectToAction("Index", "Home");
+
+
+        }
     }
 }
