@@ -40,6 +40,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,37 +50,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\Booking.cs" />
-    <Compile Include="Entity\Room.cs" />
-    <Compile Include="RoomManagementContext.cs" />
+    <Compile Include="BookingManager.cs" />
+    <Compile Include="Entities\Booking.cs">
+      <DependentUpon>RoomsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\IRoomManagementDatabasseEntities.cs" />
+    <Compile Include="Entities\Room.cs">
+      <DependentUpon>RoomsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RoomsModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RoomsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RoomsModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RoomsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RoomsModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RoomsModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="IBookingManager.cs" />
+    <Compile Include="IRoomManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RFS-RoomManagement.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RFS-RoomManagement.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RFS-RoomManagement.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RFS-RoomManagement.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="RFS-RoomManagement.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RFS-RoomManagement.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="RFS-RoomManagement.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RFS-RoomManagement.cs</LastGenOutput>
-    </Content>
+    <Compile Include="RoomManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Entities\RoomsModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RoomsModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\RoomsModel.edmx.diagram">
+      <DependentUpon>RoomsModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Entities\RoomsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RoomsModel.edmx</DependentUpon>
+      <LastGenOutput>RoomsModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\RoomsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RoomsModel.edmx</DependentUpon>
+      <LastGenOutput>RoomsModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

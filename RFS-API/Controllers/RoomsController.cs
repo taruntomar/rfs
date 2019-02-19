@@ -1,40 +1,50 @@
-﻿using RFS_API.Models;
+﻿using RoomManagement;
+using RoomManagement.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace RFS_API.Controllers
 {
     public class RoomsController : ApiController
     {
-        // GET api/values
+        IRoomManager _roomManager = null;
+        public RoomsController(IRoomManager roomManager)
+        {
+            _roomManager = roomManager;
+        }
+        // GET api/<controller>
         public IEnumerable<Room> Get()
         {
-            
+
+            return _roomManager.GetAllRooms();
         }
 
-        // GET api/values/5
+        // GET api/<controller>/5
         public string Get(int id)
         {
-            return "value";
+            return _roomManager.GetRoomById(id);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        // POST api/<controller>
+        public void Post([FromBody]string roomName)
         {
+            _roomManager.AddNewRoom(roomName);
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        // PUT api/<controller>/5
+        public void Put(int id, [FromBody]Room room)
         {
+            _roomManager.UpdateRoomProperties(id, room);
         }
 
-        // DELETE api/values/5
+        // DELETE api/<controller>/5
         public void Delete(int id)
         {
+            _roomManager.DeleteRoom(id);
         }
     }
 }
