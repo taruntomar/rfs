@@ -12,14 +12,10 @@ namespace RoomManagement.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class Location
     {
         public string Id { get; set; }
-        public string RoomName { get; set; }
-        public bool Projector { get; set; }
-        public int Sitting { get; set; }
-        public string location { get; set; }
-        public bool VideoConferencing_ { get; set; }
-        public bool MonitorScreen { get; set; }
+        public string Name { get; set; }
+        public string Country { get; set; }
     }
 }

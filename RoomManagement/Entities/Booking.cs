@@ -14,9 +14,11 @@ namespace RoomManagement.Entities
     
     public partial class Booking
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int RoomId { get; set; }
         public System.DateTime starttime { get; set; }
         public System.DateTime endtime { get; set; }
+        public Nullable<System.DateTime> createdOn { get; set; }
+        public string createdBy { get; set; }
     }
 }

@@ -15,9 +15,10 @@ namespace RoomManagement
             _dbContext = dbContext;
         }
 
-        public void AddNewRoom(string roomName)
+        public void AddNewRoom(Room room)
         {
-            throw new NotImplementedException();
+            _dbContext.Rooms.Add(room);
+            _dbContext.SaveChanges();
         }
 
         public void DeleteRoom(int id)

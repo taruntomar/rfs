@@ -30,9 +30,10 @@ namespace RFS_API.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string roomName)
+        public void Post([FromBody]Room room)
         {
-            _roomManager.AddNewRoom(roomName);
+            _roomManager.AddNewRoom(room);
+            
         }
 
         // PUT api/<controller>/5

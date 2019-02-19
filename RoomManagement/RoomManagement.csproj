@@ -50,12 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookingManager.cs" />
     <Compile Include="Entities\Booking.cs">
       <DependentUpon>RoomsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\IRoomManagementDatabasseEntities.cs" />
+    <Compile Include="Entities\Location.cs">
+      <DependentUpon>RoomsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Room.cs">
+      <DependentUpon>RoomsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RoomPicture.cs">
       <DependentUpon>RoomsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\RoomsModel.Context.cs">
@@ -73,10 +78,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RoomsModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="IBookingManager.cs" />
-    <Compile Include="IRoomManager.cs" />
+    <Compile Include="EntityManagers\BookingManager.cs" />
+    <Compile Include="EntityManagers\Contracts\IBookingManager.cs" />
+    <Compile Include="EntityManagers\Contracts\ILocationManager.cs" />
+    <Compile Include="EntityManagers\Contracts\IRoomManager.cs" />
+    <Compile Include="EntityManagers\LocationManager.cs" />
+    <Compile Include="EntityManagers\RoomManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoomManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -7,19 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RoomManagement.Entities
+namespace RFS_API
 {
     using System;
     using System.Collections.Generic;
     
     public partial class Room
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string RoomName { get; set; }
-        public bool Projector { get; set; }
+        public Nullable<bool> Projector { get; set; }
         public int Sitting { get; set; }
         public string location { get; set; }
-        public bool VideoConferencing_ { get; set; }
-        public bool MonitorScreen { get; set; }
     }
 }

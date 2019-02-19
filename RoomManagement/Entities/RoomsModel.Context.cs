@@ -13,7 +13,7 @@ namespace RoomManagement.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RoomManagementDatabasseEntities : DbContext, IRoomManagementDatabasseEntities
+    public partial class RoomManagementDatabasseEntities : DbContext,IRoomManagementDatabasseEntities
     {
         public RoomManagementDatabasseEntities()
             : base("name=RoomManagementDatabasseEntities")
@@ -26,6 +26,8 @@ namespace RoomManagement.Entities
         }
     
         public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<RoomPicture> RoomPictures { get; set; }
     }
 }
