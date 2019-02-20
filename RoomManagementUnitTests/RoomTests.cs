@@ -9,7 +9,7 @@ namespace RoomManagementUnitTests
         [TestMethod]
         public void AddRoom()
         {
-
+            
         }
     }
 }
