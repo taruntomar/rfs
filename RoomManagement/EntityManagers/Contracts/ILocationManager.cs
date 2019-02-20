@@ -7,7 +7,7 @@ namespace RoomManagement
     {
         IList<Location> GetAllLocations();
         Location GetLocationById(string id);
-        void AddNewLocation(Location roomName);
+        string AddNewLocation(Location roomName);
         void UpdateLocationProperties(string id, Location room);
         void DeleteLocation(string id);
     }

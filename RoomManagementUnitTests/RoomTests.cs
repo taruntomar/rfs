@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace RoomManagementUnitTests
 {
     [TestClass]
-    public class LocationManagementTests
+    public class RoomManagementTests
     {
         [TestMethod]
-        public void AddLocation()
+        public void AddRoom()
         {
 
         }

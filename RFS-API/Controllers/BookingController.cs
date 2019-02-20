@@ -17,13 +17,13 @@ namespace RFS_API.Controllers
             _bookingManager = bookingManager;
         }
         // GET api/<controller>
-        public IEnumerable<Booking> Get()
+        public IEnumerable<Booking> Get(string roomId, DateTime startDateTime, DateTime endDateTime)
         {
-            return _bookingManager.GetTodayBooking();
+            return _bookingManager.GetBookingForRoom(roomId, startDateTime, endDateTime);
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public Booking Get(string id)
         {
             return _bookingManager.GetBookingById(id);
         }
@@ -35,7 +35,7 @@ namespace RFS_API.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]Booking booking)
+        public void Put(string id, [FromBody]Booking booking)
         {
             _bookingManager.UpdateBooking(id, booking);
         }

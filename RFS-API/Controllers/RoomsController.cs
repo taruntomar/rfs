@@ -24,7 +24,7 @@ namespace RFS_API.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public Room Get(string id)
         {
             return _roomManager.GetRoomById(id);
         }
@@ -37,13 +37,13 @@ namespace RFS_API.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]Room room)
+        public void Put(string id, [FromBody]Room room)
         {
             _roomManager.UpdateRoomProperties(id, room);
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public void Delete(string id)
         {
             _roomManager.DeleteRoom(id);
         }

@@ -16,10 +16,19 @@ namespace RoomManagement
             _dbContext = dbContext;
         }
 
-        public void AddNewLocation(Location room)
+        public string AddNewLocation(Location room)
         {
-            _dbContext.Locations.Add(room);
-            _dbContext.SaveChanges();
+            var __room =  _dbContext.Locations.FirstOrDefault(x => x.Country == room.Country && x.Name == room.Name);
+            if (__room == null)
+            {
+                _dbContext.Locations.Add(room);
+                _dbContext.SaveChanges();
+                return "Location added successfully.";
+            }
+            else
+            {
+                return "Location with same name and country already exist.";
+            }
         }
 
         public void DeleteLocation(string id)
