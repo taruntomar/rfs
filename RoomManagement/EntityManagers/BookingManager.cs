@@ -43,17 +43,17 @@ namespace RoomManagement
 
         public IEnumerable<Booking> GetBookingForRoom(string roomId,DateTime starttime,DateTime endTime)
         {
-            return _dbContext.Bookings.Where(x => x.RoomId == roomId && x.starttime >= starttime && x.endtime <= endTime);
+            return _dbContext.Bookings.Where(x => x.RoomId == roomId && (x.starttime.CompareTo(starttime)>=0) && (x.endtime.CompareTo(endTime)<=0));
         }
 
         public IEnumerable<Booking> GetBookingCreatedBetween(DateTime starttime, DateTime endTime)
         {
-            return _dbContext.Bookings.Where(x =>  x.starttime >= starttime && x.endtime <= endTime);
+            return _dbContext.Bookings.Where(x => (x.starttime.CompareTo(starttime) >= 0) && (x.endtime.CompareTo(endTime) <= 0));
         }
 
         public IEnumerable<Booking> GetBookingDoneByUser(string userId, DateTime starttime, DateTime endTime)
         {
-            return _dbContext.Bookings.Where(x => x.createdBy == userId && x.starttime >= starttime && x.endtime <= endTime);
+            return _dbContext.Bookings.Where(x => x.createdBy == userId && (x.starttime.CompareTo(starttime) >= 0) && (x.endtime.CompareTo(endTime) <= 0));
         }
 
         public void UpdateBooking(string id, Booking booking)

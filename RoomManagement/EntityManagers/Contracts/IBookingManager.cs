@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RoomManagement.Entities;
 
 namespace RoomManagement
 {
     public interface IBookingManager
     {
+        void AddNewBooking(Booking booking);
         bool CreateBooking();
-        IEnumerable<Booking> GetTodayBooking();
-        void UpdateBooking(int id, Booking booking);
         void DeleteBooking(string id);
-        string GetBookingById(int id);
-        void AddNewBooking(object bookingName);
+        Booking GetBookingById(string id);
+        IEnumerable<Booking> GetBookingCreatedBetween(DateTime starttime, DateTime endTime);
+        IEnumerable<Booking> GetBookingDoneByUser(string userId, DateTime starttime, DateTime endTime);
+        IEnumerable<Booking> GetBookingForRoom(string roomId, DateTime starttime, DateTime endTime);
+        void UpdateBooking(string id, Booking booking);
     }
 }

@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="328d2c275ddf4cc7ad4b187f4495914a" Name="Diagram1">
-        <EntityTypeShape EntityType="RoomManagementDatabasseModel.Booking" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="RoomManagementDatabasseModel.Location" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RoomManagementDatabasseModel.Location" Width="1.5" PointX="0.75" PointY="1.75" />
         <EntityTypeShape EntityType="RoomManagementDatabasseModel.Room" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="RoomManagementDatabasseModel.RoomPicture" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="RoomManagementDatabasseModel.Booking" Width="1.5" PointX="2.75" PointY="1.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

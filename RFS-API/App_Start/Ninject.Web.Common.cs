@@ -64,6 +64,8 @@ namespace RFS_API.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IRoomManager>().To<RoomManager>();
+            kernel.Bind<ILocationManager>().To<LocationManager>();
+            kernel.Bind<IBookingManager>().To<BookingManager>();
             kernel.Bind<IRoomManagementDatabasseEntities>().To<RoomManagementDatabasseEntities>();
         }        
     }

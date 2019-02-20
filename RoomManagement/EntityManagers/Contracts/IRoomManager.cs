@@ -5,10 +5,10 @@ namespace RoomManagement
 {
     public interface IRoomManager
     {
+        void AddNewRoom(Room room);
+        void DeleteRoom(string id);
         IList<Room> GetAllRooms();
-        string GetRoomById(int id);
-        void AddNewRoom(Room roomName);
-        void UpdateRoomProperties(int id, Room room);
-        void DeleteRoom(int id);
+        Room GetRoomById(string id);
+        void UpdateRoomProperties(string id, Room newroom);
     }
 }

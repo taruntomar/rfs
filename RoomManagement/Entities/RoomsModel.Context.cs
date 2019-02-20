@@ -25,9 +25,9 @@ namespace RoomManagement.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomPicture> RoomPictures { get; set; }
+        public virtual DbSet<Booking> Bookings { get; set; }
     }
 }

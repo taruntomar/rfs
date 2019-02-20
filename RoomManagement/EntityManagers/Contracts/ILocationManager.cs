@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using RoomManagement.Entities;
 
-namespace LocationManagement
+namespace RoomManagement
 {
     public interface ILocationManager
     {

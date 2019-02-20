@@ -10,7 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="RoomId" Type="int" Nullable="false" />
+          <Property Name="RoomId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="starttime" Type="datetime" Nullable="false" />
           <Property Name="endtime" Type="datetime" Nullable="false" />
           <Property Name="createdOn" Type="datetime" />
@@ -55,22 +55,11 @@
     <edmx:ConceptualModels>
       <Schema Namespace="RoomManagementDatabasseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="RoomManagementDatabasseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Bookings" EntityType="RoomManagementDatabasseModel.Booking" />
           <EntitySet Name="Locations" EntityType="RoomManagementDatabasseModel.Location" />
           <EntitySet Name="Rooms" EntityType="RoomManagementDatabasseModel.Room" />
           <EntitySet Name="RoomPictures" EntityType="RoomManagementDatabasseModel.RoomPicture" />
+          <EntitySet Name="Bookings" EntityType="RoomManagementDatabasseModel.Booking" />
         </EntityContainer>
-        <EntityType Name="Booking">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RoomId" Type="Int32" Nullable="false" />
-          <Property Name="starttime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="endtime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="createdOn" Type="DateTime" Precision="3" />
-          <Property Name="createdBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Location">
           <Key>
             <PropertyRef Name="Id" />
@@ -99,24 +88,23 @@
           <Property Name="PictureName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoomId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="starttime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endtime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="createdOn" Type="DateTime" Precision="3" />
+          <Property Name="createdBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="RoomManagementDatabasseModelStoreContainer" CdmEntityContainer="RoomManagementDatabasseEntities">
-          <EntitySetMapping Name="Bookings">
-            <EntityTypeMapping TypeName="RoomManagementDatabasseModel.Booking">
-              <MappingFragment StoreEntitySet="Booking">
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
-                <ScalarProperty Name="endtime" ColumnName="endtime" />
-                <ScalarProperty Name="starttime" ColumnName="starttime" />
-                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Locations">
             <EntityTypeMapping TypeName="RoomManagementDatabasseModel.Location">
               <MappingFragment StoreEntitySet="Location">
@@ -145,6 +133,18 @@
                 <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="PictureName" ColumnName="PictureName" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="RoomManagementDatabasseModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="endtime" ColumnName="endtime" />
+                <ScalarProperty Name="starttime" ColumnName="starttime" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

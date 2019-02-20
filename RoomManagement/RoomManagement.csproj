@@ -78,6 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RoomsModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EntityManagers\BookingRulesManager.cs" />
     <Compile Include="EntityManagers\BookingManager.cs" />
     <Compile Include="EntityManagers\Contracts\IBookingManager.cs" />
     <Compile Include="EntityManagers\Contracts\ILocationManager.cs" />
