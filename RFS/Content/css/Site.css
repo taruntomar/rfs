@@ -1,4 +1,13 @@
-﻿md-toolbar.md-default-theme.md-hue-3:not(.md-menu-toolbar), md-toolbar.md-hue-3:not(.md-menu-toolbar) {
+﻿
+.btn-logout {
+    width: 100%;
+    padding: 3px 20px !important;
+    text-align: left !important;
+    color: red !important; 
+    margin-top: -3px;
+}
+
+md-toolbar.md-default-theme.md-hue-3:not(.md-menu-toolbar), md-toolbar.md-hue-3:not(.md-menu-toolbar) {
     background-color: red;
 }
     .navbar-inverse {
@@ -9,8 +18,10 @@
     .navbar-inverse .navbar-nav > li > a {
         color: black;
     }
-
-body {
+        .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+            color: red;
+        }
+            body {
     padding-top: 50px;
     padding-bottom: 20px;
 }

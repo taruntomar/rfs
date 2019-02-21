@@ -12,7 +12,7 @@
             </md-card-title-text>
         </md-card-title>
         <md-card-content>
-            <div layout="row">
+            <div layout="row" ng-cloak>
                 <md-input-container>
                     <label>Location:</label>
                     <md-select ng-model="selectedLocation">
@@ -21,7 +21,7 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
-                <div>
+                <div style="    margin-top: -5px;">
                     <br />
                     <md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date"></md-datepicker>
                 </div>
@@ -47,7 +47,8 @@
             </div>
         </md-card-content>
     </md-card>
-    <div ng-show="showRooms">
+    <div ng-show="showRooms" ng-cloak>
+
         <md-toolbar layout="row" class="md-hue-3">
             <div class="md-toolbar-tools">
                 <span>Available Rooms</span>
@@ -68,6 +69,8 @@
                 <md-divider></md-divider>
             </md-list>
         </md-content>
+
     </div>
+    
 </div>
             

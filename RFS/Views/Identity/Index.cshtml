@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+
+<div  class="login-section ng-cloak" ng-app="ResideoApp" ng-controller="IdentityController" class="md-padding" ng-cloak>
+    <md-card ng-cloak>
+        <md-card-title>
+            <md-card-title-text>
+                <img style="width: 150px;" src="~/Content/img/resideo-company-name-logo-black-170-x-39.png" />
+                <span class="md-headline">Login to Facility Portal</span>
+                @*<span class="md-subhead">Tell us a little about you.</span>*@
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content ng-cloak>
+            <div layout="column">
+                <form name="userForm">
+                    <div layout-gt-xs="column">
+                        <md-input-container class="md-block" flex-gt-xs>
+                            <label>Username</label>
+                            <input ng-model="username" md-no-float required type="email" ng-pattern="" >
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Password</label>
+                            <input ng-model="password" md-no-float type="password"  ng-required="true">
+                        </md-input-container>
+                        <md-button ng-click="login()" type="submit" style="    background-color: red;" class="md-raised md-primary">
+                            Login
+                        </md-button>
+                        <br />
+                        <a href="/Identity/Signup">Not able to Login?</a>
+                        <a href="/Identity/Signup">Signup</a>
+                    </div>
+                </form>
+            </div>
+        </md-card-content>
+    </md-card>
+    </div>
+
