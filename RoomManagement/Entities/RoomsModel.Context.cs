@@ -13,7 +13,7 @@ namespace RoomManagement.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RoomManagementDatabasseEntities : DbContext
+    public partial class RoomManagementDatabasseEntities : DbContext,IRoomManagementDatabasseEntities
     {
         public RoomManagementDatabasseEntities()
             : base("name=RoomManagementDatabasseEntities")
