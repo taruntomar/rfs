@@ -26,6 +26,10 @@ namespace RFS_API.Controllers
         // GET api/<controller>/5
         public Room Get(string id)
         {
+            System.Diagnostics.Trace.TraceInformation("getting room list");
+            //System.Diagnostics.Trace.TraceWarning("This is a Warning");
+            //System.Diagnostics.Trace.TraceError("This is an Error");
+
             return _roomManager.GetRoomById(id);
         }
 
