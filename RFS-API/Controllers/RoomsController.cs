@@ -34,7 +34,7 @@ namespace RFS_API.Controllers
             return _roomManager.GetAllRoomsForLocation(locationId);
         }
 
-        [System.Web.Http.Route("api/location/{locationId}/searchrooms/{SdateTime}/{EdateTime}")]
+        [System.Web.Http.Route("api/location/{locationId}/searchrooms")]
         [System.Web.Http.HttpGet()]
         public HttpResponseMessage GetsAvailableRoomsUnderLocation(HttpRequestMessage httpRequest, string locationId,string SdateTime, string EdateTime)
         {
