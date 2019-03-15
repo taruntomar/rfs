@@ -10,5 +10,6 @@ namespace RoomManagement
         IList<Room> GetAllRooms();
         Room GetRoomById(string id);
         void UpdateRoomProperties(string id, Room newroom);
+        IEnumerable<Room> GetAllRoomsForLocation(string locationId);
     }
 }

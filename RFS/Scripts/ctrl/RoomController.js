@@ -1,5 +1,7 @@
 ﻿
 var myApp = angular.module('ResideoApp', ['ngMaterial']);
+
+myApp.rmshost = "https://rms-restapi.azurewebsites.net:443";
 myApp.directive('mdInputContainer', function ($timeout) {
     return function ($scope, element) {
         var ua = navigator.userAgent;
@@ -15,13 +17,15 @@ myApp.directive('mdInputContainer', function ($timeout) {
         }
     };
 });
+
 myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $http) {
     $scope.selectedLocation = '';
     $scope.locations = [''];
+    $scope.bookings = [''];
     $scope.stimes = ['10:00 AM', '10:30 AM'];
     $scope.etimes = ['12:00 PM', '12:30 PM'];
-    $scope.rooms = ['Vidhan Soudha', 'Lal Bagh', 'Sakey Tank', 'Bangalore Palace'];
-    $http.get('/api/location').
+    $scope.rooms = [''];
+    $http.get(myApp.rmshost +'/api/Locations').
         then(function (response) {
             $scope.locations =response.data;
         });
@@ -31,8 +35,31 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
 
     };
 
-   
+    $isShowRooms = function () {
+        if ($scope.rooms.length >= 1) {
+            return true;
+        }
+        return false;
+    };
+    $isShowBookings = function () {
+        if ($scope.bookings.length >= 1) {
+            return true;
+        }
+        return false;
+    };
+    
+    $locationSelected = function (loc) {
+        $http.get(myApp.rmshost + '/api/Rooms?locationId='+loc.Id).
+            then(function (response) {
+                $scope.rooms = response.data;
+            });
+    };
+    $roomSelected = function () {
 
+    };
+    $bookingSelected = function () {
+
+    };
 
 }]);
 

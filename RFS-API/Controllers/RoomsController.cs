@@ -23,6 +23,13 @@ namespace RFS_API.Controllers
             return _roomManager.GetAllRooms();
         }
 
+        [System.Web.Http.Route("location/{locationId}/rooms")]
+        [System.Web.Http.HttpGet()]
+        public IEnumerable<Room> GetRoomsUnderLocation(string locationId)
+        {
+
+            return _roomManager.GetAllRoomsForLocation(locationId);
+        }
         // GET api/<controller>/5
         public Room Get(string id)
         {

@@ -36,6 +36,11 @@ namespace RoomManagement
             return _dbContext.Rooms.ToList<Room>();
         }
 
+        public IEnumerable<Room> GetAllRoomsForLocation(string locationId)
+        {
+            return _dbContext.Rooms.Where(x => x.location == locationId);
+        }
+
         public Room GetRoomById(string id)
         {
           return  _dbContext.Rooms.FirstOrDefault(x => x.Id == id);
