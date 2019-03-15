@@ -12,9 +12,11 @@ namespace RFS_API.Controllers
     public class RoomsController : ApiController
     {
         IRoomManager _roomManager = null;
-        public RoomsController(IRoomManager roomManager)
+        IBookingManager _bookingManager = null;
+        public RoomsController(IRoomManager roomManager, IBookingManager bookingManager)
         {
             _roomManager = roomManager;
+            _bookingManager = bookingManager;
         }
         // GET api/<controller>
         public IEnumerable<Room> Get()
@@ -23,12 +25,25 @@ namespace RFS_API.Controllers
             return _roomManager.GetAllRooms();
         }
 
-        [System.Web.Http.Route("location/{locationId}/rooms")]
+        [System.Web.Http.Route("api/location/{locationId}/rooms")]
         [System.Web.Http.HttpGet()]
         public IEnumerable<Room> GetRoomsUnderLocation(string locationId)
         {
 
             return _roomManager.GetAllRoomsForLocation(locationId);
+        }
+
+        [System.Web.Http.Route("api/location/{locationId}/rooms/{SdateTime:DateTime}/{EdateTime:DateTime}")]
+        [System.Web.Http.HttpGet()]
+        public IEnumerable<Room> GetsAvailableRoomsUnderLocation(string locationId,DateTime SdateTime, DateTime EdateTime)
+        {
+            List<Room> availableRooms = new List<Room>();
+            var rooms = _roomManager.GetAllRoomsForLocation(locationId);
+            foreach (var r in rooms) {
+                if (_bookingManager.GetBookingForRoom(r.Id, SdateTime, EdateTime).Count() == 0)
+                    availableRooms.Add(r);
+            }
+            return availableRooms;
         }
         // GET api/<controller>/5
         public Room Get(string id)

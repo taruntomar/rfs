@@ -27,6 +27,7 @@ namespace RFS_API.Controllers
         {
             return _bookingManager.GetBookingById(id);
         }
+        
 
         // POST api/<controller>
         public void Post([FromBody]Booking booking)
