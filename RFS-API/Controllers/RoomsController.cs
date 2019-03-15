@@ -3,6 +3,7 @@ using RoomManagement.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -33,17 +34,30 @@ namespace RFS_API.Controllers
             return _roomManager.GetAllRoomsForLocation(locationId);
         }
 
-        [System.Web.Http.Route("api/location/{locationId}/rooms/{SdateTime:DateTime}/{EdateTime:DateTime}")]
+        [System.Web.Http.Route("api/location/{locationId}/searchrooms/{SdateTime}/{EdateTime}")]
         [System.Web.Http.HttpGet()]
-        public IEnumerable<Room> GetsAvailableRoomsUnderLocation(string locationId,DateTime SdateTime, DateTime EdateTime)
+        public HttpResponseMessage GetsAvailableRoomsUnderLocation(HttpRequestMessage httpRequest, string locationId,string SdateTime, string EdateTime)
         {
             List<Room> availableRooms = new List<Room>();
+            HttpResponseMessage response;
+            DateTime s,e;
+            if(!(DateTime.TryParse(SdateTime,out s) && DateTime.TryParse(EdateTime, out e)))
+            {
+                response = httpRequest.CreateResponse();
+                response.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                response.ReasonPhrase = "Unable to parse datetime";
+                return response;
+            }
+
+            DateTime.TryParse(EdateTime, out e);
+            
             var rooms = _roomManager.GetAllRoomsForLocation(locationId);
             foreach (var r in rooms) {
-                if (_bookingManager.GetBookingForRoom(r.Id, SdateTime, EdateTime).Count() == 0)
+                if (_bookingManager.GetBookingForRoom(r.Id, s, e).Count() == 0)
                     availableRooms.Add(r);
             }
-            return availableRooms;
+            response = httpRequest.CreateResponse(availableRooms);
+            return response;
         }
         // GET api/<controller>/5
         public Room Get(string id)
