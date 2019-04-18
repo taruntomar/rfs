@@ -1,5 +1,4 @@
-﻿
-using RoomManagement.Entities;
+﻿using RoomManagement.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

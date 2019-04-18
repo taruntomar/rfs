@@ -22,15 +22,28 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
     $scope.selectedLocation = '';
     $scope.locations = [];
     $scope.bookings = [];
+    $scope.stime = '';
+    $scope.etime='';
     $scope.stimes = ['10:00 AM', '10:30 AM'];
     $scope.etimes = ['12:00 PM', '12:30 PM'];
     $scope.rooms = [];
+    $scope.availableRooms = [];
+    $scope.selectedDate;
+    
     $http.get(myApp.rmshost +'/api/Locations').
         then(function (response) {
             $scope.locations =response.data;
         });
     $scope.showRooms = false;
     $scope.findRooms = function () {
+        
+        $scope.selectedstime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
+        $scope.selectedetime = $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getYear() + ' ' + $scope.endTime;;
+        $http.get(myApp.rmshost + '/api/location/0/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
+            then(function (response) {
+                $scope.availableRooms = response.data;
+            });
+
         $scope.showRooms = true;
 
     };
@@ -59,6 +72,28 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
     };
     $scope.bookingSelected = function () {
 
+    };
+
+
+    $scope.bookRoom = function (room) {
+        var currentdate = new Date();
+        $data = {
+            "Id": room.Id,
+            "RoomId": room.Id,
+            "starttime": $scope.selectedstime,
+            "endtime": $scope.selectedetime,
+            "createdOn": + currentdate.getDate() + "/"
+                + (currentdate.getMonth() + 1) + "/"
+                + currentdate.getFullYear() + " @ "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds(),
+            "createdBy": "username"
+        };
+        $http.get(myApp.rmshost + '/api/booking', data).
+            then(function (response) {
+                $scope.rooms = response.data;
+            });
     };
 
 }]);
