@@ -116,7 +116,8 @@ namespace RFS_API
 
         private Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var identity = new ClaimsIdentity(new GenericIdentity(context.UserName, OAuthDefaults.AuthenticationType), context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
+            var genIdentity = new GenericIdentity(context.ClientId, OAuthDefaults.AuthenticationType);
+            var identity = new ClaimsIdentity(genIdentity, context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
 
             context.Validated(identity);
 
@@ -126,7 +127,7 @@ namespace RFS_API
         private Task GrantClientCredetails(OAuthGrantClientCredentialsContext context)
         {
             var identity = new ClaimsIdentity(new GenericIdentity(context.ClientId, OAuthDefaults.AuthenticationType), context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
-
+            //identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             context.Validated(identity);
 
             return Task.FromResult(0);

@@ -16,6 +16,7 @@ namespace RFS_API.Controllers
         {
             _bookingManager = bookingManager;
         }
+
         // GET api/<controller>
         public IEnumerable<Booking> Get(string roomId, DateTime startDateTime, DateTime endDateTime)
         {
@@ -27,7 +28,7 @@ namespace RFS_API.Controllers
         {
             return _bookingManager.GetBookingById(id);
         }
-        
+
 
         // POST api/<controller>
         public void Post([FromBody]Booking booking)

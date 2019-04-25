@@ -21,6 +21,8 @@ namespace RFS_API.Controllers
         // GET api/<controller>
         public IEnumerable<Location> Get()
         {
+            string username = User.Identity.Name;
+            
             return _locationManager.GetAllLocations();
         }
 
