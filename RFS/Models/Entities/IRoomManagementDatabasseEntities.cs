@@ -8,16 +8,17 @@ using System.Data.Entity.Validation;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using RoomManagement.Entities;
+using RFS.Models.Entities;
 
-namespace RFS.Models.Entities
+namespace RoomManagement.Entities
 {
     public interface IRoomManagementDatabasseEntities
     {
-        DbSet<Booking> Bookings { get; set; }
-        DbSet<Location> Locations { get; set; }
-        DbSet<Room> Rooms { get; set; }
-        DbSet<RoomPicture> RoomPictures { get; set; }
+         DbSet<Booking> Bookings { get; set; }
+          DbSet<Location> Locations { get; set; }
+         DbSet<Room> Rooms { get; set; }
+         DbSet<RoomPicture> RoomPictures { get; set; }
+        DbSet<user> users { get; set; }
         Database Database { get; }
         DbChangeTracker ChangeTracker { get; }
         DbContextConfiguration Configuration { get; }

@@ -7,17 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RoomManagement.Entities
+namespace RFS.Models.Entities
 {
-    using RFS.Models.Entities;
+    using RoomManagement.Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RoomManagementDatabasseEntities : DbContext, IRoomManagementDatabasseEntities
+    public partial class rfsEntities : DbContext, IRoomManagementDatabasseEntities
     {
-        public RoomManagementDatabasseEntities()
-            : base("name=RoomManagementDatabasseEntities")
+        public rfsEntities()
+            : base("name=rfsEntities")
         {
         }
     
@@ -26,9 +26,10 @@ namespace RoomManagement.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomPicture> RoomPictures { get; set; }
-        public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }

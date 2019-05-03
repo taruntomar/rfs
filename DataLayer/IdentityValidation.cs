@@ -52,6 +52,8 @@ namespace DataLayer
             }
             catch (Exception ex)
             {
+                // db connection string
+                
 
             }
             return loginsuccessful;

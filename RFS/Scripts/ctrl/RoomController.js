@@ -1,7 +1,7 @@
 ﻿
 var myApp = angular.module('ResideoApp', ['ngMaterial']);
 
-myApp.rmshost = "https://rms-restapi.azurewebsites.net:443";
+myApp.rmshost = "http://localhost:64486";
 myApp.directive('mdInputContainer', function ($timeout) {
     return function ($scope, element) {
         var ua = navigator.userAgent;
@@ -19,7 +19,7 @@ myApp.directive('mdInputContainer', function ($timeout) {
 });
 
 myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $http) {
-    $scope.selectedLocation = '';
+    $scope.selectedLoc = null;
     $scope.locations = [];
     $scope.bookings = [];
     $scope.stime = '';
@@ -38,8 +38,8 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
     $scope.findRooms = function () {
         
         $scope.selectedstime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
-        $scope.selectedetime = $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getYear() + ' ' + $scope.endTime;;
-        $http.get(myApp.rmshost + '/api/location/0/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
+        $scope.selectedetime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.endTime;;
+        $http.get(myApp.rmshost + '/api/location/' + $scope.selectedLoc.Id+'/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
             then(function (response) {
                 $scope.availableRooms = response.data;
             });
@@ -62,7 +62,7 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
     };
     
     $scope.locationSelected = function (loc) {
-        $http.get(myApp.rmshost + '/location/' + loc.Id+'/rooms').
+        $http.get(myApp.rmshost + '/api/location/' + loc.Id+'/rooms').
             then(function (response) {
                 $scope.rooms = response.data;
             });
@@ -90,7 +90,7 @@ myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $
                 + currentdate.getSeconds(),
             "createdBy": "username"
         };
-        $http.get(myApp.rmshost + '/api/booking', data).
+        $http.post(myApp.rmshost + '/api/booking', $data).
             then(function (response) {
                 $scope.rooms = response.data;
             });

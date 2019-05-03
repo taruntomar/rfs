@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RFS.Models.Entities;
+using RoomManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,33 +9,46 @@ using System.Web.Http;
 
 namespace RFS.Controllers
 {
-    public class LocationController : ApiController
+    public class LocationsController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        ILocationManager _locationManager = null;
+        public LocationsController(ILocationManager locationManager)
         {
-            return new string[] { "Bangalore-ETV", "Gurugram" };
+            _locationManager = locationManager;
+        }
+        // GET api/<controller>
+        public IEnumerable<Location> Get()
+        {
+            string username = User.Identity.Name;
+
+            return _locationManager.GetAllLocations();
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public Location Get(string id)
         {
-            return "value";
+            return _locationManager.GetLocationById(id);
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        public HttpResponseMessage Post(HttpRequestMessage httpRequest, [FromBody]Location location)
         {
+            string message = _locationManager.AddNewLocation(location);
+            var response = httpRequest.CreateResponse(message);
+            response.StatusCode = System.Net.HttpStatusCode.Created;
+            return response;
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(string id, [FromBody]Location location)
         {
+            _locationManager.UpdateLocationProperties(id, location);
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public void Delete(string id)
         {
+            _locationManager.DeleteLocation(id);
         }
     }
 }

@@ -47,13 +47,39 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.0\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.3.3.0\lib\net45\Ninject.Web.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.WebHost.3.3.0\lib\net45\Ninject.Web.WebApi.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -113,6 +139,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -138,17 +167,70 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\RoomBookingController.cs" />
+    <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Booking.cs">
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\IRoomManagementDatabasseEntities.cs" />
+    <Compile Include="Models\Entities\Location.cs">
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RFSDbModels.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RFSDbModels.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RFSDbModels.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RFSDbModels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RFSDbModels.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\Room.cs">
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\RoomPicture.cs">
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\user.cs">
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityManagers\BookingManager.cs" />
+    <Compile Include="Models\EntityManagers\BookingRulesManager.cs" />
+    <Compile Include="Models\EntityManagers\Contracts\IBookingManager.cs" />
+    <Compile Include="Models\EntityManagers\Contracts\ILocationManager.cs" />
+    <Compile Include="Models\EntityManagers\Contracts\IRoomManager.cs" />
+    <Compile Include="Models\EntityManagers\LocationManager.cs" />
+    <Compile Include="Models\EntityManagers\RoomManager.cs" />
+    <Compile Include="Models\TAuth\ITAuth.cs" />
+    <Compile Include="Models\TAuth\TApiAuth.cs" />
+    <Compile Include="Models\TAuth\TMVCAuth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\homepage.jpg" />
+    <Content Include="Models\Entities\RFSDbModels.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RFSDbModels.edmx</DependentUpon>
+      <LastGenOutput>RFSDbModels.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entities\RFSDbModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RFSDbModels.edmx</DependentUpon>
+      <LastGenOutput>RFSDbModels.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ctrl\RoomController.js" />
     <Content Include="_frameworks\angular-material\css\angular-material.css" />
     <Content Include="_frameworks\angular-material\css\angular-material.layout-attributes.css" />
@@ -235,9 +317,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="Models\Entities\RFSDbModels.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RFSDbModels.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Entities\RFSDbModels.edmx.diagram">
+      <DependentUpon>RFSDbModels.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -251,6 +339,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">

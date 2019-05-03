@@ -10,6 +10,7 @@ using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using RoomManagement;
 using RoomManagement.Entities;
+using RFS.Models.Entities;
 
 namespace RFS_API
 {

@@ -18,8 +18,8 @@
                         <div layout="row" ng-cloak>
                             <md-input-container>
                                 <label>Location:</label>
-                                <md-select ng-model="selectedLocation">
-                                    <md-option ng-repeat="loc in locations" ng-value="loc" ng-disabled="$index === 1">
+                                <md-select ng-model="selectedLoc" >
+                                    <md-option ng-value="loc" ng-repeat="loc in locations"  @*ng-disabled="$index === 1"*@>
                                         {{loc.Name}}
                                     </md-option>
                                 </md-select>

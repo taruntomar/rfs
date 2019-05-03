@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using DataLayer.Models;
+using RFS.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -37,38 +38,9 @@ namespace RFS.Controllers
         [System.Web.Http.HttpPost]
         public HttpResponseMessage Login([FromBody]UserCredential c)
         {
-            string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
-            IdentityValidation idv = new IdentityValidation(connectionstring);
-            var resp = new HttpResponseMessage();
-
-            if (idv.ValidateUserCredential(c))
-            {
-                var cookie = new CookieHeaderValue("rfs.username", c.username);
-                // create cookie 
-                cookie.Expires = DateTimeOffset.Now.AddMinutes(30);
-                cookie.Domain = Request.RequestUri.Host;
-                cookie.Path = "/";
-
-                // generate login-code
-                string loginCode = Guid.NewGuid().ToString();
-                idv.SetLoginCode(c.username, loginCode);
-
-                var cookie2 = new CookieHeaderValue("rfs.logincode", loginCode);
-                cookie2.Expires = DateTimeOffset.Now.AddMinutes(30);
-                cookie2.Domain = Request.RequestUri.Host;
-                cookie2.Path = "/";
-                resp.Headers.AddCookies(new CookieHeaderValue[] { cookie,cookie2 });
-                resp.ReasonPhrase = "Login Successful.";
-                resp.StatusCode = System.Net.HttpStatusCode.OK;
-                //resp.Headers.Location = new Uri(HttpContext.Current.Request.Url.Authority);
-            }
-            else
-            {
-
-            }
-
-            string error = "Invalid Credential";
-            return resp;
+            TApiAuth auth = new TApiAuth();
+            return auth.Login(c,Request);
+     
         }
     }
 
