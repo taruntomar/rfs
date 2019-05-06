@@ -60,9 +60,9 @@
                     <md-content>
 
                         <md-list>
-                            <md-subheader class="md-no-sticky">No. of available rooms: {{rooms.length}}</md-subheader>
+                            <md-subheader class="md-no-sticky">No. of available rooms: {{availableRooms.length}}</md-subheader>
                             <md-list-item class="md-3-line" ng-repeat="room in availableRooms" ng-click="createProjectedBooking(room)">
-                                @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                                <img ng-src="{{room.image}}" class="md-avatar"  />
                                 <div class="md-list-item-text" layout="column">
                                     <h3>{{ room.RoomName }}</h3>
                                     <p>
@@ -81,7 +81,7 @@
                     </md-content>
 
                 </div>
-                <div flex-gt-sm="33" flex ng-cloak ng-show="projectedBooking">
+                <div flex-gt-sm="60" flex ng-cloak ng-show="projectedBooking">
 
                     @*<md-toolbar layout="row" class="md-hue-3">
                 <div class="md-toolbar-tools">
@@ -96,19 +96,37 @@
                                 <md-icon md-svg-src="~/Content/img/done.svg" class="s48" aria-label="Cart"></md-icon>
                                 <h4>Booking Done</h4>
                             </div>
-                        <div style="padding-left:15px;" ng-hide="bookingActivated || bookingDone">
-                            <h4>{{projectedBooking.RoomName}}</h4>
-                            <h6>{{projectedBooking.Location.Name}},{{projectedBooking.Location.Country}} </h6>
+                        <div layout-gt-sm="row" layout="column" style="padding-left:5px;padding-top: 15px;" ng-hide="bookingActivated || bookingDone">
+                            <div>
+                                <img ng-src="{{projectedBooking.RoomImage}}" style="margin-top: 15px"  />
+                            </div>
+                            <div style="    padding-left: 15px;">
+                                <div layout-gt-sm="row" layout="column">
+                                    <h4 style="    font-size: 26px;">{{projectedBooking.RoomName}}</h4>
+                                    <h6 style="margin-top: 20px; margin-left:5px"> ({{projectedBooking.Location.Name}},{{projectedBooking.Location.Country}}) </h6>
+                                </div>
+                              
 
-                            <h6>MonitorScreen: {{projectedBooking.MonitorScreen}}</h6>
-                            <h6>Projector: {{projectedBooking.Projector}}</h6>
-                            <h6>Sitting: {{projectedBooking.Sitting}}</h6>
-                            <h6>VideoConferencing: {{projectedBooking.VideoConferencing_}}</h6>
-                            <md-divider></md-divider>
-                            <h6>Date: {{projectedBooking.Date}}</h6>
-                            <h6>Time: {{projectedBooking.StartTime}}-{{projectedBooking.EndTime}}</h6>
+                                <div layout-gt-sm="row" layout="column" font-size: 15px;>
+                                    <table>
+                                        <tr>
+                                            
+                                            
+                                            <td><md-icon style="    margin-top: 5px;" ng-show="projectedBooking.MonitorScreen" md-svg-src="~/Content/img/monitor.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                            <td><md-icon ng-show="projectedBooking.Projector" md-svg-src="~/Content/img/projector.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                            <td><md-icon style="    filter: invert(48%);"  ng-show="projectedBooking.VideoConferencing" md-svg-src="~/Content/img/videoconferencing.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                            <td><md-icon md-svg-src="~/Content/img/sittings.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                            <td><div style="font-size:15px">[{{projectedBooking.Sitting}}]</div></td>
+                                        </tr>
+                                            </table>
+                                </div>
+                                <md-divider></md-divider>
+                                <h6>Date: {{projectedBooking.Date}}</h6>
+                                <h6>Time: {{projectedBooking.StartTime}}-{{projectedBooking.EndTime}}</h6>
+                                <md-button class="md-warn md-raised md-hue-2" ng-hide="bookingDone" ng-disabled="bookingActivated" ng-click="confirmBooking()">Confirm Booking</md-button>
+                            </div>
                         </div>
-                        <md-button class="md-warn md-raised md-hue-2" ng-hide="bookingDone" ng-disabled="bookingActivated" ng-click="confirmBooking()">Confirm Booking</md-button>
+                        
                     </md-content>
                 </div>
             </div>

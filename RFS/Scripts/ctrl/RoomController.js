@@ -57,12 +57,13 @@ myApp.directive('mdInputContainer', function ($timeout) {
             var currentdate = new Date();
             $scope.projectedBooking =
                 {
+                "RoomImage": room.image,
                 "RoomName": room.RoomName,
                 "Location": { "Name": $scope.selectedLoc.Name, "Country": $scope.selectedLoc.Country },
                 "MonitorScreen": room.MonitorScreen,
                 "Projector": room.Projector,
                 "Sitting": room.Sitting,
-                "VideoConferencing": room.VideoConferencing_,
+                "VideoConferencing": room.VideoConferencing,
                 "Date": $scope.selectedDate.getDate() + "/"
                     + ($scope.selectedDate.getMonth() + 1) + "/"
                     + $scope.selectedDate.getFullYear() ,
@@ -92,6 +93,8 @@ myApp.directive('mdInputContainer', function ($timeout) {
         if ($scope.showRooms) {
             $("#findbutton").html("Find");
             $scope.showRooms = false;
+            $scope.projectedBooking = false;
+            $scope.bookingDone = false;
 
         } else {
 
@@ -100,10 +103,12 @@ myApp.directive('mdInputContainer', function ($timeout) {
             $http.get(myApp.rmshost + '/api/location/' + $scope.selectedLoc.Id + '/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
                 then(function (response) {
                     $scope.availableRooms = response.data;
+                    if (response.data.length>0)
+                    $("#findbutton").html("Reset");
                 });
 
             $scope.showRooms = true;
-            $("#findbutton").html("Reset");
+            
         }
     };
 

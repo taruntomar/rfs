@@ -41,7 +41,7 @@ namespace RFS_API.Controllers
         [System.Web.Http.HttpGet()]
         public HttpResponseMessage GetsAvailableRoomsUnderLocation(HttpRequestMessage httpRequest, string locationId,string SdateTime, string EdateTime)
         {
-            List<Room> availableRooms = new List<Room>();
+            List<object> availableRooms = new List<object>();
             HttpResponseMessage response;
             DateTime s,e;
             if(!(DateTime.TryParse(SdateTime,out s) && DateTime.TryParse(EdateTime, out e)))
@@ -55,9 +55,14 @@ namespace RFS_API.Controllers
             DateTime.TryParse(EdateTime, out e);
             
             var rooms = _roomManager.GetAllRoomsForLocation(locationId);
-            foreach (var r in rooms) {
+            foreach (var r in rooms)
+            {
+
                 if (_bookingManager.GetBookingForRoom(r.Id, s, e).Count() == 0)
-                    availableRooms.Add(r);
+                {
+                    var room = new { Id = r.Id, location = r.location, MonitorScreen = r.MonitorScreen, Projector = r.Projector, RoomName= r.RoomName, Sitting=r.Sitting, VideoConferencing=r.VideoConferencing_,image = "Content\\img\\room.jpg" };
+                    availableRooms.Add(room);
+                }
             }
             response = httpRequest.CreateResponse(availableRooms);
             return response;
