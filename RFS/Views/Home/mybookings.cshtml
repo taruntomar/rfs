@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+<md-tabs md-dynamic-height md-border-bottom>
+
+    <md-tab label="Upcoming">
+        <div layout-gt-sm="row" layout="column">
+            <div flex-gt-sm="33" flex ng-cloak>
+
+                @*<md-toolbar layout="row" class="md-hue-3">
+                <div class="md-toolbar-tools">
+                    <span>Locations</span>
+                </div>
+            </md-toolbar>*@
+
+                <md-content>
+                    <md-list flex>
+                        <md-subheader class="md-no-sticky">Total {{bookings.length}} upcoming bookings</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="booking in  bookings" ng-click="bookingSelected(booking)">
+                            @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{ booking.Room.Name }}</h3>
+                                <h4>Date: {{booking.Date}}</h4>
+                                <h4>Time: {{booking.StartTime}}-{{booking.EndTime}}</h4>
+                            </div>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                    </md-list>
+                </md-content>
+            </div>
+            <md-divider></md-divider>
+            <div flex-gt-sm="33" flex ng-cloak ng-show="selectedBookingRoom">
+
+                @*<md-toolbar layout="row" class="md-hue-3">
+                <div class="md-toolbar-tools">
+                    <span>Locations</span>
+                </div>
+            </md-toolbar>*@
+
+                <md-content >
+                    <div style="padding-left:15px;">
+                    <h4>{{selectedBookingRoom.RoomName}}</h4>
+                    <h6>{{selectedBookingRoom.Location.Name}}, {{selectedBookingRoom.Location.Country}} </h6>
+
+                    <h6>MonitorScreen: {{selectedBookingRoom.MonitorScreen}}</h6>
+                    <h6>Projector: {{selectedBookingRoom.Projector}}</h6>
+                    <h6>Sitting: {{selectedBookingRoom.Sitting}}</h6>
+                    <h6>VideoConferencing: {{selectedBookingRoom.VideoConferencing_}}</h6>
+                    <md-divider></md-divider>
+                    <h6>BookedOn: {{selectedBooking.BookedOn}}</h6>
+                    <h6>Date: {{selectedBooking.Date}}</h6>
+                    <h6>Time: {{selectedBooking.StartTime}}-{{selectedBooking.EndTime}}</h6>
+                    </div>
+                    <md-button  class="md-warn md-raised md-hue-2" ng-click="showConfirm($event)">Cancel Booking</md-button>
+                </md-content>
+            </div>
+        </div>
+    </md-tab>
+    <md-tab label="Past">
+        <md-content class="md-padding">
+        </md-content>
+    </md-tab>
+</md-tabs>

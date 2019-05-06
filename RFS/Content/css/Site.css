@@ -1,9 +1,26 @@
-﻿
+﻿.mybookingbutton {
+    background-color: darkred;
+    color: white;
+    margin: 5px;
+    padding: 5px;
+    user-select: none;
+    box-shadow: 3px 3px 6px 0px black;
+}
+    .mybookingbutton:hover {
+        
+        cursor: pointer;
+    }
+    .mybookingbutton:active {
+       
+        box-shadow: inset 0 0 4px 0px black;
+        
+    }
+
 .btn-logout {
     width: 100%;
     padding: 3px 20px !important;
     text-align: left !important;
-    color: red !important; 
+    color: red !important;
     margin-top: -3px;
 }
 

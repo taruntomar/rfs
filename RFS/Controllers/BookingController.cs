@@ -15,11 +15,26 @@ namespace RFS_API.Controllers
     public class BookingController : ApiController
     {
         IBookingManager _bookingManager = null;
-        public BookingController(IBookingManager bookingManager)
+        IRoomManager _roomManager = null;
+        public BookingController(IBookingManager bookingManager,IRoomManager roomManager)
         {
             _bookingManager = bookingManager;
+            _roomManager = roomManager;
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/me/bookings")]
+        public dynamic Get()
+        {
+            var username = new TApiAuth().GetLoggedInUsername(Request);
+            if(string.IsNullOrEmpty(username))
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+
+           
+            var bookings = _bookingManager.GetBookingDoneByUser(username);
+            var result = bookings.Select(x => new { Id = x.Id, Room = new { Id = x.RoomId, Name = _roomManager.GetRoomById(x.RoomId).RoomName }, Date = x.starttime.ToShortDateString(), StartTime = x.starttime.ToShortTimeString(), EndTime = x.endtime.ToShortTimeString(), BookedOn = x.createdOn });
+            return result;
+        }
         // GET api/<controller>
         public IEnumerable<Booking> Get(string roomId, DateTime startDateTime, DateTime endDateTime)
         {
@@ -68,6 +83,7 @@ namespace RFS_API.Controllers
         {
             if (IsAuth())
                 _bookingManager.DeleteBooking(id);
+            else
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
         }

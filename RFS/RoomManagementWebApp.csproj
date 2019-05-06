@@ -221,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\homepage.jpg" />
+    <Content Include="Content\img\done.svg" />
     <Content Include="Models\Entities\RFSDbModels.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RFSDbModels.edmx</DependentUpon>
@@ -297,7 +298,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\mybookings.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\README.md" />
     <Content Include="_frameworks\popper-1.14.0\popper.min.js.map" />
@@ -314,6 +315,16 @@
     <Content Include="_frameworks\bootstrap-4.2.1\js\bootstrap.bundle.min.js.map" />
     <Content Include="_frameworks\bootstrap-4.2.1\js\bootstrap.js.map" />
     <Content Include="_frameworks\bootstrap-4.2.1\js\bootstrap.min.js.map" />
+    <Content Include="_frameworks\shortcut\angular-animate.min.js" />
+    <Content Include="_frameworks\shortcut\angular-aria.min.js" />
+    <Content Include="_frameworks\shortcut\angular-material.min.js" />
+    <Content Include="_frameworks\shortcut\angular-messages.min.js" />
+    <Content Include="_frameworks\shortcut\angular-route.js" />
+    <Content Include="_frameworks\shortcut\angular.min.js" />
+    <Content Include="_frameworks\shortcut\bootstrap-datetimepicker.min.js" />
+    <Content Include="_frameworks\shortcut\bootstrap.min.js" />
+    <Content Include="_frameworks\shortcut\jquery-3.3.1.min.js" />
+    <Content Include="_frameworks\shortcut\moment-with-locales.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -336,6 +347,7 @@
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Identity\Signup.cshtml" />
     <Content Include="Views\Shared\_SignupLayout.cshtml" />
+    <Content Include="Views\Home\roombooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

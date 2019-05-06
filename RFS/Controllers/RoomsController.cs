@@ -15,10 +15,12 @@ namespace RFS_API.Controllers
     {
         IRoomManager _roomManager = null;
         IBookingManager _bookingManager = null;
-        public RoomsController(IRoomManager roomManager, IBookingManager bookingManager)
+        ILocationManager _locationManager = null;
+        public RoomsController(IRoomManager roomManager, IBookingManager bookingManager,ILocationManager locationManager)
         {
             _roomManager = roomManager;
             _bookingManager = bookingManager;
+            _locationManager = locationManager;
         }
         // GET api/<controller>
         public IEnumerable<Room> Get()
@@ -61,13 +63,16 @@ namespace RFS_API.Controllers
             return response;
         }
         // GET api/<controller>/5
-        public Room Get(string id)
+        public dynamic Get(string id)
         {
             System.Diagnostics.Trace.TraceInformation("getting room list");
             //System.Diagnostics.Trace.TraceWarning("This is a Warning");
             //System.Diagnostics.Trace.TraceError("This is an Error");
+            var room = _roomManager.GetRoomById(id);
+            var location = _locationManager.GetLocationById(room.location);
 
-            return _roomManager.GetRoomById(id);
+            return new { Id = room.Id,Location = new { Id= room.location, Name = location.Name, Country = location.Country }, MonitorScreen = room.MonitorScreen, Projector =  room.Projector, RoomName =  room.RoomName, Sitting =  room.Sitting, VideoConferencing_ = room.VideoConferencing_};
+                
         }
 
         // POST api/<controller>

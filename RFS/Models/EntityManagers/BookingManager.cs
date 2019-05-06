@@ -58,6 +58,10 @@ namespace RoomManagement
             return _dbContext.Bookings.Where(x => x.createdBy == userId && (x.starttime.CompareTo(starttime) >= 0) && (x.endtime.CompareTo(endTime) <= 0));
         }
 
+        public IEnumerable<Booking> GetBookingDoneByUser(string userId)
+        {
+            return _dbContext.Bookings.Where(x => x.createdBy == userId );
+        }
         public void UpdateBooking(string id, Booking booking)
         {
             Booking __booking = GetBookingById(id);

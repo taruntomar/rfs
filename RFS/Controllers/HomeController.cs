@@ -28,20 +28,25 @@ namespace RFS.Controllers
             //return new IdentityController().Index();
         }
 
-        public ActionResult About()
+        public ActionResult Admin()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult mybookings()
+        {
+            ViewBag.Message = "Your contact page.";
+            
+            return View();
+        }
+        public ActionResult roombooking()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
-
         [System.Web.Http.HttpGet]
         public ActionResult Logout()
         {
