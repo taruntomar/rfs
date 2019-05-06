@@ -87,16 +87,24 @@ myApp.directive('mdInputContainer', function ($timeout) {
             
         };
     $scope.findRooms = function () {
+        // DISABLE ALL CONTROLLS
         
-        $scope.selectedstime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
-        $scope.selectedetime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.endTime;;
-        $http.get(myApp.rmshost + '/api/location/' + $scope.selectedLoc.Id+'/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
-            then(function (response) {
-                $scope.availableRooms = response.data;
-            });
+        if ($scope.showRooms) {
+            $("#findbutton").html("Find");
+            $scope.showRooms = false;
 
-        $scope.showRooms = true;
+        } else {
 
+            $scope.selectedstime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
+            $scope.selectedetime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.endTime;;
+            $http.get(myApp.rmshost + '/api/location/' + $scope.selectedLoc.Id + '/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
+                then(function (response) {
+                    $scope.availableRooms = response.data;
+                });
+
+            $scope.showRooms = true;
+            $("#findbutton").html("Reset");
+        }
     };
 
     $scope.isShowRooms = function () {
