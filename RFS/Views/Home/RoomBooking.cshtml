@@ -2,216 +2,139 @@
     Layout = null;
 }
 
-<md-tabs md-dynamic-height md-border-bottom>
 
-    <md-tab label="Booking">
-        <md-content class="md-padding">
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Find available rooms</span>
-                        @*<span class="md-subhead">Tell us a little about you.</span>*@
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content>
-                    <div layout="row" ng-cloak>
-                        <md-input-container>
-                            <label>Location:</label>
-                            <md-select ng-model="selectedLoc" ng-disabled="showRooms">
-                                <md-option ng-value="loc" ng-repeat="loc in locations" @*ng-disabled="$index === 1"*@>
-                                    {{loc.Name}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <div style="margin-top: -5px;">
-                            <br />
-                            <md-datepicker ng-model="selectedDate" md-placeholder="Enter date" ng-disabled="showRooms"></md-datepicker>
-                        </div>
-                        <md-input-container>
-                            <label>Start Time:</label>
-                            <md-select ng-model="startTime"  ng-disabled="showRooms">
-                                <md-option ng-repeat="stime in stimes" ng-value="stime" ng-disabled="$index === 1">
-                                    {{stime}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container>
-                            <label>End Time:</label>
-                            <md-select ng-model="endTime"  ng-disabled="showRooms">
-                                <md-option ng-repeat="etime in etimes" ng-value="etime" ng-disabled="$index === 1">
-                                    {{etime}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-button id="findbutton" style="    margin-left: 20px;
+
+<md-content class="md-padding">
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Find available rooms</span>
+                @*<span class="md-subhead">Tell us a little about you.</span>*@
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <div layout="row" ng-cloak>
+                <md-input-container>
+                    <label>Location:</label>
+                    <md-select ng-model="selectedLoc" ng-disabled="showRooms">
+                        <md-option ng-value="loc" ng-repeat="loc in locations" @*ng-disabled="$index === 1"*@>
+                            {{loc.Name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <div style="margin-top: -5px;">
+                    <br />
+                    <md-datepicker ng-model="selectedDate" md-placeholder="Enter date" ng-disabled="showRooms"></md-datepicker>
+                </div>
+                <md-input-container>
+                    <label>Start Time:</label>
+                    <md-select ng-model="startTime" ng-disabled="showRooms">
+                        <md-option ng-repeat="stime in stimes" ng-value="stime" ng-disabled="$index === 1">
+                            {{stime}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>End Time:</label>
+                    <md-select ng-model="endTime" ng-disabled="showRooms">
+                        <md-option ng-repeat="etime in etimes" ng-value="etime" ng-disabled="$index === 1">
+                            {{etime}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-button id="findbutton" style="    margin-left: 20px;
     height: 50px;" class="md-raised" ng-click=findRooms()>Find</md-button>
 
-                    </div>
-                </md-card-content>
-            </md-card>
-            <div layout-gt-sm="row" layout="column">
-                <div flex-gt-sm="33" flex ng-show="showRooms && !projectedBooking" ng-cloak>
-                    @*<md-toolbar layout="row" class="md-hue-3">
-                <div class="md-toolbar-tools">
-                    <span>Rooms</span>
-                </div>
-            </md-toolbar>*@
-
-                    <md-content>
-
-                        <md-list>
-                            <md-subheader class="md-no-sticky">No. of available rooms: {{availableRooms.length}}</md-subheader>
-                            <md-list-item class="md-3-line" ng-repeat="room in availableRooms" ng-click="createProjectedBooking(room)">
-                                <img ng-src="{{room.image}}" class="md-avatar"  />
-                                <div class="md-list-item-text" layout="column">
-                                    <h3>{{ room.RoomName }}</h3>
-                                    <p>
-                                        Sitting:{{ room.Sitting }},
-                                        Projector:  {{room.Projector}},
-                                        VideoConferencing:  {{room.VideoConferencing_}},
-                                        MonitorScreen:  {{room.MonitorScreen}}
-                                        @*<md-button class="md-warn md-raised md-hue-2" ng-click="createProjectedBooking(room)" >Book</md-button>*@
-                                    </p>
-
-                                </div>
-                            </md-list-item>
-
-
-                        </md-list>
-                    </md-content>
-
-                </div>
-                <div flex-gt-sm="60" flex ng-cloak ng-show="projectedBooking">
-
-                    @*<md-toolbar layout="row" class="md-hue-3">
-                <div class="md-toolbar-tools">
-                    <span>Locations</span>
-                </div>
-            </md-toolbar>*@
-
-                    <md-content>
-                        <md-button class="md-raised"  ng-click="backToRoomList()">< Back</md-button>
-                            <md-progress-circular ng-disabled="!bookingActivated || bookingDone" ng-hide="!bookingActivated || bookingDone" class="md-accent md-hue-1" md-diameter="60"></md-progress-circular>
-                            <div class="successStatus" ng-show="bookingDone">
-                                <md-icon md-svg-src="~/Content/img/done.svg" class="s48" aria-label="Cart"></md-icon>
-                                <h4>Booking Done</h4>
-                            </div>
-                        <div layout-gt-sm="row" layout="column" style="padding-left:5px;padding-top: 15px;" ng-hide="bookingActivated || bookingDone">
-                            <div>
-                                <img ng-src="{{projectedBooking.RoomImage}}" style="margin-top: 15px"  />
-                            </div>
-                            <div style="    padding-left: 15px;">
-                                <div layout-gt-sm="row" layout="column">
-                                    <h4 style="    font-size: 26px;">{{projectedBooking.RoomName}}</h4>
-                                    <h6 style="margin-top: 20px; margin-left:5px"> ({{projectedBooking.Location.Name}},{{projectedBooking.Location.Country}}) </h6>
-                                </div>
-                              
-
-                                <div layout-gt-sm="row" layout="column" font-size: 15px;>
-                                    <table>
-                                        <tr>
-                                            
-                                            
-                                            <td><md-icon style="    margin-top: 5px;" ng-show="projectedBooking.MonitorScreen" md-svg-src="~/Content/img/monitor.svg" class="s48" aria-label="Cart"></md-icon></td>
-                                            <td><md-icon ng-show="projectedBooking.Projector" md-svg-src="~/Content/img/projector.svg" class="s48" aria-label="Cart"></md-icon></td>
-                                            <td><md-icon style="    filter: invert(48%);"  ng-show="projectedBooking.VideoConferencing" md-svg-src="~/Content/img/videoconferencing.svg" class="s48" aria-label="Cart"></md-icon></td>
-                                            <td><md-icon md-svg-src="~/Content/img/sittings.svg" class="s48" aria-label="Cart"></md-icon></td>
-                                            <td><div style="font-size:15px">[{{projectedBooking.Sitting}}]</div></td>
-                                        </tr>
-                                            </table>
-                                </div>
-                                <md-divider></md-divider>
-                                <h6>Date: {{projectedBooking.Date}}</h6>
-                                <h6>Time: {{projectedBooking.StartTime}}-{{projectedBooking.EndTime}}</h6>
-                                <md-button class="md-warn md-raised md-hue-2" ng-hide="bookingDone" ng-disabled="bookingActivated" ng-click="confirmBooking()">Confirm Booking</md-button>
-                            </div>
-                        </div>
-                        
-                    </md-content>
-                </div>
             </div>
-
-        </md-content>
-    </md-tab>
-    <md-tab label="Manage">
-        <div layout-gt-sm="row" layout="column">
-            <div flex-gt-sm="33" flex ng-cloak>
-
-                <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
-                        <span>Locations</span>
-                    </div>
-                </md-toolbar>
-
-                <md-content>
-                    <md-list flex>
-                        <md-subheader class="md-no-sticky">{{locations.length}} locations are available</md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected(loc)">
-                            @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
-                            <div class="md-list-item-text" layout="column">
-                                <h3>{{ loc.Name }}</h3>
-                                <h4>Country: {{loc.Country}}</h4>
-                                <p></p>
-                            </div>
-                        </md-list-item>
-                        <md-divider></md-divider>
-                    </md-list>
-                </md-content>
-            </div>
-            <md-divider></md-divider>
-            <div flex-gt-sm="33" flex ng-show="isShowRooms()">
-                <md-toolbar layout="row" class="md-hue-3">
+        </md-card-content>
+    </md-card>
+    <div layout-gt-sm="row" layout="column">
+        <div ng-show="noroom" style="font-size:22px;     margin: 10px; font-family: 'Titillium Web', sans-serif;">No room available with this critaria.</div>
+        <div flex-gt-sm="100" flex ng-show="showRooms && !projectedBooking" ng-cloak>
+            @*<md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
                         <span>Rooms</span>
                     </div>
-                </md-toolbar>
+                </md-toolbar>*@
 
-                <md-content>
+            <md-content>
 
-                    <md-list>
-                        <md-subheader class="md-no-sticky">{{rooms.length}} locations are available</md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="room in rooms" ng-click="null">
-                            @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
-                            <div class="md-list-item-text" layout="column">
-                                <h3>{{ room.RoomName }}</h3>
-                                <p>
-                                    Sitting:{{ room.Sitting }},
-                                    Projector:  {{room.Projector}},
-                                    VideoConferencing:  {{room.VideoConferencing_}},
-                                    MonitorScreen:  {{room.MonitorScreen}}
-                                </p>
-                            </div>
-                        </md-list-item>
-                        <md-divider></md-divider>
-                    </md-list>
-                </md-content>
+                <md-list>
+                    <md-subheader class="md-no-sticky">No. of available rooms: {{availableRooms.length}}</md-subheader>
+                    <md-list-item class="md-3-line" ng-repeat="room in availableRooms" ng-click="createProjectedBooking(room)">
+                        <img ng-src="{{room.image}}" class="md-avatar" />
+                        <div class="md-list-item-text" layout="column">
+                            <h3>{{ room.RoomName }}</h3>
+                            <p>
+                                Sitting:{{ room.Sitting }},
+                                Projector:  {{room.Projector}},
+                                VideoConferencing:  {{room.VideoConferencing_}},
+                                MonitorScreen:  {{room.MonitorScreen}}
+                                @*<md-button class="md-warn md-raised md-hue-2" ng-click="createProjectedBooking(room)" >Book</md-button>*@
+                            </p>
 
-            </div>
-            <md-divider></md-divider>
-            <div flex-gt-sm="33" flex ng-show="isShowBookings()">
-                <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
-                        <span>Bookings</span>
-                    </div>
-                </md-toolbar>
+                        </div>
+                    </md-list-item>
 
-                <md-content>
 
-                    <md-list class="md-dense">
-                        <md-subheader class="md-no-sticky">{{locations.length}} locations are available</md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected(loc)">
-                            @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
-                            <div class="md-list-item-text" layout="column">
-                                <h3>{{ loc.Name }}</h3>
-                                <h4>Country: {{loc.Country}}</h4>
-                                <p></p>
-                            </div>
-                        </md-list-item>
-                        <md-divider></md-divider>
-                    </md-list>
-                </md-content>
+                </md-list>
+            </md-content>
 
-            </div>
         </div>
-    </md-tab>
-</md-tabs>
+        <div flex-gt-sm="100" flex ng-cloak ng-show="projectedBooking">
+
+            @*<md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Locations</span>
+                    </div>
+                </md-toolbar>*@
+
+            <md-content>
+                <md-button class="md-raised" ng-click="backToRoomList()">< Back</md-button>
+                <md-progress-circular ng-disabled="!bookingActivated || bookingDone" ng-hide="!bookingActivated || bookingDone" class="md-accent md-hue-1" md-diameter="60"></md-progress-circular>
+                <div class="successStatus" ng-show="bookingDone">
+                    <md-icon style="    margin-left: 50px;
+    margin-top: 50px;
+    width: 75px;
+    height: 75px;" md-svg-src="~/Content/img/done.svg" class="s48" aria-label="Cart"></md-icon>
+                    <h4 style="
+    margin-left: 30px;">
+                        Booking Done
+                    </h4>
+                </div>
+                <div layout-gt-sm="row" layout="column" style="padding-left:5px;padding-top: 15px;" ng-hide="bookingActivated || bookingDone">
+                    <div>
+                        <img ng-src="{{projectedBooking.RoomImage}}" style="margin-top: 15px" />
+                    </div>
+                    <div style="    padding-left: 15px;">
+                        <div layout-gt-sm="row" layout="column">
+                            <h4 style="    font-size: 26px;">{{projectedBooking.RoomName}}</h4>
+                            <h6 style="margin-top: 20px; margin-left:5px"> ({{projectedBooking.Location.Name}},{{projectedBooking.Location.Country}}) </h6>
+                        </div>
+
+
+                        <div layout-gt-sm="row" layout="column" font-size: 15px;>
+                            <table>
+                                <tr>
+
+
+                                    <td><md-icon style="    margin-top: 5px;" ng-show="projectedBooking.MonitorScreen" md-svg-src="~/Content/img/monitor.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                    <td><md-icon ng-show="projectedBooking.Projector" md-svg-src="~/Content/img/projector.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                    <td><md-icon style="    filter: invert(48%);" ng-show="projectedBooking.VideoConferencing" md-svg-src="~/Content/img/videoconferencing.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                    <td><md-icon md-svg-src="~/Content/img/sittings.svg" class="s48" aria-label="Cart"></md-icon></td>
+                                    <td><div style="font-size:15px">[{{projectedBooking.Sitting}}]</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <md-divider></md-divider>
+                        <h6>Date: {{projectedBooking.Date}}</h6>
+                        <h6>Time: {{projectedBooking.StartTime}}-{{projectedBooking.EndTime}}</h6>
+                        <md-button class="md-warn md-raised md-hue-2" ng-hide="bookingDone" ng-disabled="bookingActivated" ng-click="confirmBooking()">Confirm Booking</md-button>
+                    </div>
+                </div>
+
+            </md-content>
+        </div>
+    </div>
+
+</md-content>

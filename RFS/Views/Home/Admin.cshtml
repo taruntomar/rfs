@@ -1,0 +1,192 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+    <md-tabs md-dynamic-height md-border-bottom>
+
+        <md-tab label="Users">
+            <div layout-gt-sm="row" layout="column">
+                <div flex-gt-sm="33" flex ng-cloak>
+
+
+                    <md-content style="overflow: hidden;">
+                        <md-list class="md-dense" flex>
+                            <md-subheader class="md-no-sticky" style="height: 80px; padding:0px;
+   ">
+                                <div md-theme="docs-dark" layout-gt-sm="row" layout-padding style=" padding-top:20px;     box-shadow: inset 0 0 7px 1px silver;   height:80px">
+                                    <div flex-gt-sm="60" flex ng-cloak style="padding: 0px; ">
+                                        <md-input-container style="      width: -webkit-fill-available;
+    height: 80px;
+    padding: 0px;
+    margin: 0px">
+                                            <label>Search</label>
+                                            <input ng-model="user.title">
+                                        </md-input-container>
+                                    </div>
+                                    <div flex-gt-sm="45" layout-gt-sm="row" ng-cloak style="padding: 0px;">
+                                        <md-button style="margin-left: 4px;" class="md-raised  toolbarbutton">Find</md-button>
+                                        <md-button style="    margin-left: 4px;" class="md-raised toolbarbutton">+</md-button><md-button style="    margin-left: 4px;
+    margin-right: 4px;" class="md-raised  toolbarbutton">-</md-button>
+                                    </div>
+
+                                </div>
+                                
+                            </md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="userSelected(user)">
+                                @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{ user.email }}</h3>
+                                    @*<h4>Country: {{user.email}}</h4>*@
+                                    <p></p>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list>
+                    </md-content>
+                </div>
+                <md-divider></md-divider>
+                <div flex-gt-sm="33" flex ng-show="isShowRooms()">
+                    <md-toolbar layout="row" class="md-hue-3">
+                        <div class="md-toolbar-tools">
+                            <span>Rooms</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-content>
+
+                        <md-list>
+                            <md-subheader class="md-no-sticky">{{rooms.length}} locations are available</md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="room in rooms" ng-click="null">
+                                @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{ room.RoomName }}</h3>
+                                    <p>
+                                        Sitting:{{ room.Sitting }},
+                                        Projector:  {{room.Projector}},
+                                        VideoConferencing:  {{room.VideoConferencing_}},
+                                        MonitorScreen:  {{room.MonitorScreen}}
+                                    </p>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list>
+                    </md-content>
+
+                </div>
+                <md-divider></md-divider>
+                <div flex-gt-sm="33" flex ng-show="isShowBookings()">
+                    <md-toolbar layout="row" class="md-hue-3">
+                        <div class="md-toolbar-tools">
+                            <span>Bookings</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-content>
+
+                        <md-list class="md-dense">
+                            <md-subheader class="md-no-sticky">{{locations.length}} locations are available</md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected(loc)">
+                                @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{ loc.Name }}</h3>
+                                    <h4>Country: {{loc.Country}}</h4>
+                                    <p></p>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list>
+                    </md-content>
+
+                </div>
+            </div>
+        </md-tab>
+        <md-tab label="Locations/Rooms">
+            <div layout-gt-sm="row" layout="column">
+                <div flex-gt-sm="33" flex ng-cloak>
+
+                    <md-toolbar layout="row" class="md-hue-3">
+                        <div class="md-toolbar-tools">
+                            <span>Locations</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-content>
+                        <md-list flex>
+                            <md-subheader class="md-no-sticky">{{locations.length}} locations are available</md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected(loc)">
+                                @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{ loc.Name }}</h3>
+                                    <h4>Country: {{loc.Country}}</h4>
+                                    <p></p>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list>
+                    </md-content>
+                </div>
+                <md-divider></md-divider>
+                <div flex-gt-sm="33" flex ng-show="isShowRooms()">
+                    <md-toolbar layout="row" class="md-hue-3">
+                        <div class="md-toolbar-tools">
+                            <span>Rooms</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-content>
+
+                        <md-list>
+                            <md-subheader class="md-no-sticky">{{rooms.length}} locations are available</md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="room in rooms" ng-click="null">
+                                @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{ room.RoomName }}</h3>
+                                    <p>
+                                        Sitting:{{ room.Sitting }},
+                                        Projector:  {{room.Projector}},
+                                        VideoConferencing:  {{room.VideoConferencing_}},
+                                        MonitorScreen:  {{room.MonitorScreen}}
+                                    </p>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list>
+                    </md-content>
+
+                </div>
+                <md-divider></md-divider>
+                <div flex-gt-sm="33" flex ng-show="isShowBookings()">
+                    <md-toolbar layout="row" class="md-hue-3">
+                        <div class="md-toolbar-tools">
+                            <span>Bookings</span>
+                        </div>
+                    </md-toolbar>
+
+                    <md-content>
+
+                        <md-list class="md-dense">
+                            <md-subheader class="md-no-sticky">{{locations.length}} locations are available</md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected(loc)">
+                                @*<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />*@
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{ loc.Name }}</h3>
+                                    <h4>Country: {{loc.Country}}</h4>
+                                    <p></p>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list>
+                    </md-content>
+
+                </div>
+            </div>
+        </md-tab>
+        <md-tab label="Statistics">
+
+        </md-tab>
+        <md-tab label="Settings">
+
+        </md-tab>
+    </md-tabs>

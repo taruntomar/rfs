@@ -40,6 +40,7 @@ namespace RFS
         }
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IUserManager>().To<UserManager>();
             kernel.Bind<IRoomManager>().To<RoomManager>();
             kernel.Bind<ILocationManager>().To<LocationManager>();
             kernel.Bind<IBookingManager>().To<BookingManager>();

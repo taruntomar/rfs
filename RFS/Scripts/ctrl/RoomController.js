@@ -16,6 +16,11 @@ myApp.config(function ($routeProvider) {
         })
        
 });
+myApp.config(function ($mdIconProvider) {
+    $mdIconProvider
+        .iconSet("call", '/Content/img/done.svg', 24)
+        .iconSet("social", '/Content/img/done.svg', 24);
+});
 
 myApp.rmshost = "http://localhost:64486";
 myApp.directive('mdInputContainer', function ($timeout) {
@@ -87,6 +92,25 @@ myApp.directive('mdInputContainer', function ($timeout) {
 
             
         };
+        $scope.FetchRoomList = function () {
+
+            $scope.selectedstime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
+            $scope.selectedetime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.endTime;;
+            $http.get(myApp.rmshost + '/api/location/' + $scope.selectedLoc.Id + '/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
+                then(function (response) {
+                    $scope.availableRooms = response.data;
+                    if (response.data.length > 0) {
+                        $("#findbutton").html("Reset");
+                        $scope.showRooms = true;
+                        $scope.noroom = false;
+                    } else {
+                        $scope.noroom = true;
+                        
+                    }
+
+                });
+
+        };
     $scope.findRooms = function () {
         // DISABLE ALL CONTROLLS
         
@@ -98,20 +122,11 @@ myApp.directive('mdInputContainer', function ($timeout) {
 
         } else {
 
-            $scope.selectedstime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
-            $scope.selectedetime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.endTime;;
-            $http.get(myApp.rmshost + '/api/location/' + $scope.selectedLoc.Id + '/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
-                then(function (response) {
-                    $scope.availableRooms = response.data;
-                    if (response.data.length>0)
-                    $("#findbutton").html("Reset");
-                });
-
-            $scope.showRooms = true;
-            
+            $scope.FetchRoomList();
+           
         }
     };
-
+    $scope.noroom = false;
     $scope.isShowRooms = function () {
         if ($scope.rooms.length >= 1) {
             return true;
@@ -147,14 +162,14 @@ myApp.directive('mdInputContainer', function ($timeout) {
                 $scope.rooms = response.data;
                 $scope.bookingActivated = false;
                 $scope.bookingDone = true;
-                $scope.findRooms();
+                
             });
         };
 
         $scope.backToRoomList = function () {
-
-            $scope.projectedBooking = false;
             $scope.bookingDone = false;
+            $scope.projectedBooking = false;
+            $scope.FetchRoomList();
             
         };
 
@@ -227,6 +242,19 @@ myApp.controller('mybookingsCtrl', ['$scope','$mdDialog', '$http', function ($sc
 
 myApp.controller('adminCtrl', ['$scope', '$http', function ($scope, $http) {
 
+    $scope.users = [];
+    $scope.getListOfUsers = function () {
+        $http.get(myApp.rmshost + '/api/user').
+            then(function (response) {
+                $scope.users = response.data;
+            }, function (response) {
+                if (response.status === 401) {
+                    $window.location.href = "/";
+                }
+            });
+    };
+    $scope.getListOfUsers();
+
 }]);
 myApp.controller('IdentityController', ['$window', '$scope', '$http', function ($window,$scope, $http) {
 
@@ -258,5 +286,39 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', function (
 
     };
 
+
+}]);
+
+myApp.controller('NavigationController', ['$window', '$scope', '$http', function ($window, $parentscope, $http, $mdDialog) {
+
+    var originatorEv;
+
+    $parentscope.openMenu = function ($mdMenu, ev) {
+        originatorEv = ev;
+        $mdMenu.open(ev);
+    };
+
+    $parentscope.notificationsEnabled = true;
+    $parentscope.toggleNotifications = function () {
+        $parentscope.notificationsEnabled = !$parentscope.notificationsEnabled;
+    };
+
+    $parentscope.redial = function () {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .targetEvent(originatorEv)
+                .clickOutsideToClose(true)
+                .parent('body')
+                .title('Suddenly, a redial')
+                .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
+                .ok('That was easy')
+        );
+
+        originatorEv = null;
+    };
+
+    $parentscope.checkVoicemail = function () {
+        // This never happens.
+    };
 
 }]);

@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - Resideo Facility</title>
     <style>
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
     <link href="~/_frameworks/bootstrap-datetimepicker-4.17.45/bootstrap-datetimepicker.min.js" rel="stylesheet" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
@@ -26,8 +27,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
     <script src="~/_frameworks/bootstrap-4.2.1/js/bootstrap.min.js"></script>
 </head>
-<body style="    background: scroll;"  >
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body ng-app="ResideoApp"  style="    background: scroll;"  >
+    
+    <div  ng-controller="NavigationController" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -50,19 +52,51 @@
                     <li>@Html.ActionLink("Security", "Security", "Security")</li>
                     <li></li>
                 </ul>
-                <ul class="nav navbar-nav" style="    float: right;
-    margin-top: 15px;">
+                <ul class="nav navbar-nav" style="    float: right; margin-top:7px;
+    ">
                     <li>
-                        Welcome @ViewBag.username
+                        <md-menu>
+                            <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdMenu, $event)">
+                                <md-icon md-menu-origin md-svg-icon="/Content/img/user.svg"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button ng-click="ctrl.redial($event)">
+                                        @*<md-icon md-svg-icon="/Content/img/done.svg" md-menu-align-target></md-icon>
+                @ViewBag.username*@
+                                    </md-button>
+                                </md-menu-item>
+
+                                <md-menu-item>
+                                    <md-button ng-click="ctrl.checkVoicemail()" ng-href="/#!/mybookings">
+                                        <md-icon md-svg-icon="/Content/img/bookings.svg" md-menu-align-target></md-icon>
+                                        @*<a class="md-primary md-raised" style="display: contents;" href="">*@
+                                            My Bookings
+                                        </a>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="ctrl.redial($event)">
+                                        <md-icon md-svg-icon="/Content/img/myprofile.svg" md-menu-align-target></md-icon>
+                                        @ViewBag.username
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-menu-item>
+                                    <md-button class="md-hue"  href="Home/Logout">
+                                        @*<md-icon md-svg-icon="/Content/img/done.svg"></md-icon>*@
+                                        Logout
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
 
                     </li>
-                    <li><a style="display: contents;" href="/#!/mybookings">
-    <md-button style="
-   " class=" mybookingbutton md-raised md-primary">My Bookings</md-button>
-</a> </li>
+                    <li> </li>
                     <li>
                         <form>
-                            <a  class="md-primary md-raised btn-logout" href="Home/Logout">Logout</a>
+                           
                         </form>
                     </li>
                 </ul>

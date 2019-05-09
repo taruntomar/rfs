@@ -1,4 +1,19 @@
-﻿.mybookingbutton {
+﻿    
+.md-subheader .md-subheader-inner {
+    display: block;
+    padding: 0px !important;
+}
+.toolbarbutton {
+    min-width: 30px;
+    min-height: 30px;
+    width: 70px;
+    height: 30px;
+    max-width: 70px;
+    max-height: 30px;
+    margin:0px;
+}
+
+.mybookingbutton {
     background-color: darkred;
     color: white;
     margin: 5px;
