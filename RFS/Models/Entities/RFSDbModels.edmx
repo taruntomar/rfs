@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="rfsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="rfsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Booking">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,6 +15,8 @@
           <Property Name="endtime" Type="datetime" Nullable="false" />
           <Property Name="createdOn" Type="datetime" />
           <Property Name="createdBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="isCancelled" Type="bit" />
+          <Property Name="CancelledDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -58,6 +60,10 @@ warning 6002: The table/view 'rfs.dbo.users' does not have a primary key defined
           <Property Name="password" Type="text" Nullable="false" />
           <Property Name="salt" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="logincode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="location" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActivated" Type="bit" />
         </EntityType>
         <EntityContainer Name="rfsModelStoreContainer">
           <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
@@ -70,12 +76,15 @@ warning 6002: The table/view 'rfs.dbo.users' does not have a primary key defined
     [users].[email] AS [email], 
     [users].[password] AS [password], 
     [users].[salt] AS [salt], 
-    [users].[logincode] AS [logincode]
+    [users].[logincode] AS [logincode], 
+    [users].[Name] AS [Name], 
+    [users].[location] AS [location], 
+    [users].[phone] AS [phone], 
+    [users].[IsActivated] AS [IsActivated]
     FROM [dbo].[users] AS [users]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="rfsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -89,6 +98,8 @@ warning 6002: The table/view 'rfs.dbo.users' does not have a primary key defined
           <Property Name="endtime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="createdOn" Type="DateTime" Precision="3" />
           <Property Name="createdBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isCancelled" Type="Boolean" />
+          <Property Name="CancelledDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -130,6 +141,10 @@ warning 6002: The table/view 'rfs.dbo.users' does not have a primary key defined
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="salt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="logincode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActivated" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="rfsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bookings" EntityType="Self.Booking" />
@@ -147,6 +162,8 @@ warning 6002: The table/view 'rfs.dbo.users' does not have a primary key defined
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="rfsModel.Booking">
               <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="CancelledDate" ColumnName="CancelledDate" />
+                <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="starttime" ColumnName="starttime" />
@@ -190,6 +207,10 @@ warning 6002: The table/view 'rfs.dbo.users' does not have a primary key defined
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="rfsModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />

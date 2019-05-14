@@ -12,8 +12,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 namespace RFS.Controllers.ApiControllers
 {
-
-
     public class SignupController : ApiController
     {
         // GET api/<controller>

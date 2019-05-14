@@ -1,4 +1,5 @@
-﻿using RFS.Models.Entities;
+﻿using RFS.Models;
+using RFS.Models.Entities;
 using RoomManagement;
 using System;
 using System.Collections.Generic;
@@ -49,4 +50,36 @@ namespace RFS.Controllers
             _userManager.DeleteUser(id);
         }
     }
+    public class MeController : ApiController
+    {
+        IUserManager _userManager = null;
+        public MeController(IUserManager userManager)
+        {
+            _userManager = userManager;
+        }
+        // GET api/<controller>
+        public dynamic Get()
+        {
+            var username = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(username))
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            var user = _userManager.GetUserFromMailId(username);
+            return new {Name=user };
+                
+        }
+
+
+        // PUT api/<controller>/5
+        public void Put(string id, [FromBody]user user)
+        {
+            _userManager.UpdateUserProperties(id, user);
+        }
+
+        // DELETE api/<controller>/5
+        public void Delete(string id)
+        {
+            _userManager.DeleteUser(id);
+        }
+    }
+
 }

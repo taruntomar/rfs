@@ -1,4 +1,32 @@
-﻿    
+﻿.strikethrough {
+    position: relative;
+}
+
+    .strikethrough:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 50%;
+        right: 0;
+        border-top: 1px solid;
+        border-color: inherit;
+        -webkit-transform: rotate(-5deg);
+        -moz-transform: rotate(-5deg);
+        -ms-transform: rotate(-5deg);
+        -o-transform: rotate(-5deg);
+        transform: rotate(-5deg);
+    }
+
+#helplink:hover{
+    cursor:pointer;
+    color:black;
+}
+.headerlinka :hover {
+    color: white;
+}
+.headerlinka  {
+    color: white;
+}
 .md-subheader .md-subheader-inner {
     display: block;
     padding: 0px !important;
@@ -44,8 +72,8 @@ md-toolbar.md-default-theme.md-hue-3:not(.md-menu-toolbar), md-toolbar.md-hue-3:
 }
     .navbar-inverse {
     background-color: white;
-    border-color: #ce0202;
-    box-shadow: 1px 4px 0px #ce0202;
+    border-color: red;
+    box-shadow: 1px 4px 0px red;
 }
     .navbar-inverse .navbar-nav > li > a {
         color: black;

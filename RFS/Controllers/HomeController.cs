@@ -35,6 +35,14 @@ namespace RFS.Controllers
             return View();
         }
 
+        public ActionResult me()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+
         public ActionResult mybookings()
         {
             ViewBag.Message = "Your contact page.";

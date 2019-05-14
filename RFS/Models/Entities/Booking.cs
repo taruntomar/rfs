@@ -20,5 +20,7 @@ namespace RFS.Models.Entities
         public System.DateTime endtime { get; set; }
         public Nullable<System.DateTime> createdOn { get; set; }
         public string createdBy { get; set; }
+        public Nullable<bool> isCancelled { get; set; }
+        public Nullable<System.DateTime> CancelledDate { get; set; }
     }
 }

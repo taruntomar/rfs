@@ -61,6 +61,11 @@ namespace RoomManagement
             return user;
         }
 
+        public user GetUserFromMailId(string email)
+        {
+            return _dbContext.users.FirstOrDefault(x => x.email == email);
+        }
+
         public void UpdateUserProperties(string id, user user)
         {
             var loc = _dbContext.users.FirstOrDefault(x => x.Id == id);

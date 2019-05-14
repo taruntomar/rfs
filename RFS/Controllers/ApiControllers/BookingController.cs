@@ -2,10 +2,13 @@
 using RFS.Models.Entities;
 using RoomManagement;
 using RoomManagement.Entities;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -16,10 +19,12 @@ namespace RFS_API.Controllers
     {
         IBookingManager _bookingManager = null;
         IRoomManager _roomManager = null;
-        public BookingController(IBookingManager bookingManager,IRoomManager roomManager)
+        IUserManager _userManager = null;
+        public BookingController(IBookingManager bookingManager,IRoomManager roomManager, IUserManager userManager)
         {
             _bookingManager = bookingManager;
             _roomManager = roomManager;
+            _userManager = userManager;
         }
 
         [System.Web.Http.HttpGet]
@@ -32,7 +37,7 @@ namespace RFS_API.Controllers
 
            
             var bookings = _bookingManager.GetBookingDoneByUser(username);
-            var result = bookings.Select(x => new { Id = x.Id, Room = new { Id = x.RoomId, Name = _roomManager.GetRoomById(x.RoomId).RoomName }, Date = x.starttime.ToShortDateString(), StartTime = x.starttime.ToShortTimeString(), EndTime = x.endtime.ToShortTimeString(), BookedOn = x.createdOn });
+            var result = bookings.Select(x => new { Id = x.Id, isCancelled = x.isCancelled, Room = new { Id = x.RoomId,image = "Content\\img\\room.jpg", Name = _roomManager.GetRoomById(x.RoomId).RoomName }, Date = x.starttime.ToShortDateString(), StartTime = x.starttime.ToShortTimeString(), EndTime = x.endtime.ToShortTimeString(), BookedOn = x.createdOn });
             return result;
         }
         // GET api/<controller>
@@ -60,13 +65,29 @@ namespace RFS_API.Controllers
 
 
         // POST api/<controller>
-        public void Post([FromBody]Booking booking)
+        public async Task PostAsync([FromBody]Booking booking)
         {
             TApiAuth auth = new TApiAuth();
             booking.Id = Guid.NewGuid().ToString();
             booking.createdBy = auth.GetLoggedInUsername(Request);
             booking.createdOn = DateTime.UtcNow;
             _bookingManager.AddNewBooking(booking);
+            var room = _roomManager.GetRoomById(booking.RoomId);
+            var user = _userManager.GetUserFromMailId(booking.createdBy);
+            await SendEmailExecute(booking, room, user,"done");
+
+        }
+        async Task SendEmailExecute(Booking booking, Room room, user user, string message)
+        {
+            var apiKey = System.Configuration.ConfigurationManager.AppSettings["sendgridkey"];
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("india-facility@resideo.com", "Meeting Room Booking");
+            var subject = "Booking is "+ message + " for room \""+ room.RoomName+ "\"";
+            var to = new EmailAddress(user.email, user.Name);
+            var plainTextContent = "Room: "+room.RoomName+", "+booking.starttime+"-"+booking.endtime;
+            var htmlContent = "<a>Check on Facility Portal</a>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
         }
 
         // PUT api/<controller>/5
@@ -79,12 +100,19 @@ namespace RFS_API.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             if (IsAuth())
+            {
                 _bookingManager.DeleteBooking(id);
+                var booking = _bookingManager.GetBookingById(id);
+                var room = _roomManager.GetRoomById(booking.RoomId);
+                var user = _userManager.GetUserFromMailId(booking.createdBy);
+                await SendEmailExecute(booking, room, user, "cancelled");
+
+            }
             else
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
         }
     }

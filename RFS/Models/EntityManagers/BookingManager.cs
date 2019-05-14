@@ -33,7 +33,7 @@ namespace RoomManagement
             Booking booking = GetBookingById(id);
             if (booking != null)
             {
-                _dbContext.Bookings.Remove(booking);
+                booking.isCancelled = true;
                 _dbContext.SaveChanges();
             }
         }

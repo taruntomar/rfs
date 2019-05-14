@@ -19,5 +19,9 @@ namespace RFS.Models.Entities
         public string password { get; set; }
         public string salt { get; set; }
         public string logincode { get; set; }
+        public string Name { get; set; }
+        public string location { get; set; }
+        public string phone { get; set; }
+        public Nullable<bool> IsActivated { get; set; }
     }
 }

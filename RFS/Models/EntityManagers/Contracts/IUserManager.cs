@@ -11,5 +11,6 @@ namespace RoomManagement
         string AddNewUser(user roomName);
         void UpdateUserProperties(string id, user room);
         void DeleteUser(string id);
+        user GetUserFromMailId(string username);
     }
 }

@@ -1,4 +1,10 @@
 ﻿
+//$('.headerlink').click(function (e) {
+//    $('.headerlinka').css("color", "white");
+//    $(this).css("background-color", "red")
+    
+//});
+
 var myApp = angular.module('ResideoApp', ['ngMaterial', 'ngRoute']);
 myApp.config(function ($routeProvider) {
     $routeProvider
@@ -13,6 +19,9 @@ myApp.config(function ($routeProvider) {
         .when("/admin", {
             templateUrl: "/Home/admin",
             controller: "adminCtrl"
+        }).when("/me", {
+            templateUrl: "/Home/me",
+            controller: "meController"
         })
        
 });
@@ -320,5 +329,30 @@ myApp.controller('NavigationController', ['$window', '$scope', '$http', function
     $parentscope.checkVoicemail = function () {
         // This never happens.
     };
+
+}]);
+
+myApp.controller('meController', ['$window', '$scope', '$http', function ($window, $scope, $http) {
+
+    $scope.user = { Name: "" };
+    $scope.locations = [];
+    $scope.getMyProfile = function () {
+        $http.get(myApp.rmshost + '/api/me').
+            then(function (response) {
+                $scope.user = response.data;
+            }, function (response) {
+                if (response.status === 401) {
+                    $window.location.href = "/";
+                }
+            });
+    };
+    $scope.getMyProfile();
+    $scope.getAllLocations = function () {
+        $http.get(myApp.rmshost + '/api/Locations').
+            then(function (response) {
+                $scope.locations = response.data;
+            });
+    };
+    $scope.getAllLocations();
 
 }]);
