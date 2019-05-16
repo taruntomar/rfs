@@ -301,11 +301,20 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', function (
 myApp.controller('NavigationController', ['$window', '$scope', '$http', function ($window, $parentscope, $http, $mdDialog) {
 
     var originatorEv;
-
+    $parentscope.isAdmin = false;
     $parentscope.openMenu = function ($mdMenu, ev) {
         originatorEv = ev;
         $mdMenu.open(ev);
     };
+
+    $http.get(myApp.rmshost + '/api/isadmin').
+        then(function (response) {
+            $parentscope.isAdmin = response.data;
+        }, function (response) {
+            if (response.status === 401) {
+                $window.location.href = "/";
+            }
+        });
 
     $parentscope.notificationsEnabled = true;
     $parentscope.toggleNotifications = function () {
@@ -332,8 +341,14 @@ myApp.controller('NavigationController', ['$window', '$scope', '$http', function
 
 }]);
 
-myApp.controller('meController', ['$window', '$scope', '$http', function ($window, $scope, $http) {
+myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', function ($window, $scope, $http, $mdToast ) {
 
+    $scope.last = {
+        bottom: true,
+        top: false,
+        left: false,
+        right: true
+    };
     $scope.user = { Name: "" };
     $scope.locations = [];
     $scope.getMyProfile = function () {
@@ -346,6 +361,41 @@ myApp.controller('meController', ['$window', '$scope', '$http', function ($windo
                 }
             });
     };
+    $scope.toastPosition = angular.extend({}, $scope.last);
+    $scope.getToastPosition = function () {
+
+        return Object.keys($scope.toastPosition)
+            .filter(function (pos) {
+                return $scope.toastPosition[pos];
+            }).join(' ');
+    };
+
+    $scope.updateProfile = function () {
+       
+
+
+        $http.put(myApp.rmshost + '/api/me/' + $scope.user.Id, $scope.user).
+            then(function (response) {
+                var pinTo = $scope.getToastPosition();
+
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Profile Updated.')
+                        .position(pinTo)
+                        .hideDelay(3000))
+                    .then(function () {
+                        $log.log('user profile updated.');
+                    }).catch(function () {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            }, function (response) {
+                if (response.status === 401) {
+                    $window.location.href = "/";
+                }
+            });
+
+    };
+    
     $scope.getMyProfile();
     $scope.getAllLocations = function () {
         $http.get(myApp.rmshost + '/api/Locations').

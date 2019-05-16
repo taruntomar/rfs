@@ -65,7 +65,7 @@
                                         <md-menu-item>
                                             <md-button ng-click="ctrl.redial($event)">
                                                 @*<md-icon md-svg-icon="/Content/img/done.svg" md-menu-align-target></md-icon>
-                                            @ViewBag.username*@
+                @ViewBag.username*@
                                             </md-button>
                                         </md-menu-item>
 
@@ -81,6 +81,12 @@
                                             <md-button ng-click="ctrl.redial($event)" ng-href="/#!/me">
                                                 <md-icon md-svg-icon="/Content/img/myprofile.svg" md-menu-align-target></md-icon>
                                                 @ViewBag.username
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item ng-show="isAdmin">
+                                            <md-button ng-click="ctrl.redial($event)" ng-href="/#!/me">
+                                                <md-icon md-svg-icon="/Content/img/myprofile.svg" md-menu-align-target></md-icon>
+                                                Admin Control Center
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-divider></md-menu-divider>

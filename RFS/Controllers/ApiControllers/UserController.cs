@@ -64,15 +64,33 @@ namespace RFS.Controllers
             if (string.IsNullOrEmpty(username))
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             var user = _userManager.GetUserFromMailId(username);
-            return new {Name=user };
+            return new {Id =user.Id, Name=user.Name, Email = user.email, isAdmin = user.isAdmin, loc = new { Name = user.location }, Phone = user.phone, };
                 
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/isadmin")]
+        public bool IsAdmin()
+        {
+            var username = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(username))
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            var user = _userManager.GetUserFromMailId(username);
+            return user.isAdmin.HasValue && user.isAdmin.Value ? true : false;
+
         }
 
 
         // PUT api/<controller>/5
-        public void Put(string id, [FromBody]user user)
+        public void Put(string id, [FromBody]dynamic user)
         {
-            _userManager.UpdateUserProperties(id, user);
+            var usr = _userManager.GetUserById(id);
+            usr.Name = user.Name;
+            usr.phone = user.Phone;
+            usr.location = user.loc.Name;
+
+            _userManager.UpdateUserProperties(id, usr);
+
         }
 
         // DELETE api/<controller>/5

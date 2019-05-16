@@ -23,5 +23,6 @@ namespace RFS.Models.Entities
         public string location { get; set; }
         public string phone { get; set; }
         public Nullable<bool> IsActivated { get; set; }
+        public Nullable<bool> isAdmin { get; set; }
     }
 }
