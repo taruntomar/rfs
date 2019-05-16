@@ -20,13 +20,18 @@ namespace RFS.Controllers
         // GET api/<controller>
         public IEnumerable<user> Get()
         {
-            return _userManager.GetAllUsers();
+            return _userManager.GetAllUsers().Select<user,user>( (x,u) => { x.salt = ""; x.password = ""; x.logincode = ""; return x; });
         }
 
         // GET api/<controller>/5
         public user Get(string id)
         {
-            return _userManager.GetUserById(id);
+            var user=  _userManager.GetUserById(id);
+            user.logincode = "";
+            user.password = "";
+            user.salt = "";
+
+            return user;
         }
 
         // POST api/<controller>

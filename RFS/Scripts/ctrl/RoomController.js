@@ -250,7 +250,7 @@ myApp.controller('mybookingsCtrl', ['$scope','$mdDialog', '$http', function ($sc
 }]);
 
 myApp.controller('adminCtrl', ['$scope', '$http', function ($scope, $http) {
-
+    $scope.selectedUser = null;
     $scope.users = [];
     $scope.getListOfUsers = function () {
         $http.get(myApp.rmshost + '/api/user').
@@ -262,6 +262,19 @@ myApp.controller('adminCtrl', ['$scope', '$http', function ($scope, $http) {
                 }
             });
     };
+
+    $scope.userSelected = function (user) {
+
+        $http.get(myApp.rmshost + '/api/user/' + user.Id).
+            then(function (response) {
+                $scope.selectedUser = response.data;
+            }, function (response) {
+                if (response.status === 401) {
+                    $window.location.href = "/";
+                }
+            });
+    };
+
     $scope.getListOfUsers();
 
 }]);
