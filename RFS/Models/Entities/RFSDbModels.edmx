@@ -60,6 +60,8 @@
           <Property Name="phone" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActivated" Type="bit" />
           <Property Name="isAdmin" Type="bit" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="VerificationCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="rfsModelStoreContainer">
           <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
@@ -134,6 +136,8 @@
           <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActivated" Type="Boolean" />
           <Property Name="isAdmin" Type="Boolean" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="VerificationCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -189,6 +193,8 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="rfsModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
                 <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
                 <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
                 <ScalarProperty Name="phone" ColumnName="phone" />

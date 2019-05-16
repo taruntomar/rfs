@@ -139,14 +139,14 @@ namespace DataLayer
 
         }
 
-        public void RegisterUser(UserCredential c)
+        public void RegisterUser(dynamic c,string code)
         {
             // generate salt 
             string salt = Guid.NewGuid().ToString();
             // has password
-            string hashedPassword = GetHashedPassword(c.password, salt);
+            string hashedPassword = GetHashedPassword((string)c.password, salt);
 
-            string sql = "INSERT into users (Id,email,password,salt,logincode) VALUES (@Id,@email,@password,@salt,@logincode)";
+            string sql = "INSERT into users (Id,email,password,salt,logincode,Name,location,phone,IsActivated,isAdmin,IsVerified,VerificationCode) VALUES (@Id,@email,@password,@salt,@logincode,@Name,@location,@phone,@IsActivated,@isAdmin,@IsVerified,@VerificationCode)";
 
             SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
             SqlCommand command;
@@ -156,10 +156,17 @@ namespace DataLayer
                 sqlConnection.Open();
                 command = new SqlCommand(sql, sqlConnection);
                 command.Parameters.Add("@Id", SqlDbType.NVarChar, 50).Value = Guid.NewGuid().ToString();
-                command.Parameters.Add("@email", SqlDbType.NVarChar, 150).Value = c.username;
+                command.Parameters.Add("@email", SqlDbType.NVarChar, 150).Value =(string) c.email;
                 command.Parameters.Add("@password", SqlDbType.Text).Value = hashedPassword;
                 command.Parameters.Add("@salt", SqlDbType.NVarChar, 50).Value = salt;
                 command.Parameters.Add("@logincode", SqlDbType.NVarChar, 50).Value = "";
+                command.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = (string)c.name;
+                command.Parameters.Add("@location", SqlDbType.NVarChar, 50).Value = "Bangalore";
+                command.Parameters.Add("@phone", SqlDbType.NVarChar, 50).Value = (string)c.phone;
+                command.Parameters.Add("@IsActivated", SqlDbType.NVarChar, 50).Value = false;
+                command.Parameters.Add("@isAdmin", SqlDbType.NVarChar, 50).Value = false;
+                command.Parameters.Add("@IsVerified", SqlDbType.NVarChar, 50).Value = false;
+                command.Parameters.Add("@VerificationCode", SqlDbType.NVarChar, 50).Value = code;
                 command.ExecuteNonQuery();
                 command.Dispose();
                 sqlConnection.Close();

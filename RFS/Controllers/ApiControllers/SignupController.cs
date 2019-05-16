@@ -19,13 +19,15 @@ namespace RFS.Controllers.ApiControllers
     {
         // GET api/<controller>
         [System.Web.Http.HttpPost]
-        public HttpResponseMessage Signup([FromBody]UserCredential c)
+        public async Task<HttpResponseMessage> Signup([FromBody]dynamic userinfo)
         {
+           
             string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
             IdentityValidation idv = new IdentityValidation(connectionstring);
             var resp = new HttpResponseMessage();
+            UserCredential userCredential = new UserCredential() { username = userinfo.email, password = userinfo.password };
 
-            if (idv.UserExist(c))
+            if (idv.UserExist(userCredential))
             {
                 string error1 = "error: user already exist with same email id. Try resetting password.";
                 resp.StatusCode = System.Net.HttpStatusCode.NotModified;
@@ -33,13 +35,16 @@ namespace RFS.Controllers.ApiControllers
             }
             else
             {
+                //generating code for verification of email id 
+                string code = Guid.NewGuid().ToString();
+
                 // reegister user
-                idv.RegisterUser(c);
+                idv.RegisterUser(userinfo,code);
 
                 resp.StatusCode = System.Net.HttpStatusCode.OK;
                 resp.ReasonPhrase = "User successfully created.";
-                string code = Guid.NewGuid().ToString();
-                SendAccountVerificationEmail(c.username,code);
+
+                await SendEmailExecute((string)userinfo.email, (string)userinfo.name, code);
             }
 
             // show message to check inbox for activation link.
@@ -53,9 +58,29 @@ namespace RFS.Controllers.ApiControllers
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("india-facility@resideo.com","Resideo India Operation");
             var subject = "Verify your account";
-            var to = new EmailAddress(email, email);
-            var plainTextContent = "";
+            var to = new EmailAddress(email, "asdfasdf");
+            var plainTextContent = "rewt";
             var htmlContent = "<div>Click on given link or Goto portal > user > my profile > verify account and enter the code: "+code+"</div><a href=\"http://localhost:64486/Identity/acticationcode="+ code + "\">Verify Account</a>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        async Task SendEmailExecute(string email, string name, string code)
+        {
+            var apiKey = System.Configuration.ConfigurationManager.AppSettings["sendgridkey"];
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("india-facility@resideo.com", "Meeting Room Booking");
+            var subject = "Verify your account";
+            var to = new EmailAddress(email, name);
+            var plainTextContent = "Room: " + "asdfasdf" + ", " + "asdfasdf" + "-" + "asdfasdf";
+            var htmlContent = "Verification Code: "+code +"<br/><a>Check on Facility Portal</a>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
         }

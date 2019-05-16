@@ -278,13 +278,22 @@ myApp.controller('adminCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.getListOfUsers();
 
 }]);
-myApp.controller('IdentityController', ['$window', '$scope', '$http', function ($window,$scope, $http) {
+myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast', function ($window, $scope, $http,$mdToast) {
+    $scope.signupStart = false;
+    $scope.signupSucces = false;
+    $scope.user = {
+        email: "",
+        name: "",
+        phone: "",
+        password: "",
+        checkpassword:""
+    };
 
    
     $scope.login = function () {
         let credentials = {
-            username: $scope.username,
-            password: $scope.password
+            username: $scope.user.email,
+            password: $scope.user.password
         };
         $http.post('/api/Login', credentials ).
             then(function (response) {
@@ -294,15 +303,18 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', function (
                 }
             });        
     };
-
+    $scope.sleep = function(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     $scope.signup = function () {
-        let userdata = {
-            username: $scope.username,
-            password: $scope.password
-        };
-        $http.post('/api/Signup', userdata).
+        $scope.signupStart = true;
+        $http.post('/api/Signup', $scope.user).
             then(function (response) {
-                $scope.locations = response.data;
+                $scope.signupStart = false;
+                $scope.signupSucces = true;
+                $scope.sleep(3000);
+                $scope.login();
+               
             });     
         
 
@@ -374,14 +386,7 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
                 }
             });
     };
-    $scope.toastPosition = angular.extend({}, $scope.last);
-    $scope.getToastPosition = function () {
-
-        return Object.keys($scope.toastPosition)
-            .filter(function (pos) {
-                return $scope.toastPosition[pos];
-            }).join(' ');
-    };
+ 
 
     $scope.updateProfile = function () {
        
@@ -389,17 +394,15 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
 
         $http.put(myApp.rmshost + '/api/me/' + $scope.user.Id, $scope.user).
             then(function (response) {
-                var pinTo = $scope.getToastPosition();
-
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent('Profile Updated.')
                         .position(pinTo)
                         .hideDelay(3000))
                     .then(function () {
-                        $log.log('user profile updated.');
+                        //$log.log('user profile updated.');
                     }).catch(function () {
-                        $log.log('Toast failed or was forced to close early by another toast.');
+                        //$log.log('Toast failed or was forced to close early by another toast.');
                     });
             }, function (response) {
                 if (response.status === 401) {

@@ -24,5 +24,7 @@ namespace RFS.Models.Entities
         public string phone { get; set; }
         public Nullable<bool> IsActivated { get; set; }
         public Nullable<bool> isAdmin { get; set; }
+        public Nullable<bool> IsVerified { get; set; }
+        public string VerificationCode { get; set; }
     }
 }
