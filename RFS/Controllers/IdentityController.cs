@@ -26,9 +26,21 @@ namespace RFS.Controllers
 
             return View("Signup", "~/Views/Shared/_SignupLayout.cshtml", null);
         }
-        
+        public ActionResult ResetPassword()
+        {
+            ViewBag.Message = "Your application description page.";
 
-    
+            return View("ResetPassword", "~/Views/Shared/_SignupLayout.cshtml", null);
+        }
+
+        public ActionResult ResetPasswordForm(string email, string code)
+        {
+
+            ViewBag.code = code;
+            ViewBag.email = email;
+            return View("ResetPasswordForm", "~/Views/Shared/_SignupLayout.cshtml", null);
+        }
+
     }
 
 

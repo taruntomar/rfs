@@ -26,5 +26,6 @@ namespace RFS.Models.Entities
         public Nullable<bool> isAdmin { get; set; }
         public Nullable<bool> IsVerified { get; set; }
         public string VerificationCode { get; set; }
+        public string passResetCode { get; set; }
     }
 }

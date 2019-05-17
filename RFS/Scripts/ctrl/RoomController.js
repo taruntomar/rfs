@@ -286,10 +286,37 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast'
         name: "",
         phone: "",
         password: "",
-        checkpassword:""
+        checkpassword: "",
+        code:""
     };
+    $scope.passwordResetDone = false;
+    $scope.sentResetLink = false;
+    $scope.passwordResetStart = false;
+    $scope.startSendingResetLink = false;
+    $scope.resetPassword = function () {
+        $scope.startSendingResetLink = true;
+        $http.get('/api/SendPasswordResetLink?email=' + encodeURIComponent( $scope.user.email)).
+            then(function (response) {
+                if (response.status === 200) {
+                    //password reset link sent successfully
+                    $scope.sentResetLink = true;
+                }
+            });        
 
-   
+
+    };
+    $scope.resetPasswordForUser = function () {
+        $scope.passwordResetStart = true;
+        $http.post('/api/ResetPassowrd', $scope.user).
+            then(function (response) {
+                if (response.status === 200) {
+                    $scope.passwordResetDone = true;
+                    $scope.sleep(6000);
+                    $window.location.href = '/';
+                }
+            });        
+
+    };
     $scope.login = function () {
         let credentials = {
             username: $scope.user.email,

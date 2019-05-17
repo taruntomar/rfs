@@ -97,6 +97,81 @@ namespace DataLayer
             return loginsuccessful;
         }
 
+        public void UpdatePassword(string email, string password)
+        {
+
+            
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command = null;
+            try
+            {
+                sqlConnection.Open();
+                string sql = "select * from users where email like '" + email + "'";
+
+                command = new SqlCommand(sql, sqlConnection);
+                SqlDataReader dataReader;
+                dataReader = command.ExecuteReader();
+                string salt = "";
+                while (dataReader.Read())
+                {
+                   salt = dataReader["salt"].ToString();
+                }
+                dataReader.Close();
+                string hashedPassword = GetHashedPassword((string)password, salt);
+                sql = "update users set password = '" + hashedPassword + "' where email like '" + email + "'";
+
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (command != null)
+                command.Dispose();
+            sqlConnection.Close();
+
+        }
+
+        public bool CheckPasswordResetCode(string email, string code)
+        {
+             bool loginsuccessful = false;
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command;
+            string sql = "select * from users where email like '" + email + "'";
+            SqlDataReader dataReader;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                dataReader = command.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    string passwordResetCode = dataReader["passResetCode"].ToString();
+
+
+                    if (passwordResetCode == code)
+                    {
+                        // password matched.
+                        loginsuccessful = true;
+                    }
+                    break;
+
+                }
+
+                dataReader.Close();
+                command.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return loginsuccessful;
+        }
+
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
             HashAlgorithm algorithm = new SHA256Managed();
@@ -137,6 +212,28 @@ namespace DataLayer
                 command.Dispose();
             sqlConnection.Close();
 
+        }
+
+        public void StorePasswordResetCode(string email, string passResetCode)
+        {
+            string sql = "update users set passResetCode = '" + passResetCode + "' where email like '" + email + "'";
+
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command = null;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (command != null)
+                command.Dispose();
+            sqlConnection.Close();
         }
 
         public void RegisterUser(dynamic c,string code)

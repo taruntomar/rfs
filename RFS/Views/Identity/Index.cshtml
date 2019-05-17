@@ -18,18 +18,18 @@
                     <div layout-gt-xs="column">
                         <md-input-container class="md-block" flex-gt-xs>
                             <label>Username</label>
-                            <input ng-model="username" md-no-float required type="email" ng-pattern="" >
+                            <input ng-model="user.email" md-no-float required type="email" ng-pattern="" >
                         </md-input-container>
 
                         <md-input-container>
                             <label>Password</label>
-                            <input ng-model="password" md-no-float type="password"  ng-required="true">
+                            <input ng-model="user.password" md-no-float type="password"  ng-required="true">
                         </md-input-container>
                         <md-button ng-click="login()" type="submit" style="    background-color: red;" class="md-raised md-primary">
                             Login
                         </md-button>
                         <br />
-                        <a href="/Identity/Signup">Not able to Login?</a>
+                        <a href="/Identity/ResetPassword">Not able to Login?</a>
                         <a href="/Identity/Signup">Signup</a>
                     </div>
                 </form>
