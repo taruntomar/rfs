@@ -62,10 +62,12 @@ namespace RFS.Models
             }
             else
             {
-
+                string error = "Invalid Credential";
+                resp.ReasonPhrase = error;
+                resp.StatusCode = System.Net.HttpStatusCode.Unauthorized;
             }
 
-            string error = "Invalid Credential";
+          
             return resp;
         }
         //Following me

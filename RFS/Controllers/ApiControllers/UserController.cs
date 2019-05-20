@@ -84,6 +84,17 @@ namespace RFS.Controllers
             return user.isAdmin.HasValue && user.isAdmin.Value ? true : false;
 
         }
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/isVerified")]
+        public bool isVerified()
+        {
+            var username = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(username))
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            var user = _userManager.GetUserFromMailId(username);
+            return user.IsVerified.HasValue && user.IsVerified.Value ? true : false;
+
+        }
 
 
         // PUT api/<controller>/5

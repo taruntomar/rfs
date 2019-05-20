@@ -3,7 +3,7 @@
 }
 
 
-<div  class="login-section" ng-app="ResideoApp" ng-controller="IdentityController" class="md-padding">
+<div ng-cloak  class="login-section" ng-app="ResideoApp" ng-controller="IdentityController" class="md-padding">
     <md-card ng-if="!signupSucces">
         <md-card-title>
             <md-card-title-text>
@@ -38,8 +38,11 @@
                         </md-input-container>
                         <md-input-container>
                             <label>Retype Password</label>
-                            <input ng-disabled="signupStart" type="password" ng-model="user.checkpassword" compare-to="user.password" required>
+                            <input  name="confirm_password" ng-disabled="signupStart" type="password" ng-model="user.checkpassword" compare-to="user.password" required>
                             <div class="hint">Just to verify that what you are typing is same what you are thinking.</div>
+                            <div ng-messages="userForm.confirm_password.$error" role="alert" class="form-errors first-name-error">
+                                <div ng-message="compareTo">Passwords do not match</div>
+                            </div>
                         </md-input-container>
                         <md-button    ng-disabled="signupStart"  type="submit" style="    background-color: red;" class="md-raised md-primary">
                             Signup

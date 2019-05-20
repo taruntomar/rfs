@@ -96,7 +96,31 @@ namespace DataLayer
             }
             return loginsuccessful;
         }
+        public void SetVerifyAccount(string email, string password)
+        {
 
+
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command = null;
+            try
+            {
+                sqlConnection.Open();
+                
+                string sql = "update users set IsVerified = 1 where email like '" + email + "'";
+
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (command != null)
+                command.Dispose();
+            sqlConnection.Close();
+
+        }
         public void UpdatePassword(string email, string password)
         {
 
@@ -172,6 +196,43 @@ namespace DataLayer
             return loginsuccessful;
         }
 
+        public bool CheckAccountVerificationCode(string email, string code)
+        {
+            bool loginsuccessful = false;
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command;
+            string sql = "select * from users where email like '" + email + "'";
+            SqlDataReader dataReader;
+            try
+            {
+                sqlConnection.Open();
+                command = new SqlCommand(sql, sqlConnection);
+                dataReader = command.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    string passwordResetCode = dataReader["VerificationCode"].ToString();
+
+
+                    if (passwordResetCode == code)
+                    {
+                        // password matched.
+                        loginsuccessful = true;
+                    }
+                    break;
+
+                }
+
+                dataReader.Close();
+                command.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return loginsuccessful;
+        }
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
             HashAlgorithm algorithm = new SHA256Managed();

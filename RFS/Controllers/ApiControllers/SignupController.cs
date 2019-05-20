@@ -17,11 +17,19 @@ namespace RFS.Controllers.ApiControllers
 {
     public class SignupController : ApiController
     {
+
+
+        private EmailComManager _emailComManager;
+        public SignupController()
+        {
+            
+        }
         // GET api/<controller>
         [System.Web.Http.HttpPost]
         public async Task<HttpResponseMessage> Signup([FromBody]dynamic userinfo)
         {
-           
+            var host = Request.RequestUri.Scheme + "://" + Request.RequestUri.Host + ":" + Request.RequestUri.Port;
+            _emailComManager = new EmailComManager(host);
             string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
             IdentityValidation idv = new IdentityValidation(connectionstring);
             var resp = new HttpResponseMessage();
@@ -44,7 +52,7 @@ namespace RFS.Controllers.ApiControllers
                 resp.StatusCode = System.Net.HttpStatusCode.OK;
                 resp.ReasonPhrase = "User successfully created.";
 
-                await SendEmailExecute((string)userinfo.email, (string)userinfo.name, code);
+                await _emailComManager.SendAccountVerificationLink((string)userinfo.email, (string)userinfo.name, code);
             }
 
             // show message to check inbox for activation link.
@@ -57,6 +65,8 @@ namespace RFS.Controllers.ApiControllers
         [System.Web.Http.Route("api/ResetPassowrd")]
         public async Task<HttpResponseMessage> ResetPassowrd([FromBody]dynamic userinfo)
         {
+            var host = Request.RequestUri.Scheme + "://" + Request.RequestUri.Host + ":" + Request.RequestUri.Port;
+            _emailComManager = new EmailComManager(host);
             // verify passcode with db and reset password
             string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
             IdentityValidation idv = new IdentityValidation(connectionstring);
@@ -74,11 +84,38 @@ namespace RFS.Controllers.ApiControllers
              resp.ReasonPhrase = "done.";
             return resp;
         }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("api/VerifyAccount")]
+        public async Task<HttpResponseMessage> VerifyAccount([FromBody]dynamic userinfo)
+        {
+            var host = Request.RequestUri.Scheme + "://" + Request.RequestUri.Host + ":" + Request.RequestUri.Port;
+            _emailComManager = new EmailComManager(host);
+            // verify passcode with db and reset password
+            string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
+            IdentityValidation idv = new IdentityValidation(connectionstring);
+            var resp = new HttpResponseMessage();
+            UserCredential userCredential = new UserCredential() { username = userinfo.email, password = userinfo.password };
 
+
+            if (idv.CheckAccountVerificationCode((string)userinfo.email, (string)userinfo.code))
+            {
+                //mark account as verified
+                idv.SetVerifyAccount((string)userinfo.email, (string)userinfo.password);
+                resp.StatusCode = System.Net.HttpStatusCode.OK;
+                resp.ReasonPhrase = "done.";
+                return resp;
+            }
+
+            resp.StatusCode = System.Net.HttpStatusCode.BadRequest;
+            resp.ReasonPhrase = "Code incorrect.";
+            return resp;
+        }
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("api/SendPasswordResetLink")]
         public async Task<HttpResponseMessage> SendPasswordResetLink(string email)
         {
+            var host = Request.RequestUri.Scheme + "://" + Request.RequestUri.Host + ":" + Request.RequestUri.Port;
+            _emailComManager = new EmailComManager(host);
             // generate code
             string passResetCode = Guid.NewGuid().ToString();
             
@@ -87,7 +124,7 @@ namespace RFS.Controllers.ApiControllers
             string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
             IdentityValidation idv = new IdentityValidation(connectionstring);
             idv.StorePasswordResetCode(email, passResetCode);
-            await SendPassowordResetLink((string)email, (string)"Dear User", passResetCode);
+            await _emailComManager.SendPassowordResetLink((string)email, (string)"Dear User", passResetCode);
             var resp = new HttpResponseMessage();
             resp.StatusCode = System.Net.HttpStatusCode.OK;
                 resp.ReasonPhrase = "password reset link has been send successfully.";
@@ -119,49 +156,6 @@ namespace RFS.Controllers.ApiControllers
 
 
         }
-        async Task SendAccountVerificationEmail(string email ,string code)
-        {
-            var apiKey = System.Configuration.ConfigurationManager.AppSettings["sendgridkey"];
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("india-facility@resideo.com","Resideo India Operation");
-            var subject = "Verify your account";
-            var to = new EmailAddress(email, "asdfasdf");
-            var plainTextContent = "rewt";
-            var htmlContent = "<div>Click on given link or Goto portal > user > my profile > verify account and enter the code: "+code+"</div><a href=\"http://localhost:64486/Identity/acticationcode="+ code + "\">Verify Account</a>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            try
-            {
-                var response = await client.SendEmailAsync(msg);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        async Task SendEmailExecute(string email, string name, string code)
-        {
-            var apiKey = System.Configuration.ConfigurationManager.AppSettings["sendgridkey"];
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("india-facility@resideo.com", "Meeting Room Booking");
-            var subject = "Verify your account";
-            var to = new EmailAddress(email, name);
-            var plainTextContent = "Room: " + "asdfasdf" + ", " + "asdfasdf" + "-" + "asdfasdf";
-            var htmlContent = "Verification Code: "+code +"<br/><a>Check on Facility Portal</a>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
-        }
-        async Task SendPassowordResetLink(string email, string name, string code)
-        {
-            var apiKey = System.Configuration.ConfigurationManager.AppSettings["sendgridkey"];
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("india-facility@resideo.com", "Meeting Room Booking");
-            var subject = "Password reset link";
-            var to = new EmailAddress(email, name);
-            var plainTextContent = "Room: " + "asdfasdf" + ", " + "asdfasdf" + "-" + "asdfasdf";
-            var htmlContent = "Password reset Code: " + code + "<br/><a href=\""+Request.RequestUri.Scheme+"://"+ Request.RequestUri.Host +":"+ Request.RequestUri.Port +"/Identity/ResetPasswordForm?email="+email+"&code=" +code+"\" >Click here</a> to reset your password.";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
-        }
+       
     }
 }

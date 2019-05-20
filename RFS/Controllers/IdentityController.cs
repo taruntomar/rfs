@@ -41,6 +41,14 @@ namespace RFS.Controllers
             return View("ResetPasswordForm", "~/Views/Shared/_SignupLayout.cshtml", null);
         }
 
+        public ActionResult VerifyAccount(string email, string code)
+        {
+
+            ViewBag.code = code;
+            ViewBag.email = email;
+            return View("VerifyAccount", "~/Views/Shared/_SignupLayout.cshtml", null);
+        }
+
     }
 
 

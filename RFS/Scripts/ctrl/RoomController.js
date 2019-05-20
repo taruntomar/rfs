@@ -1,10 +1,4 @@
 ﻿
-//$('.headerlink').click(function (e) {
-//    $('.headerlinka').css("color", "white");
-//    $(this).css("background-color", "red")
-    
-//});
-
 var myApp = angular.module('ResideoApp', ['ngMaterial', 'ngRoute']);
 myApp.config(function ($routeProvider) {
     $routeProvider
@@ -30,8 +24,33 @@ myApp.config(function ($mdIconProvider) {
         .iconSet("call", '/Content/img/done.svg', 24)
         .iconSet("social", '/Content/img/done.svg', 24);
 });
+function compareTo() {
 
-myApp.rmshost = "http://localhost:64486";
+    return {
+        require: "ngModel",
+        scope: {
+            compareTolValue: "=compareTo"
+        },
+        link: function (scope, element, attributes, ngModel) {
+
+            ngModel.$validators.compareTo = function (modelValue) {
+
+                return modelValue == scope.compareTolValue;
+            };
+
+            scope.$watch("compareTolValue", function () {
+                ngModel.$validate();
+            });
+        }
+    };
+}
+
+compareTo.$inject = [];
+myApp.directive('compareTo', compareTo);
+
+
+
+myApp.rmshost = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
 myApp.directive('mdInputContainer', function ($timeout) {
     return function ($scope, element) {
         var ua = navigator.userAgent;
@@ -278,6 +297,19 @@ myApp.controller('adminCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.getListOfUsers();
 
 }]);
+
+myApp.controller('AccountVerificationController', ['$window', '$scope', '$http', '$mdToast', function ($window, $scope, $http, $mdToast) {
+    $scope.verificationSucces = false;
+    $http.post('/api/VerifyAccount', $scope.user).
+        then(function (response) {
+            if (response.status === 200) {
+                $scope.verificationSucces = true;
+                $scope.sleep(6000);
+                $window.location.href = '/';
+            }
+        });        
+}]);
+
 myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast', function ($window, $scope, $http,$mdToast) {
     $scope.signupStart = false;
     $scope.signupSucces = false;
@@ -317,29 +349,42 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast'
             });        
 
     };
+    $scope.loginfailed = false;
+    $scope.loginStarted = false;
     $scope.login = function () {
         let credentials = {
             username: $scope.user.email,
             password: $scope.user.password
         };
+        $scope.loginStarted = true;
         $http.post('/api/Login', credentials ).
             then(function (response) {
                 if (response.status === 200) {
+                    $scope.loginStarted = false;
                     $window.location.href = '/';
 
+                } else {
+                    $scope.loginStarted = false;
+                    $scope.loginfailed = true;
                 }
-            });        
+            }, function (response) {
+            $scope.loginStarted = false;
+                $scope.loginfailed = true;}
+                );        
     };
     $scope.sleep = function(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
     $scope.signup = function () {
+        // check if there is no error
+        if (!($scope.user.password === $scope.user.checkpassword))
+            return;
         $scope.signupStart = true;
         $http.post('/api/Signup', $scope.user).
             then(function (response) {
                 $scope.signupStart = false;
                 $scope.signupSucces = true;
-                $scope.sleep(3000);
+                $scope.sleep(9000);
                 $scope.login();
                
             });     
@@ -349,6 +394,7 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast'
 
 
 }]);
+
 
 myApp.controller('NavigationController', ['$window', '$scope', '$http', function ($window, $parentscope, $http, $mdDialog) {
 
@@ -367,6 +413,16 @@ myApp.controller('NavigationController', ['$window', '$scope', '$http', function
                 $window.location.href = "/";
             }
         });
+    $parentscope.isVerified = false;
+    $http.get(myApp.rmshost + '/api/isVerified').
+        then(function (response) {
+            $parentscope.isVerified = response.data;
+        }, function (response) {
+            $(".overlay").toggle(); // show/hide the overlay
+        });
+   
+    if (!$parentscope.isVerified)
+        $(".overlay").toggle(); 
 
     $parentscope.notificationsEnabled = true;
     $parentscope.toggleNotifications = function () {
