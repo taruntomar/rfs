@@ -300,6 +300,17 @@ myApp.controller('adminCtrl', ['$scope', '$http', function ($scope, $http) {
 
 myApp.controller('AccountVerificationController', ['$window', '$scope', '$http', '$mdToast', function ($window, $scope, $http, $mdToast) {
     $scope.verificationSucces = false;
+    $scope.user = {
+        email: "",
+        name: "",
+        phone: "",
+        password: "",
+        checkpassword: "",
+        code: ""
+    };
+    $scope.sleep = function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     $http.post('/api/VerifyAccount', $scope.user).
         then(function (response) {
             if (response.status === 200) {
@@ -309,6 +320,7 @@ myApp.controller('AccountVerificationController', ['$window', '$scope', '$http',
             }
         });        
 }]);
+
 
 myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast', function ($window, $scope, $http,$mdToast) {
     $scope.signupStart = false;
@@ -413,16 +425,30 @@ myApp.controller('NavigationController', ['$window', '$scope', '$http', function
                 $window.location.href = "/";
             }
         });
+    $parentscope.ResetVerificationMail = false;
+    $parentscope.ResetVerificationMailStarted = false;
+    $parentscope.resendVerificationLink = function () {
+        $parentscope.ResetVerificationMailStarted = true;
+        $http.get(myApp.rmshost + '/api/SendVerificationMail').
+            then(function (response) {
+                $parentscope.ResetVerificationMail = true;
+                $parentscope.ResetVerificationMailStarted = false;
+            }, function (response) {
+            });
+
+    };
     $parentscope.isVerified = false;
     $http.get(myApp.rmshost + '/api/isVerified').
         then(function (response) {
             $parentscope.isVerified = response.data;
+            if (!$parentscope.isVerified) {
+                $(".overlay").toggle();
+            }
         }, function (response) {
             $(".overlay").toggle(); // show/hide the overlay
         });
    
-    if (!$parentscope.isVerified)
-        $(".overlay").toggle(); 
+   
 
     $parentscope.notificationsEnabled = true;
     $parentscope.toggleNotifications = function () {
@@ -505,3 +531,8 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
     $scope.getAllLocations();
 
 }]);
+
+$(document).ready(function () {
+    $('#body').show();
+    $('#msg').hide();
+});

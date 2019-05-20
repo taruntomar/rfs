@@ -1,6 +1,7 @@
 ﻿using DataLayer;
 using DataLayer.Models;
 using RFS.Models;
+using RoomManagement;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -17,12 +18,11 @@ namespace RFS.Controllers.ApiControllers
 {
     public class SignupController : ApiController
     {
-
-
+        private IUserManager _userManager;
         private EmailComManager _emailComManager;
-        public SignupController()
+        public SignupController(IUserManager userManager)
         {
-            
+            _userManager = userManager;
         }
         // GET api/<controller>
         [System.Web.Http.HttpPost]
@@ -109,6 +109,35 @@ namespace RFS.Controllers.ApiControllers
             resp.StatusCode = System.Net.HttpStatusCode.BadRequest;
             resp.ReasonPhrase = "Code incorrect.";
             return resp;
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/SendVerificationMail")]
+        public async Task<HttpResponseMessage> SendVerificationMail()
+        {
+            HttpResponseMessage response = Request.CreateResponse();
+            var email = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(email))
+            {
+                response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                return response;
+            }
+            else
+            {
+                //generating code for verification of email id 
+                string code = Guid.NewGuid().ToString();
+                var host = Request.RequestUri.Scheme + "://" + Request.RequestUri.Host + ":" + Request.RequestUri.Port;
+                _emailComManager = new EmailComManager(host);
+                string connectionstring = ConfigurationManager.AppSettings["dbconnectionstring"];
+                IdentityValidation idv = new IdentityValidation(connectionstring);
+                idv.UpdateAccountActivationCode(email,code);
+                var user = _userManager.GetUserFromMailId(email);
+                //user.VerificationCode = code;
+                //_userManager.UpdateUserProperties(user.Id, user);
+                await _emailComManager.SendAccountVerificationLink((string)email, (string)user.Name, code);
+                response.StatusCode = System.Net.HttpStatusCode.OK;
+                return response;
+            }
         }
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("api/SendPasswordResetLink")]

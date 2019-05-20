@@ -196,6 +196,29 @@ namespace DataLayer
             return loginsuccessful;
         }
 
+        public void UpdateAccountActivationCode(string email, string code)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_dbConnectionString);
+            SqlCommand command = null;
+            try
+            {
+                sqlConnection.Open();
+
+                string sql = "update users set VerificationCode = '"+code+"' where email like '" + email + "'";
+
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (command != null)
+                command.Dispose();
+            sqlConnection.Close();
+        }
+
         public bool CheckAccountVerificationCode(string email, string code)
         {
             bool loginsuccessful = false;
