@@ -89,7 +89,7 @@
                     </div>
                 </md-toolbar>*@
 
-            <md-content>
+            <md-content style="overflow: hidden;">
                 <md-button class="md-raised" ng-click="backToRoomList()">< Back</md-button>
                 <md-progress-circular ng-disabled="!bookingActivated || bookingDone" ng-hide="!bookingActivated || bookingDone" class="md-accent md-hue-1" md-diameter="60"></md-progress-circular>
                 <div class="successStatus" ng-show="bookingDone">

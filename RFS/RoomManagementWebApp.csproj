@@ -245,6 +245,7 @@
     <Content Include="Content\homepage.jpg" />
     <Content Include="Content\img\bookings.svg" />
     <Content Include="Content\img\cancelled.svg" />
+    <Content Include="Content\img\control-panel.svg" />
     <Content Include="Content\img\done.svg" />
     <Content Include="Content\img\ic_card_giftcard_24px.svg" />
     <Content Include="Content\img\ic_chevron_right_24px.svg" />

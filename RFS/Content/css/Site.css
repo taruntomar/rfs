@@ -1,4 +1,9 @@
-﻿.overlay {
+﻿#personalIcon :hover{
+    background-color:lightgray
+
+}
+
+.overlay {
     position: fixed;
     display: none;
     /* color with alpha channel */

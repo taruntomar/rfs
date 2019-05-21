@@ -20,11 +20,13 @@ namespace RFS_API.Controllers
         IBookingManager _bookingManager = null;
         IRoomManager _roomManager = null;
         IUserManager _userManager = null;
-        public BookingController(IBookingManager bookingManager,IRoomManager roomManager, IUserManager userManager)
+        ILocationManager _locationManager = null;
+        public BookingController(IBookingManager bookingManager,IRoomManager roomManager, IUserManager userManager,ILocationManager locationManager)
         {
             _bookingManager = bookingManager;
             _roomManager = roomManager;
             _userManager = userManager;
+            _locationManager = locationManager;
         }
 
         [System.Web.Http.HttpGet]
@@ -67,15 +69,24 @@ namespace RFS_API.Controllers
         // POST api/<controller>
         public async Task PostAsync([FromBody]Booking booking)
         {
-            TApiAuth auth = new TApiAuth();
-            booking.Id = Guid.NewGuid().ToString();
-            booking.createdBy = auth.GetLoggedInUsername(Request);
-            booking.createdOn = DateTime.UtcNow;
-            _bookingManager.AddNewBooking(booking);
-            var room = _roomManager.GetRoomById(booking.RoomId);
-            var user = _userManager.GetUserFromMailId(booking.createdBy);
-            await SendEmailExecute(booking, room, user,"done");
+            try
+            {
+                TApiAuth auth = new TApiAuth();
+                booking.Id = Guid.NewGuid().ToString();
+                booking.createdBy = auth.GetLoggedInUsername(Request);
+                booking.createdOn = DateTime.UtcNow;
+                _bookingManager.AddNewBooking(booking);
+                var room = _roomManager.GetRoomById(booking.RoomId);
+                var user = _userManager.GetUserFromMailId(booking.createdBy);
+                var loc = _locationManager.GetLocationById(room.location);
+                //await SendEmailExecute(booking, room, user,"done");
+                EmailComManager emailComManager = new EmailComManager("");
 
+                await emailComManager.SendRoomBookingCalenderInvite(user.email, user.Name, room.RoomName + "(" + loc.Name + ")", booking.starttime, booking.endtime);
+            }catch(Exception ex)
+            {
+
+            }
         }
         async Task SendEmailExecute(Booking booking, Room room, user user, string message)
         {
