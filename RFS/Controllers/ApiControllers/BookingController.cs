@@ -30,8 +30,8 @@ namespace RFS_API.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("api/me/bookings")]
-        public dynamic Get()
+        [System.Web.Http.Route("api/me/bookings/{timeframe}")]
+        public dynamic GetBookings(string timeframe)
         {
             var username = new TApiAuth().GetLoggedInUsername(Request);
             if(string.IsNullOrEmpty(username))
@@ -39,7 +39,9 @@ namespace RFS_API.Controllers
 
            
             var bookings = _bookingManager.GetBookingDoneByUser(username);
-            var result = bookings.Select(x => new { Id = x.Id, isCancelled = x.isCancelled, Room = new { Id = x.RoomId,image = "Content\\img\\room.jpg", Name = _roomManager.GetRoomById(x.RoomId).RoomName }, Date = x.starttime.ToShortDateString(), StartTime = x.starttime.ToShortTimeString(), EndTime = x.endtime.ToShortTimeString(), BookedOn = x.createdOn });
+            var compare = timeframe == "upcoming" ? 1 : -1;
+            var filter = bookings.Where(x => x.starttime.CompareTo(DateTime.UtcNow) == compare);
+            var result = filter.Select(x=> {return new { Id = x.Id, isCancelled = x.isCancelled, Room = new { Id = x.RoomId, image = "Content\\img\\room.jpg", Name = _roomManager.GetRoomById(x.RoomId).RoomName }, Date = x.starttime.ToShortDateString(), StartTime = x.starttime.ToShortTimeString(), EndTime = x.endtime.ToShortTimeString(), BookedOn = x.createdOn }; });
             return result;
         }
         // GET api/<controller>
@@ -80,7 +82,8 @@ namespace RFS_API.Controllers
                 var user = _userManager.GetUserFromMailId(booking.createdBy);
                 var loc = _locationManager.GetLocationById(room.location);
                 //await SendEmailExecute(booking, room, user,"done");
-                EmailComManager emailComManager = new EmailComManager("");
+                var host = Request.RequestUri.Scheme + "://" + Request.RequestUri.Host + ":" + Request.RequestUri.Port;
+                EmailComManager emailComManager = new EmailComManager(host);
 
                 await emailComManager.SendRoomBookingCalenderInvite(user.email, user.Name, room.RoomName + "(" + loc.Name + ")", booking.starttime, booking.endtime);
             }catch(Exception ex)

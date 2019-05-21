@@ -260,6 +260,7 @@
     <Content Include="Content\img\sittings.svg" />
     <Content Include="Content\img\user.svg" />
     <Content Include="Content\img\videoconferencing.svg" />
+    <Content Include="Content\templates\bookingConfirm.htm" />
     <Content Include="Content\templates\verification.htm" />
     <Content Include="Content\templates\reset-password.htm" />
     <Content Include="Models\Entities\RFSDbModels.Context.tt">

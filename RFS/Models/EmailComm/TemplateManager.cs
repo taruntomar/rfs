@@ -9,6 +9,19 @@ namespace RFS.Models.EmailComm
 {
     public class TemplateManager
     {
+        public async Task<string> GetBookingConfirmTemplate(string host)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(host);
+            var result = await httpClient.GetAsync("/content/templates/bookingConfirm.htm");
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return await result.Content.ReadAsStringAsync();
+            }
+            else
+                return "";
+
+        }
 
         public async Task<string> GetResetPasswordTemplate(string host)
         {

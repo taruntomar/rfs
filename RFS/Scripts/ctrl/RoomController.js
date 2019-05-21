@@ -71,13 +71,44 @@ myApp.directive('mdInputContainer', function ($timeout) {
     $scope.selectedLoc = null;
     $scope.locations = [];
     $scope.bookings = [];
-    $scope.stime = '';
-    $scope.etime='';
-    $scope.stimes = ['06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM', '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM','10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM', '10:00 PM', '10:30 PM', '11:00 PM', '11:30 PM', '12:00 AM', '12:30 AM', '01:00 AM', '01:30 AM', '02:00 AM', '02:30 AM', '03:00 AM', '03:30 AM', '04:00 AM', '04:30 AM', '05:00 AM', '05:30 AM' ];
-    $scope.etimes = ['06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM', '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM', '10:00 PM', '10:30 PM', '11:00 PM', '11:30 PM', '12:00 AM', '12:30 AM', '01:00 AM', '01:30 AM', '02:00 AM', '02:30 AM', '03:00 AM', '03:30 AM', '04:00 AM', '04:30 AM', '05:00 AM', '05:30 AM'];
+        $scope.stime = false;
+        $scope.etime = null;
+       
+        var today = new Date();
+        var hour = today.getHours();
+        var minutes = today.getMinutes();
+        $scope.getStartTimeArray = function (hour,minutes) {
+            let list = [];
+            
+            let startTime;
+            while (hour < 24) {
+                if (minutes < 30) {
+                    minutes = 30;
+                } else {
+                    minutes = 0;
+                    hour += 1;
+                }
+                startTime = (hour < 13 ? hour : hour - 12) + ":" + (minutes === 0 ? "00" : minutes) + (hour < 13 ? " AM" : " PM");
+                list.push(startTime);
+            }
+
+            return list;
+        };
+        $scope.stimes = $scope.getStartTimeArray(hour, minutes);
+        $scope.startTime = null;
+        $scope.startDateChange = function () {
+            let a = $scope.startTime.split(':');
+            let hour = parseInt(a[0]);
+            let b = a[1].split(' ');
+            let minutes = parseInt(b[0]);
+            hour = b[1] === "AM" ? hour : hour + 12;
+            $scope.etimes = $scope.getStartTimeArray(hour, minutes);
+        };
+    //$scope.stimes = ['06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM', '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM','10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM', '10:00 PM', '10:30 PM', '11:00 PM', '11:30 PM', '12:00 AM', '12:30 AM', '01:00 AM', '01:30 AM', '02:00 AM', '02:30 AM', '03:00 AM', '03:30 AM', '04:00 AM', '04:30 AM', '05:00 AM', '05:30 AM' ];
+    //$scope.etimes = ['06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM', '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM', '10:00 PM', '10:30 PM', '11:00 PM', '11:30 PM', '12:00 AM', '12:30 AM', '01:00 AM', '01:30 AM', '02:00 AM', '02:30 AM', '03:00 AM', '03:30 AM', '04:00 AM', '04:30 AM', '05:00 AM', '05:30 AM'];
     $scope.rooms = [];
     $scope.availableRooms = [];
-        $scope.selectedDate;
+        $scope.selectedDate = today;
         $scope.projectedBooking = false;  
     
     $http.get(myApp.rmshost +'/api/Locations').
@@ -203,23 +234,36 @@ myApp.directive('mdInputContainer', function ($timeout) {
 
 }]);
 
-myApp.controller('mybookingsCtrl', ['$scope','$mdDialog', '$http', function ($scope, $mdDialog, $http) {
+myApp.controller('mybookingsCtrl', ['$scope', '$mdDialog', '$http','$window', function ($scope, $mdDialog, $http, $window) {
 
-    $scope.bookings = [];
+    $scope.upcomingbookings  = [];
     $scope.selectedBooking = false;
     $scope.selectedBookingRoom = '';
     
     $scope.getUpcomingBookings = function () {
-        $http.get(myApp.rmshost + '/api/me/bookings').
+        $http.get(myApp.rmshost + '/api/me/bookings/upcoming').
             then(function (response) {
-                $scope.bookings = response.data;
+                $scope.upcomingbookings = response.data;
             }, function (response) {
                 if (response.status === 401) {
                     $window.location.href = "/";
                 }
             });
     };
+    $scope.getPastBookings = function () {
+        $http.get(myApp.rmshost + '/api/me/bookings/past').
+            then(function (response) {
+                $scope.pastbookings = response.data;
+            }, function (response) {
+                if (response.status === 401) {
+                    $window.location.href = "/";
+                }
+            });
+
+    };
+    $scope.pastbookings = [];
     $scope.getUpcomingBookings();
+    $scope.getPastBookings();
     $scope.bookingSelected = function (booking) {
         $http.get(myApp.rmshost + '/api/Rooms/' + booking.Room.Id).
             then(function (response) {

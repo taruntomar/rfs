@@ -28,16 +28,16 @@
                 </div>
                 <md-input-container>
                     <label>Start Time:</label>
-                    <md-select ng-model="startTime" ng-disabled="showRooms">
-                        <md-option ng-repeat="stime in stimes" ng-value="stime" ng-disabled="$index === 1">
+                    <md-select ng-model="startTime" ng-disabled="showRooms" ng-change="startDateChange()">
+                        <md-option ng-repeat="stime in stimes" ng-value="stime">
                             {{stime}}
                         </md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container>
                     <label>End Time:</label>
-                    <md-select ng-model="endTime" ng-disabled="showRooms">
-                        <md-option ng-repeat="etime in etimes" ng-value="etime" ng-disabled="$index === 1">
+                    <md-select ng-model="endTime" ng-disabled="showRooms || !startTime">
+                        <md-option ng-repeat="etime in etimes" ng-value="etime">
                             {{etime}}
                         </md-option>
                     </md-select>

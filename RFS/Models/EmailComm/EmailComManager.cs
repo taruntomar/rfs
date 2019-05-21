@@ -56,11 +56,18 @@ namespace RFS.Models
 
         public async Task SendRoomBookingCalenderInvite(string recipientMail,string recipientName,string roomLocation,DateTime start, DateTime end)
         {
+            string datetime = start.Day + "/" + start.Month + "/" + start.Year + " " + start.ToString("HH:mm") + ":" + end.ToString("HH:mm");
+            var templateManager = new TemplateManager();
+            var html = await templateManager.GetBookingConfirmTemplate(Host);
+            html = html.Replace("{{name}}", recipientName);
+            html = html.Replace("{{date}}", datetime);
+            html = html.Replace("{{room}}", roomLocation);
+
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("india-operation@resideo.com", "Resideo India Operation"),
                 Subject = "Meeting Room Booking Confirmation",
-                HtmlContent = "<strong>Hello, Email using HTML!</strong>"
+                HtmlContent = html
             };
             var recipients = new List<EmailAddress>
             {
@@ -68,10 +75,10 @@ namespace RFS.Models
             };
             msg.AddTos(recipients);
 
-            string CalendarContent = MeetingRequestString("india-operations@resideo.com", new List<string>() { recipientMail }, "Meeting Room Booked", "Meeting room booking confirmation", roomLocation, start, end);
+            string CalendarContent = MeetingRequestString("india-operations@resideo.com", new List<string>() { recipientMail }, "Meeting room booking confirmation", "Meeting Room Booked", roomLocation, start, end);
             byte[] calendarBytes = Encoding.UTF8.GetBytes(CalendarContent.ToString());
             SendGrid.Helpers.Mail.Attachment calendarAttachment = new SendGrid.Helpers.Mail.Attachment();
-            calendarAttachment.Filename = "invite.ics";
+            calendarAttachment.Filename = roomLocation+datetime+".ics";
             //the Base64 encoded content of the attachment.
             calendarAttachment.Content = Convert.ToBase64String(calendarBytes);
             calendarAttachment.Type = "text/calendar";
