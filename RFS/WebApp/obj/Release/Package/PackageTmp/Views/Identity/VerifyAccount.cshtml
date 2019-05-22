@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+
+<div ng-cloak  class="login-section" ng-init="user.email='@(ViewBag.email)';user.code='@(ViewBag.code)'" ng-app="ResideoApp" ng-controller="AccountVerificationController" class="md-padding">
+    <md-card >
+        <md-card-title>
+            <md-card-title-text>
+                <img style="width: 150px;" src="~/Content/img/resideo-company-name-logo-black-170-x-39.png" />
+                <span class="md-headline">Account Verification</span>
+                @*<span class="md-subhead">Tell us a little about you.</span>*@
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content ng-if="!verificationSucces">
+            <div layout="column">
+                <h4>Verifying your account...</h4>
+                <md-progress-linear class="md-warn" md-mode="indeterminate"></md-progress-linear>
+            </div>
+        </md-card-content>
+        <md-card-content ng-if="verificationSucces">
+            <div layout="column">
+                <h4>Verification done. Redirecting you to login page...</h4>
+                <md-progress-linear  class="md-warn" md-mode="indeterminate"></md-progress-linear>
+            </div>
+        </md-card-content>
+    </md-card>
+
+   
+    </div>

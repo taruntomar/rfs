@@ -1,0 +1,14 @@
+C:\dev\rfs\RFS\RoomManagementDatabasse\bin\Debug\RoomManagementDatabasse.dacpac
+C:\dev\rfs\RFS\RoomManagementDatabasse\bin\Debug\RoomManagementDatabasse.dll
+C:\dev\rfs\RFS\RoomManagementDatabasse\bin\Debug\RoomManagementDatabasse.pdb
+C:\dev\rfs\RFS\RoomManagementDatabasse\obj\Debug\RoomManagementDatabasse.dll
+C:\dev\rfs\RFS\RoomManagementDatabasse\obj\Debug\RoomManagementDatabasse.pdb
+C:\dev\rfs\RFS\RFS\db\bin\Debug\RoomManagementDatabasse.dacpac
+C:\dev\rfs\RFS\RFS\db\bin\Debug\RoomManagementDatabasse.dll
+C:\dev\rfs\RFS\RFS\db\bin\Debug\RoomManagementDatabasse.pdb
+C:\dev\rfs\RFS\RFS\db\obj\Debug\Model.xml
+C:\dev\rfs\RFS\RFS\db\obj\Debug\refactor.xml
+C:\dev\rfs\RFS\RFS\db\obj\Debug\postdeploy.sql
+C:\dev\rfs\RFS\RFS\db\obj\Debug\predeploy.sql
+C:\dev\rfs\RFS\RFS\db\obj\Debug\RoomManagementDatabasse.dll
+C:\dev\rfs\RFS\RFS\db\obj\Debug\RoomManagementDatabasse.pdb
