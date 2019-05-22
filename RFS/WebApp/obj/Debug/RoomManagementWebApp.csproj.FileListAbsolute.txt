@@ -221,3 +221,4 @@ C:\dev\rfs\RFS\RFS\WebApp\obj\Debug\RoomManagementWebApp.csproj.CoreCompileInput
 C:\dev\rfs\RFS\RFS\WebApp\obj\Debug\RoomManagementWebApp.csproj.CopyComplete
 C:\dev\rfs\RFS\RFS\WebApp\obj\Debug\RFS.dll
 C:\dev\rfs\RFS\RFS\WebApp\obj\Debug\RFS.pdb
+C:\dev\rfs\RFS\RFS\WebApp\obj\Debug\RoomManagementWebApp.csprojAssemblyReference.cache
