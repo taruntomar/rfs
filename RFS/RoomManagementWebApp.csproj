@@ -394,6 +394,8 @@
     <Content Include="Views\Identity\ResetPassword.cshtml" />
     <Content Include="Views\Identity\ResetPasswordForm.cshtml" />
     <Content Include="Views\Identity\VerifyAccount.cshtml" />
+    <None Include="Properties\PublishProfiles\rfs - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\rfs - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
