@@ -11,6 +11,7 @@ namespace RFS.Models.Entities
 {
     using RoomManagement.Entities;
     using System;
+    using System.Configuration;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
@@ -19,6 +20,8 @@ namespace RFS.Models.Entities
         public rfsEntities()
             : base("name=rfsEntities")
         {
+            var conn = ConfigurationManager.AppSettings["dbconnectionstring"]; 
+            this.Database.Connection.ConnectionString = conn;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
