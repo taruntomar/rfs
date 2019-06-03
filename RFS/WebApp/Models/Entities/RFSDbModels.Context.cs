@@ -20,8 +20,7 @@ namespace RFS.Models.Entities
         public rfsEntities()
             : base("name=rfsEntities")
         {
-            var conn = ConfigurationManager.AppSettings["dbconnectionstring"]; 
-            this.Database.Connection.ConnectionString = conn;
+          
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

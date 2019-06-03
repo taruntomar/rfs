@@ -2,7 +2,23 @@
     background-color:lightgray
 
 }
-
+#changedpbutton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-85%, -50%);
+    -ms-transform: translate(-90%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    display: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#profilepicdiv:hover #changedpbutton {
+    display: block;
+}
 .overlay {
     position: fixed;
     display: none;

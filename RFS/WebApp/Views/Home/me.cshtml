@@ -4,10 +4,17 @@
 
 
 <div layout-gt-sm="row" >
-<div flex-gt-sm="20" id="profilepicdiv">
-    <img style="width: 150px;
-    height: 150px;" src="Content/img/user.svg" />
-</div>
+    <div flex-gt-sm="20" id="profilepicdiv" style="position: relative;
+  ">
+        <img id="userImage" style="width: 150px;
+    height: 150px; " src="Content/img/user.svg" />
+        
+        <div id="changedpbutton">
+            <input class="ng-hide" id="input-file-id" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" type="file" />
+            <label for="input-file-id" class="md-button">Upload DP</label>
+        </div>
+        @*<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" />*@
+    </div>
     <div flex-gt-sm="80" >
         <md-content class="md-no-momentum">
             <div layout="row">

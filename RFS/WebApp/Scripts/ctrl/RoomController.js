@@ -68,13 +68,27 @@ myApp.directive('mdInputContainer', function ($timeout) {
 });
 
     myApp.controller('RoomBookingController', ['$scope','$http', function ($scope, $http) {
-    $scope.selectedLoc = null;
-    $scope.locations = [];
+        $scope.selectedDate = new Date();
+        $scope.selectedLoc = null;
+        $scope.locations = [];
+
+        $scope.startDayChange = function () {
+            $scope.stimes = $scope.sameDay(today, $scope.selectedDate) ? $scope.getStartTimeArray(hour, minutes) : $scope.getStartTimeArray(0, 33);
+
+        };
     $scope.bookings = [];
         $scope.stime = false;
         $scope.etime = null;
-       
+
+        $scope.sameDay = function (d1, d2) {
+            return d1.getFullYear() === d2.getFullYear() &&
+                d1.getMonth() === d2.getMonth() &&
+                d1.getDate() === d2.getDate();
+        };
+        
+
         var today = new Date();
+        
         var hour = today.getHours();
         var minutes = today.getMinutes();
         $scope.getStartTimeArray = function (hour,minutes) {
@@ -94,7 +108,8 @@ myApp.directive('mdInputContainer', function ($timeout) {
 
             return list;
         };
-        $scope.stimes = $scope.getStartTimeArray(hour, minutes);
+        $scope.startDayChange(); 
+       
         $scope.startTime = null;
         $scope.startDateChange = function () {
             let a = $scope.startTime.split(':');
@@ -113,7 +128,10 @@ myApp.directive('mdInputContainer', function ($timeout) {
     
     $http.get(myApp.rmshost +'/api/Locations').
         then(function (response) {
-            $scope.locations =response.data;
+            $scope.locations = response.data;
+            if ($scope.locations.length > 0) {
+                $scope.selectedLoc = $scope.locations[0];
+            }
         });
         $scope.showRooms = false;
         $scope.createProjectedBooking = function (room) {
@@ -151,10 +169,11 @@ myApp.directive('mdInputContainer', function ($timeout) {
 
             
         };
+        $scope.minDate = new Date();
         $scope.FetchRoomList = function () {
 
-            $scope.selectedstime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
-            $scope.selectedetime = $scope.selectedDate.getMonth() + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.endTime;;
+            $scope.selectedstime = ($scope.selectedDate.getMonth()+1) + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.startTime;
+            $scope.selectedetime = ($scope.selectedDate.getMonth()+1) + '/' + $scope.selectedDate.getDate() + '/' + $scope.selectedDate.getFullYear() + ' ' + $scope.endTime;;
             $http.get(myApp.rmshost + '/api/location/' + $scope.selectedLoc.Id + '/searchrooms/?SdateTime=' + $scope.selectedstime + '&EdateTime=' + $scope.selectedetime).
                 then(function (response) {
                     $scope.availableRooms = response.data;
@@ -529,6 +548,18 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
     };
     $scope.user = { Name: "" };
     $scope.locations = [];
+    $scope.uploadFile = function (files) {
+        var fd = new FormData();
+        //Take the first selected file
+        fd.append("file", files[0]);
+
+        $http.post(uploadUrl, fd, {
+            withCredentials: true,
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        }).success().error(  );
+
+    };
     $scope.getMyProfile = function () {
         $http.get(myApp.rmshost + '/api/me').
             then(function (response) {

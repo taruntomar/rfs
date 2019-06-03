@@ -24,7 +24,7 @@
                 </md-input-container>
                 <div style="margin-top: -5px;">
                     <br />
-                    <md-datepicker ng-model="selectedDate" md-placeholder="Enter date" ng-disabled="showRooms"></md-datepicker>
+                    <md-datepicker md-min-date="minDate" ng-model="selectedDate" md-placeholder="Enter date" ng-disabled="showRooms" ng-change="startDayChange()"></md-datepicker>
                 </div>
                 <md-input-container>
                     <label>Start Time:</label>
