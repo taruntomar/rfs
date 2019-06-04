@@ -550,7 +550,7 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
         left: false,
         right: true
     };
-
+    $scope.loc = "";
     $scope.user = { Name: "" };
     $scope.locations = [];
     $scope.uploadFile = function (files) {
@@ -572,10 +572,16 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
             });
 
     };
+    $scope.isemailnotified = true;
     $scope.getMyProfile = function () {
         $http.get(myApp.rmshost + '/api/me').
             then(function (response) {
                 $scope.user = response.data;
+                //for (let i = 0; i < $scope.locations.length; i++) {
+                //    if ($scope.locations[i].Name === $scope.user.loc.Name) {
+                //        $scope.user.loc = $scope.locations[i];
+                //    }
+                //}
             }, function (response) {
                 if (response.status === 401) {
                     $window.location.href = "/";
@@ -595,7 +601,7 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent('Profile Updated.')
-                        .position(pinTo)
+                        .position("bottom right")
                         .hideDelay(3000))
                     .then(function () {
                         //$log.log('user profile updated.');

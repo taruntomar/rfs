@@ -263,6 +263,7 @@
     <Content Include="Content\img\projector.svg" />
     <Content Include="Content\img\room.jpg" />
     <Content Include="Content\img\sittings.svg" />
+    <Content Include="Content\img\user.png" />
     <Content Include="Content\img\user.svg" />
     <Content Include="Content\img\videoconferencing.svg" />
     <Content Include="Content\templates\bookingConfirm.htm" />

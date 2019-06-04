@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace RFS.Controllers
@@ -23,7 +24,9 @@ namespace RFS.Controllers
         // GET api/<controller>
         public IEnumerable<user> Get()
         {
-            return _userManager.GetAllUsers().Select<user,user>( (x,u) => { x.salt = ""; x.password = ""; x.logincode = ""; return x; });
+            var users = _userManager.GetAllUsers();
+            return users.Select(y => new  user{ Id = y.Id, email = y.email, IsActivated = y.IsActivated, isAdmin = y.isAdmin, IsVerified = y.IsVerified, location = y.location,  Name= y.Name , phone = y.phone});
+            //return users.Select<user,user>( (x,u) => { x.salt = ""; x.password = ""; x.logincode = ""; return x; });
         }
 
         [System.Web.Http.HttpGet]
@@ -59,12 +62,30 @@ namespace RFS.Controllers
             }
 
             var user = _userManager.GetUserById(userid);
-            Byte[] b = user.UserProfilePics.FirstOrDefault().data;
-            if (b == null)
+            if(user == null)
             {
-                return new HttpResponseMessage(HttpStatusCode.NoContent);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            var profilepic = user.UserProfilePics.FirstOrDefault();
+            Byte[] b;
+            if (profilepic == null)
+            {
+                string path = HttpContext.Current.Server.MapPath("~\\Content\\img\\user.png");
+                int a = 1;
+                b = File.ReadAllBytes(path);
+                //using (FileStream fs = new FileStream(path, FileMode.Open))
+                //{
+                //    response.Content = new StreamContent(fs);
+                //}
+               
+            }
+            else
+            {
+                b = profilepic.data;
+                
+             
+            }
             response.Content = new StreamContent(new MemoryStream(b));
             response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
             return response;
@@ -98,11 +119,9 @@ namespace RFS.Controllers
         public user Get(string id)
         {
             var user=  _userManager.GetUserById(id);
-            user.logincode = "";
-            user.password = "";
-            user.salt = "";
-
-            return user;
+            
+            var tmp = new user { Id = user.Id, email = user.email, IsActivated = user.IsActivated, isAdmin = user.isAdmin, IsVerified = user.IsVerified, location = user.location, Name = user.Name, phone = user.phone };
+            return tmp;
         }
 
         // POST api/<controller>

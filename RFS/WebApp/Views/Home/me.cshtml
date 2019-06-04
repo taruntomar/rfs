@@ -39,15 +39,15 @@
                     <md-input-container flex="50">
                         <label>Location:</label>
                         <md-select ng-model="user.loc">
-                            <md-option ng-value="loc" ng-repeat="loc in locations" @*ng-disabled="$index === 1"*@>
+                            <md-option ng-value="loc" ng-repeat="loc in locations"  ng-selected="loc.Name === user.loc.Name" @*ng-disabled="$index === 1"*@>
                                 {{loc.Name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
                 </div>
-                <md-switch flex="20" style="margin-left:36px;" md-invert ng-model="user.emailnotify" aria-label="Switch 1">
+                @*<md-switch flex="20" style="margin-left:36px;" md-invert ng-model="isemailnotified" aria-label="Switch 1">
                     Notify me over email:
-                </md-switch>
+                </md-switch>*@
                 <md-button style="margin-left:34px" class="md-warn md-raised md-hue-2" ng-click="updateProfile()">Update Profile</md-button>
         </md-content>
         </div>
