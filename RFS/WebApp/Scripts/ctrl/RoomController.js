@@ -479,7 +479,10 @@ myApp.controller('NavigationController', ['$window', '$scope', '$http', function
         originatorEv = ev;
         $mdMenu.open(ev);
     };
-
+    $parentscope.dplocation = "Content/img/user.svg";
+    $http.get(myApp.rmshost + '/api/me/dp').then(function (response) {
+        $parentscope.dplocation = myApp.rmshost + '/api/me/dp';
+    }, function (response) { });
     $http.get(myApp.rmshost + '/api/isadmin').
         then(function (response) {
             $parentscope.isAdmin = response.data;
@@ -540,12 +543,14 @@ myApp.controller('NavigationController', ['$window', '$scope', '$http', function
 
 myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', function ($window, $scope, $http, $mdToast ) {
 
+    $scope.dplocation = "Content/img/user.svg";
     $scope.last = {
         bottom: true,
         top: false,
         left: false,
         right: true
     };
+
     $scope.user = { Name: "" };
     $scope.locations = [];
     $scope.uploadFile = function (files) {
@@ -553,11 +558,18 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
         //Take the first selected file
         fd.append("file", files[0]);
 
-        $http.post(uploadUrl, fd, {
+        $http.post(myApp.rmshost +"/api/me/dp", fd, {
             withCredentials: true,
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
-        }).success().error(  );
+        }).
+            then(function (response) {
+                $(".userImage").removeAttr("src").attr("src", "/api/me/dp");
+            }, function (response) {
+                if (response.status === 401) {
+                    $window.location.href = "/";
+                }
+            });
 
     };
     $scope.getMyProfile = function () {
@@ -570,8 +582,10 @@ myApp.controller('meController', ['$window', '$scope', '$http','$mdToast', funct
                 }
             });
     };
- 
 
+    $http.get(myApp.rmshost + '/api/me/dp').then(function (response) {
+    $scope.dplocation ='/api/me/dp'}, function (response) { });
+    
     $scope.updateProfile = function () {
        
 

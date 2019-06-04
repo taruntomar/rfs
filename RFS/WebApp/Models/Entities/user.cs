@@ -14,6 +14,12 @@ namespace RFS.Models.Entities
     
     public partial class user
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public user()
+        {
+            this.UserProfilePics = new HashSet<UserProfilePic>();
+        }
+    
         public string Id { get; set; }
         public string email { get; set; }
         public string password { get; set; }
@@ -27,5 +33,8 @@ namespace RFS.Models.Entities
         public Nullable<bool> IsVerified { get; set; }
         public string VerificationCode { get; set; }
         public string passResetCode { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserProfilePic> UserProfilePics { get; set; }
     }
 }

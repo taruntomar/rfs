@@ -1,4 +1,5 @@
-﻿using RFS.Models.Entities;
+﻿using RFS.Models;
+using RFS.Models.Entities;
 using RoomManagement.Entities;
 using System;
 using System.Collections.Generic;
@@ -61,9 +62,32 @@ namespace RoomManagement
             return user;
         }
 
+        
+
         public user GetUserFromMailId(string email)
         {
             return _dbContext.users.FirstOrDefault(x => x.email == email);
+        }
+
+        public void SetUserProfilePic(string usermail, byte[] buffer, string filename)
+        {
+            var user = GetUserFromMailId(usermail);
+            UserProfilePic userProfilePic= null;
+            if (user.UserProfilePics == null || user.UserProfilePics.Count == 0)
+            {
+                userProfilePic = new UserProfilePic();
+                userProfilePic.Id = Guid.NewGuid().ToString();
+                _dbContext.UserProfilePicture.Add(userProfilePic);
+            }
+            else
+            {
+                userProfilePic = user.UserProfilePics.FirstOrDefault();
+            }
+        
+            userProfilePic.data = buffer;
+            userProfilePic.ext = filename.Split('.')[1];
+            userProfilePic.UserId = user.Id;
+            _dbContext.SaveChanges();
         }
 
         public void UpdateUserProperties(string id, user user)

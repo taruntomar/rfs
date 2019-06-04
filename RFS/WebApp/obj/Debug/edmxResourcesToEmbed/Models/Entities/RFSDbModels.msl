@@ -65,5 +65,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="UserProfilePics">
+      <EntityTypeMapping TypeName="rfsModel.UserProfilePic">
+        <MappingFragment StoreEntitySet="UserProfilePic">
+          <ScalarProperty Name="ext" ColumnName="ext" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

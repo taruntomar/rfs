@@ -12,5 +12,7 @@ namespace RoomManagement
         void UpdateUserProperties(string id, user room);
         void DeleteUser(string id);
         user GetUserFromMailId(string username);
+        void SetUserProfilePic(string useremail,byte[] buffer, string filename);
+       
     }
 }

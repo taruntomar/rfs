@@ -62,8 +62,9 @@
                         <md-menu style="margin:0px;padding:0px;">
                             <md-button  aria-label="Open phone interactions menu" class="md-icon-button" style="width:auto; height:50px;padding:unset; border-radius:unset" ng-click="openMenu($mdMenu, $event)">
                                 <div layout="row">
-                                    @ViewBag.username
-                                    <md-icon style="margin-left:5px" md-menu-origin md-svg-icon="/Content/img/user.svg"></md-icon>
+                                    <div style="line-height: 40px;">@ViewBag.username</div>
+                                    <img class="userImage" style="    width: 35px;    height: 35px;;margin-left:5px;border-radius: 50%; " src="{{dplocation}}" />
+                                    @*<md-icon style="margin-left:5px" md-menu-origin md-svg-icon="{{dplocation}}"></md-icon>*@
                                 </div>
                             </md-button>
                             <md-menu-content width="4">

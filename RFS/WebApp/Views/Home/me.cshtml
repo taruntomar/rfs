@@ -6,8 +6,8 @@
 <div layout-gt-sm="row" >
     <div flex-gt-sm="20" id="profilepicdiv" style="position: relative;
   ">
-        <img id="userImage" style="width: 150px;
-    height: 150px; " src="Content/img/user.svg" />
+        <img class="userImage" style="width: 150px;
+    height: 150px;  border-radius: 50%; " src="{{dplocation}}" />
         
         <div id="changedpbutton">
             <input class="ng-hide" id="input-file-id" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" type="file" />

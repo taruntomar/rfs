@@ -227,6 +227,9 @@
     <Compile Include="Models\Entities\user.cs">
       <DependentUpon>RFSDbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\UserProfilePic.cs">
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityManagers\BookingManager.cs" />
     <Compile Include="Models\EntityManagers\BookingRulesManager.cs" />
     <Compile Include="Models\EntityManagers\Contracts\IBookingManager.cs" />

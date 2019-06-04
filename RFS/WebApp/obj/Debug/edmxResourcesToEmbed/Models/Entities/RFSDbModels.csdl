@@ -47,6 +47,11 @@
     <EntitySet Name="Rooms" EntityType="Self.Room" />
     <EntitySet Name="RoomPictures" EntityType="Self.RoomPicture" />
     <EntitySet Name="users" EntityType="rfsModel.user" />
+    <EntitySet Name="UserProfilePics" EntityType="rfsModel.UserProfilePic" />
+    <AssociationSet Name="FK_UserProfilePic_users" Association="rfsModel.FK_UserProfilePic_users">
+      <End Role="user" EntitySet="users" />
+      <End Role="UserProfilePic" EntitySet="UserProfilePics" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="user">
     <Key>
@@ -65,5 +70,28 @@
     <Property Name="IsVerified" Type="Boolean" />
     <Property Name="VerificationCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="passResetCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserProfilePics" Relationship="rfsModel.FK_UserProfilePic_users" FromRole="user" ToRole="UserProfilePic" />
   </EntityType>
+  <EntityType Name="UserProfilePic">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="data" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ext" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="user" Relationship="rfsModel.FK_UserProfilePic_users" FromRole="UserProfilePic" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_UserProfilePic_users">
+    <End Type="rfsModel.user" Role="user" Multiplicity="1" />
+    <End Type="rfsModel.UserProfilePic" Role="UserProfilePic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfilePic">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

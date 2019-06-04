@@ -33,5 +33,6 @@ namespace RFS.Models.Entities
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomPicture> RoomPictures { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<UserProfilePic> UserProfilePicture { get; set; }
     }
 }

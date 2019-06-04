@@ -3,9 +3,12 @@ using RFS.Models.Entities;
 using RoomManagement;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace RFS.Controllers
@@ -21,6 +24,74 @@ namespace RFS.Controllers
         public IEnumerable<user> Get()
         {
             return _userManager.GetAllUsers().Select<user,user>( (x,u) => { x.salt = ""; x.password = ""; x.logincode = ""; return x; });
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/me/dp")]
+        public HttpResponseMessage GetMyDP()
+        {
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
+
+            var user = _userManager.GetUserFromMailId(useremail);
+            Byte[] b = user.UserProfilePics.FirstOrDefault().data;
+            if (b == null)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NoContent);
+            }
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StreamContent(new MemoryStream(b));
+            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+            return response;
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/user/{userid}/dp")]
+        public HttpResponseMessage GetDP(string userid)
+        {
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
+
+            var user = _userManager.GetUserById(userid);
+            Byte[] b = user.UserProfilePics.FirstOrDefault().data;
+            if (b == null)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NoContent);
+            }
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StreamContent(new MemoryStream(b));
+            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+            return response;
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("api/me/dp")]
+        public async Task<IHttpActionResult> SetDP()
+        {
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return BadRequest();
+            }
+            if (!Request.Content.IsMimeMultipartContent())
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+
+            var provider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(provider);
+            foreach (var file in provider.Contents)
+            {
+                var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+                var buffer = await file.ReadAsByteArrayAsync();
+                _userManager.SetUserProfilePic(useremail,buffer, filename);
+            }
+
+            return Ok();
         }
 
         // GET api/<controller>/5
