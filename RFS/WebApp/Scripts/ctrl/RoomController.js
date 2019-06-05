@@ -383,6 +383,39 @@ myApp.controller('adminCtrl', ['$scope', '$http', '$mdToast', function ($scope, 
 
     };
     $scope.getListOfUsers();
+    //================location===========================
+    $scope.locations = [];
+    $scope.selectedLocation = "";
+    $scope.rooms = null;
+    $scope.selectedRoom = null;
+    $scope.getAllLocations = function () {
+        $http.get(myApp.rmshost + '/api/Locations').
+            then(function (response) {
+                $scope.locations = response.data;
+            });
+    };
+    $scope.selectedRoom = null;
+    $scope.roomSelected = function (room) {
+        $scope.selectedRoom = room;
+    };
+    $scope.locationSelected = function (loc) {
+        $scope.selectedLocation = loc;
+        $http.get(myApp.rmshost + '/api/Location/' + $scope.selectedLocation.Id+'/rooms').
+            then(function (response) {
+                $scope.rooms = response.data;
+            });
+    };
+    $scope.getAllLocations();
+    $scope.roompic = "Content/img/room.jpg";
+    $http.get(myApp.rmshost + '/api/room/{roomid}/pic').then(function (response) {
+        $scope.roompic = myApp.rmshost + '/api/room/{roomid}/pic';
+    }, function (response) { });
+    $scope.updateRoom = function () {
+
+    };
+    $scope.deleteRoom = function () {
+
+    };
 
 }]);
 

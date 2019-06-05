@@ -258,9 +258,11 @@
     <Content Include="Content\img\ic_person_24px.svg" />
     <Content Include="Content\img\ic_phone_24px.svg" />
     <Content Include="Content\img\ic_place_24px.svg" />
+    <Content Include="Content\img\location.png" />
     <Content Include="Content\img\monitor.svg" />
     <Content Include="Content\img\myprofile.svg" />
     <Content Include="Content\img\projector.svg" />
+    <Content Include="Content\img\room-outline.png" />
     <Content Include="Content\img\room.jpg" />
     <Content Include="Content\img\sittings.svg" />
     <Content Include="Content\img\user.png" />
