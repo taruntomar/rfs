@@ -139,8 +139,30 @@ namespace RFS.Controllers
             _userManager.UpdateUserProperties(id, user);
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(string id)
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("api/user/{userId}/activation")]
+        public async Task<IHttpActionResult> SetUserActication(string userId,[FromBody]user u)
+        {
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return BadRequest();
+            }
+            var user = _userManager.GetUserFromMailId(useremail);
+            if(user.isAdmin.HasValue && user.isAdmin.Value)
+            {
+
+                _userManager.SetUserActivation(_userManager.GetUserById(userId), u.IsActivated.HasValue?u.IsActivated.Value:false);
+                return Ok();
+            }
+            else
+            {
+                return Unauthorized();
+            }
+
+        }
+            // DELETE api/<controller>/5
+            public void Delete(string id)
         {
             _userManager.DeleteUser(id);
         }

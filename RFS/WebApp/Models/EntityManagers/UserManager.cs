@@ -69,6 +69,12 @@ namespace RoomManagement
             return _dbContext.users.FirstOrDefault(x => x.email == email);
         }
 
+        public void SetUserActivation(user user, bool flag)
+        {
+            user.IsActivated = flag;
+            _dbContext.SaveChanges();
+        }
+
         public void SetUserProfilePic(string usermail, byte[] buffer, string filename)
         {
             var user = GetUserFromMailId(usermail);

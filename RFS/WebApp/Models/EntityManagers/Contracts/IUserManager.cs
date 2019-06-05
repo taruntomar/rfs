@@ -13,6 +13,6 @@ namespace RoomManagement
         void DeleteUser(string id);
         user GetUserFromMailId(string username);
         void SetUserProfilePic(string useremail,byte[] buffer, string filename);
-       
+        void SetUserActivation(user userId, bool flag);
     }
 }
