@@ -19,6 +19,7 @@ namespace RoomManagement.Entities
          DbSet<Room> Rooms { get; set; }
          DbSet<RoomPicture> RoomPictures { get; set; }
         DbSet<UserProfilePic> UserProfilePicture { get; set; }
+        DbSet<RoomProfilePic> RoomProfilePicture { get; set; }
         DbSet<user> users { get; set; }
         Database Database { get; }
         DbChangeTracker ChangeTracker { get; }

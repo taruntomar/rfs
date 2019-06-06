@@ -121,7 +121,7 @@
                     <md-list class="md-dense" ng-model="selectedRoom">
                         <md-subheader class="md-no-sticky">{{rooms.length}} rooms are available</md-subheader>
                         <md-list-item class="md-3-line" ng-repeat="room in rooms" ng-click="roomSelected(room)">
-                            <img ng-src="/Content/img/room-outline.png" class="md-avatar" alt="{{item.who}}" />
+                            <img ng-src="/api/rooms/{{room.Id}}/dp" class="md-avatar" alt="{{item.who}}" />
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{ room.RoomName }}</h3>
                                 @*<div layout="row" style="float:left">
@@ -146,8 +146,8 @@
                     <div layout="row" style="padding:30px">
                         <div flex-gt-sm="30" id="profilepicdiv" style="position: relative;
   ">
-                            <img class="userImage" style="width: 150px;
-    height: 150px;  border-radius: 50%; " src="{{roompic}}" />
+                            <img class="roomImage" style="width: 150px;
+    height: 150px;  border-radius: 50%; " ng-src="/api/rooms/{{selectedRoom.Id}}/dp" />
 
                             <div id="changedpbutton">
                                 <input class="ng-hide" id="input-file-id" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" type="file" />
@@ -157,10 +157,11 @@
                         </div>
                         <div style="padding: 10px;">
                             <div style="font-size: xx-large;">{{ selectedRoom.RoomName }}</div>
+
                             <div layout="row" style="float:left;margin-top:15px">
                                 <md-icon style="    margin-top: 5px;" md-svg-src="~/Content/img/sittings.svg" class="s48" aria-label="Cart"></md-icon>
                                 <md-input-container>
-                                    <input mdInput type="number" placeholder="Sitting" ng-value="selectedRoom.Sitting">
+                                    <input mdInput type="number" placeholder="Sitting" ng-model="selectedRoom.Sitting" ng-value="selectedRoom.Sitting">
                                 </md-input-container>
                             </div>
 
@@ -191,9 +192,14 @@
 
                                 </md-switch>
                             </div>
+                            <div layout="row"style="float:left">
+                                <div>Status: </div><div><div style="color:green" ng-hide="selectedRoom.decommission">In Servie</div><div style="color:red" ng-show="selectedRoom.decommission">Out of Servie (Decommissioned)</div></div>
+                            </div>
+                            <br />
                             <div style="float:left;margin:2px">
                                 <md-button class="md-raised" ng-click="updateRoom()">Update</md-button>
-                                <md-button class="md-warn md-raised md-hue-2" ng-click="deleteRoom()">Delete</md-button>
+                                <md-button class="md-warn md-raised md-hue-2" ng-hide="selectedRoom.decommission" ng-click="decommissionRoom($event)">Decommission</md-button>
+                                <md-button class="md-warn md-raised md-hue-2" ng-show="selectedRoom.decommission" ng-click="commissionBackRoom($event)">Commission Back</md-button>
                             </div>
 
                         </div>

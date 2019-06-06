@@ -12,5 +12,6 @@ namespace RoomManagement
         Room GetRoomById(string id);
         void UpdateRoomProperties(string id, Room newroom);
         IEnumerable<Room> GetAllRoomsForLocation(string locationId);
+        void SetRoomProfilePic(string roomId, byte[] buffer, string filename);
     }
 }

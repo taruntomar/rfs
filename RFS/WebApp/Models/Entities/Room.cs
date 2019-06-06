@@ -14,6 +14,12 @@ namespace RFS.Models.Entities
     
     public partial class Room
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Room()
+        {
+            this.RoomProfilePics = new HashSet<RoomProfilePic>();
+        }
+    
         public string Id { get; set; }
         public string RoomName { get; set; }
         public bool Projector { get; set; }
@@ -21,5 +27,9 @@ namespace RFS.Models.Entities
         public string location { get; set; }
         public bool VideoConferencing_ { get; set; }
         public bool MonitorScreen { get; set; }
+        public Nullable<bool> decommission { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomProfilePic> RoomProfilePics { get; set; }
     }
 }

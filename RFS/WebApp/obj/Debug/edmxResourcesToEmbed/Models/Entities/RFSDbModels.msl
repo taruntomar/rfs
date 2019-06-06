@@ -27,6 +27,7 @@
     <EntitySetMapping Name="Rooms">
       <EntityTypeMapping TypeName="rfsModel.Room">
         <MappingFragment StoreEntitySet="Room">
+          <ScalarProperty Name="decommission" ColumnName="decommission" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="RoomName" ColumnName="RoomName" />
           <ScalarProperty Name="Projector" ColumnName="Projector" />
@@ -71,6 +72,16 @@
           <ScalarProperty Name="ext" ColumnName="ext" />
           <ScalarProperty Name="data" ColumnName="data" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomProfilePics">
+      <EntityTypeMapping TypeName="rfsModel.RoomProfilePic">
+        <MappingFragment StoreEntitySet="RoomProfilePic">
+          <ScalarProperty Name="ext" ColumnName="ext" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="RoomId" ColumnName="RoomId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

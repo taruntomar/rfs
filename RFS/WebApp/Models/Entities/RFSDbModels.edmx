@@ -37,6 +37,7 @@
           <Property Name="location" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="VideoConferencing " Type="bit" Nullable="false" />
           <Property Name="MonitorScreen" Type="bit" Nullable="false" />
+          <Property Name="decommission" Type="bit" />
         </EntityType>
         <EntityType Name="RoomPictures">
           <Key>
@@ -45,6 +46,15 @@
           <Property Name="RoomId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PictureName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="picture" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="RoomProfilePic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoomId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="data" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ext" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="UserProfilePic">
           <Key>
@@ -73,6 +83,18 @@
           <Property Name="VerificationCode" Type="nvarchar" MaxLength="50" />
           <Property Name="passResetCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_RoomProfilePic_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="RoomProfilePic" Type="Self.RoomProfilePic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoomProfilePic">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserProfilePic_users">
           <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="UserProfilePic" Type="Self.UserProfilePic" Multiplicity="*" />
@@ -90,8 +112,13 @@
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomPictures" EntityType="Self.RoomPictures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomProfilePic" EntityType="Self.RoomProfilePic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfilePic" EntityType="Self.UserProfilePic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RoomProfilePic_Room" Association="Self.FK_RoomProfilePic_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="RoomProfilePic" EntitySet="RoomProfilePic" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserProfilePic_users" Association="Self.FK_UserProfilePic_users">
             <End Role="users" EntitySet="users" />
             <End Role="UserProfilePic" EntitySet="UserProfilePic" />
@@ -133,6 +160,8 @@
           <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="VideoConferencing_" Type="Boolean" Nullable="false" />
           <Property Name="MonitorScreen" Type="Boolean" Nullable="false" />
+          <Property Name="decommission" Type="Boolean" />
+          <NavigationProperty Name="RoomProfilePics" Relationship="rfsModel.FK_RoomProfilePic_Room" FromRole="Room" ToRole="RoomProfilePic" />
         </EntityType>
         <EntityType Name="RoomPicture">
           <Key>
@@ -152,6 +181,11 @@
           <AssociationSet Name="FK_UserProfilePic_users" Association="rfsModel.FK_UserProfilePic_users">
             <End Role="user" EntitySet="users" />
             <End Role="UserProfilePic" EntitySet="UserProfilePics" />
+          </AssociationSet>
+          <EntitySet Name="RoomProfilePics" EntityType="rfsModel.RoomProfilePic" />
+          <AssociationSet Name="FK_RoomProfilePic_Room" Association="rfsModel.FK_RoomProfilePic_Room">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="RoomProfilePic" EntitySet="RoomProfilePics" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="user">
@@ -195,6 +229,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="RoomProfilePic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoomId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="data" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ext" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Room" Relationship="rfsModel.FK_RoomProfilePic_Room" FromRole="RoomProfilePic" ToRole="Room" />
+        </EntityType>
+        <Association Name="FK_RoomProfilePic_Room">
+          <End Type="rfsModel.Room" Role="Room" Multiplicity="1" />
+          <End Type="rfsModel.RoomProfilePic" Role="RoomProfilePic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoomProfilePic">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -227,6 +283,7 @@
           <EntitySetMapping Name="Rooms">
             <EntityTypeMapping TypeName="rfsModel.Room">
               <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="decommission" ColumnName="decommission" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RoomName" ColumnName="RoomName" />
                 <ScalarProperty Name="Projector" ColumnName="Projector" />
@@ -271,6 +328,16 @@
                 <ScalarProperty Name="ext" ColumnName="ext" />
                 <ScalarProperty Name="data" ColumnName="data" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomProfilePics">
+            <EntityTypeMapping TypeName="rfsModel.RoomProfilePic">
+              <MappingFragment StoreEntitySet="RoomProfilePic">
+                <ScalarProperty Name="ext" ColumnName="ext" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

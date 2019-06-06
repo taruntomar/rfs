@@ -24,10 +24,18 @@ namespace RoomManagement
 
         public void DeleteRoom(string id)
         {
-            Room room =  GetRoomById(id);
+            //cancel all bookings related to this room
+            Room room = GetRoomById(id);
             if (room != null)
             {
-                _dbContext.Rooms.Remove(room);
+                var bookings = _dbContext.Bookings.Where(x => x.RoomId == id && x.starttime.CompareTo(DateTime.UtcNow)>0);            
+                foreach(var booking in bookings)
+                {
+                    booking.isCancelled = true;
+                }
+                room.decommission = true;
+            
+                //_dbContext.Rooms.Remove(room);
                 _dbContext.SaveChanges();
             }
         }
@@ -45,6 +53,27 @@ namespace RoomManagement
         public Room GetRoomById(string id)
         {
           return  _dbContext.Rooms.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void SetRoomProfilePic(string roomId, byte[] buffer, string filename)
+        {
+            var room = _dbContext.Rooms.FirstOrDefault(x=>x.Id==roomId);
+            RoomProfilePic roomProfilePic = null;
+            if (room.RoomProfilePics == null || room.RoomProfilePics.Count == 0)
+            {
+                roomProfilePic = new RoomProfilePic();
+                roomProfilePic.Id = Guid.NewGuid().ToString();
+                _dbContext.RoomProfilePicture.Add(roomProfilePic);
+            }
+            else
+            {
+                roomProfilePic = room.RoomProfilePics.FirstOrDefault();
+            }
+
+            roomProfilePic.data = buffer;
+            roomProfilePic.ext = filename.Split('.')[1];
+            roomProfilePic.RoomId = room.Id;
+            _dbContext.SaveChanges();
         }
 
         public void UpdateRoomProperties(string id, Room newroom)

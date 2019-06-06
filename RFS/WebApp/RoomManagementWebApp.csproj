@@ -224,6 +224,9 @@
     <Compile Include="Models\Entities\RoomPicture.cs">
       <DependentUpon>RFSDbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\RoomProfilePic.cs">
+      <DependentUpon>RFSDbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\user.cs">
       <DependentUpon>RFSDbModels.tt</DependentUpon>
     </Compile>
@@ -281,7 +284,13 @@
       <DependentUpon>RFSDbModels.edmx</DependentUpon>
       <LastGenOutput>RFSDbModels.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\ctrl\RoomController.js" />
+    <Content Include="Scripts\ctrl\meController.js" />
+    <Content Include="Scripts\ctrl\RoomBookingController.js" />
+    <Content Include="Scripts\ctrl\mybookingsCtrl.js" />
+    <Content Include="Scripts\ctrl\adminCtrl.js" />
+    <Content Include="Scripts\ctrl\IdentityController.js" />
+    <Content Include="Scripts\ctrl\AccountVerificationController.js" />
+    <Content Include="Scripts\ctrl\NavigationController.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\resideo-company-name-logo-black-170-x-39.png" />
     <Content Include="Content\img\Resideo-Master-Graphic-Red-75-x75.png" />

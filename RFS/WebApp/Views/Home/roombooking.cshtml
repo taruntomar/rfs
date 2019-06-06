@@ -62,7 +62,7 @@
                 <md-list>
                     <md-subheader class="md-no-sticky">No. of available rooms: {{availableRooms.length}}</md-subheader>
                     <md-list-item class="md-3-line" ng-repeat="room in availableRooms" ng-click="createProjectedBooking(room)">
-                        <img ng-src="{{room.image}}" class="md-avatar" />
+                        <img ng-src="/api/rooms/{{room.Id}}/dp" class="md-avatar" />
                         <div class="md-list-item-text" layout="column">
                             <h3>{{ room.RoomName }}</h3>
                             <p>

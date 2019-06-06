@@ -28,8 +28,8 @@
     <script src="~/_frameworks/bootstrap-4.2.1/js/bootstrap.min.js"></script>
 </head>
 <div id="msg">Page is loading...</div>
-<body ng-app="ResideoApp"  style="    background: scroll;"  >
-    
+<body ng-app="ResideoApp" style="    background: scroll;">
+
     <div ng-cloak ng-controller="NavigationController" class="navbar navbar-inverse navbar-fixed-top">
 
         <div class="container">
@@ -53,14 +53,14 @@
                     <li class="headerlink" style="background-color:red"><a style="color:white" class="headerlinka" href="/#!/">Meeting Room</a></li>
                     <li class="headerlink" style="user-select: none;"><a id="helplink" disabled="disabled">Help&nbsp;<sup style="color:gray">Coming Soon</sup></a> </li>
                     @*<li class="headerlink"><a disabled="disabled">Stationary</a></li>
-                    <li class="headerlink"><a disabled="disabled">Help</a></li>*@
+                        <li class="headerlink"><a disabled="disabled">Help</a></li>*@
                     <li></li>
                 </ul>
                 <ul id="personalIcon" class=" nav navbar-nav" style="    float: right; margin:0px;padding:0px;
     ">
                     <li style="margin:0px;padding:0px;">
                         <md-menu style="margin:0px;padding:0px;">
-                            <md-button  aria-label="Open phone interactions menu" class="md-icon-button" style="width:auto; height:50px;padding:unset; border-radius:unset" ng-click="openMenu($mdMenu, $event)">
+                            <md-button aria-label="Open phone interactions menu" class="md-icon-button" style="width:auto; height:50px;padding:unset; border-radius:unset" ng-click="openMenu($mdMenu, $event)">
                                 <div layout="row">
                                     <div style="line-height: 40px;">@ViewBag.username</div>
                                     <img class="userImage" style="    width: 35px;    height: 35px;;margin-left:5px;border-radius: 50%; " src="{{dplocation}}" />
@@ -71,7 +71,7 @@
                                 <md-menu-item>
                                     <md-button ng-click="ctrl.redial($event)">
                                         @*<md-icon md-svg-icon="/Content/img/done.svg" md-menu-align-target></md-icon>
-                                        @ViewBag.username*@
+                                            @ViewBag.username*@
                                     </md-button>
                                 </md-menu-item>
 
@@ -133,23 +133,29 @@
 
                 <md-progress-linear ng-if="ResetVerificationMailStarted " class="md-warn" md-mode="indeterminate"></md-progress-linear>
             </div>
-               
-            </div>
+
         </div>
+    </div>
     </div>
     <div style="padding:0px;" class="container body-content " flex-sm-xs>
         @RenderBody()
         @*<hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Resideo</p>
-        </footer>*@
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Resideo</p>
+            </footer>*@
     </div>
 
     @RenderSection("scripts", required: false)
-   
+    <script src="~/Scripts/ctrl/RoomBookingController.js"></script>
+    <script src="~/Scripts/ctrl/AccountVerificationController.js"></script>
+    <script src="~/Scripts/ctrl/adminCtrl.js"></script>
+    <script src="~/Scripts/ctrl/IdentityController.js"></script>
+    <script src="~/Scripts/ctrl/meController.js"></script>
+    <script src="~/Scripts/ctrl/mybookingsCtrl.js"></script>
+    <script src="~/Scripts/ctrl/NavigationController.js"></script>
 
 
-    <script src="~/Scripts/ctrl/RoomController.js"></script>
+
     <script src="~/Scripts/site.js"></script>
 
 
