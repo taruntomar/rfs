@@ -160,10 +160,24 @@ namespace RFS_API.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]Room room)
+        public HttpResponseMessage Post([FromBody]Room room)
         {
-            _roomManager.AddNewRoom(room);
-            
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+            var user = _userManager.GetUserFromMailId(useremail);
+            if (user.isAdmin.HasValue && user.isAdmin.Value)
+            {
+                room.Id = Guid.NewGuid().ToString();
+                _roomManager.AddNewRoom(room);
+                return new HttpResponseMessage(HttpStatusCode.Created);
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
         }
 
         // PUT api/<controller>/5

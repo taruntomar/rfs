@@ -2,6 +2,10 @@
     background-color:lightgray
 
 }
+.selectedLocIndex {
+    background-color: lightgray;
+    color: white;
+}
 #changedpbutton {
     position: absolute;
     top: 50%;

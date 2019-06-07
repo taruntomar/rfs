@@ -22,9 +22,9 @@
                 }
             });
     };
-
-    $scope.userSelected = function (user) {
-
+    $scope.selecteduserIndex = null;
+    $scope.userSelected = function (index,user) {
+        $scope.selecteduserIndex = index;
         $http.get(myApp.rmshost + '/api/user/' + user.Id).
             then(function (response) {
                 $scope.selectedUser = response.data;
@@ -49,6 +49,7 @@
         }, function (response) { });
 
     };
+   
     $scope.getListOfUsers();
     //================location===========================
     $scope.locations = [];
@@ -59,13 +60,62 @@
         $http.get(myApp.rmshost + '/api/Locations').
             then(function (response) {
                 $scope.locations = response.data;
+                $scope.selectedRoom = null;
+                $scope.selectedLocation = "";
+                $scope.rooms = null;
             });
     };
     $scope.selectedRoom = null;
-    $scope.roomSelected = function (room) {
+    $scope.roomSelected = function (index,room) {
+        $scope.selectedRoomIndex = index;
         $scope.selectedRoom = room;
     };
-    $scope.locationSelected = function (loc) {
+    $scope.addLocation = function (ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+            .title('Add new location')
+            .textContent('{city}-{short-address} is a good way to name.')
+            .placeholder('location Name')
+            .ariaLabel('Location name')
+            .initialValue('')
+            .targetEvent(ev)
+            .required(true)
+            .ok('Okay!')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function (result) {
+            $http.post(myApp.rmshost + '/api/locations/', { "Id": "", "Name": result, "Country": "India" }).then(function (response) {
+                $scope.getAllLocations();
+            });
+        }, function () {
+            $scope.status = 'You didn\'t name your dog.';
+        });
+    };
+    $scope.addRoom = function (ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+            .title('Add new Room')
+            .textContent('Any unique and pretty name will work.')
+            .placeholder('room Name')
+            .ariaLabel('room name')
+            .initialValue('')
+            .targetEvent(ev)
+            .required(true)
+            .ok('Okay!')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function (result) {
+            $http.post(myApp.rmshost + '/api/rooms/', { "Id": "", "RoomName": result, "Projector": false, "Sitting": 0, "location": $scope.selectedLocation.Id, "VideoConferencing_": false, "MonitorScreen": false, "decommission": true, "RoomProfilePics": null }).then(function (response) {
+                $scope.getAllLocations();
+            });
+        }, function () {
+            $scope.status = 'You didn\'t name your dog.';
+        });
+    };
+    $scope.selectedLocIndex = null;
+    $scope.selectedRoomIndex = null;
+    $scope.locationSelected = function (index, loc) {
+        $scope.selectedLocIndex = index;
         $scope.selectedLocation = loc;
         $scope.selectedRoom = null;
         $http.get(myApp.rmshost + '/api/Location/' + $scope.selectedLocation.Id+'/rooms').

@@ -34,7 +34,7 @@
                             </div>
 
                         </md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="userSelected(user)">
+                        <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="userSelected($index,user)" ng-class="{selectedLocIndex: selecteduserIndex===$index}">
                             <img ng-src="/api/user/{{user.Id}}/dp" class="md-avatar" alt="{{item.who}}" />
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{ user.Name }}</h3>
@@ -88,15 +88,16 @@
             <div flex-gt-sm="20" flex ng-cloak>
 
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
-                        <span>Locations</span>
+                    <div layout="row" class="md-toolbar-tools">
+                       <span style="color:white">Locations </span>
+                        <md-button class="md-fab md-mini" style="background-color:transparent;font-size:xx-large" ng-click="addLocation($event)">+</md-button>
                     </div>
                 </md-toolbar>
 
                 <md-content>
                     <md-list flex>
                         <md-subheader class="md-no-sticky">{{locations.length}} locations are available</md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected(loc)">
+                        <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected($index,loc)" ng-class="{selectedLocIndex: selectedLocIndex===$index}">
                             <img ng-src="/Content/img/location.png" class="md-avatar" alt="{{item.who}}" />
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{ loc.Name }}</h3>
@@ -111,16 +112,17 @@
             <md-divider></md-divider>
             <div flex-gt-sm="20" flex ng-show="rooms">
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
-                        <span>Rooms</span>
+                    <div layout="row" class="md-toolbar-tools">
+                        <span style="color:white">Rooms </span>
+                        <md-button class="md-fab md-mini" style="background-color:transparent;font-size:xx-large" ng-click="addRoom($event)" >+</md-button>
                     </div>
                 </md-toolbar>
 
                 <md-content>
 
                     <md-list class="md-dense" ng-model="selectedRoom">
-                        <md-subheader class="md-no-sticky">{{rooms.length}} rooms are available</md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="room in rooms" ng-click="roomSelected(room)">
+                        <md-subheader class="md-no-sticky">{{rooms.length}} rooms are available at {{selectedLocation.Name}}</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="room in rooms" ng-click="roomSelected($index,room)" ng-class="{selectedLocIndex: selectedRoomIndex===$index}">
                             <img ng-src="/api/rooms/{{room.Id}}/dp" class="md-avatar" alt="{{item.who}}" />
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{ room.RoomName }}</h3>
