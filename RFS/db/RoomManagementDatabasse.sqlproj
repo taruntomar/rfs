@@ -71,6 +71,8 @@
     <Build Include="dbo\Tables\Location.sql" />
     <Build Include="dbo\Tables\Room.sql" />
     <Build Include="dbo\Tables\RoomPictures.sql" />
+    <Build Include="dbo\Tables\UserProfilePic.sql" />
+    <Build Include="dbo\Tables\RoomProfilePic.sql" />
     <Build Include="Security\rfsadmin.sql" />
   </ItemGroup>
 </Project>

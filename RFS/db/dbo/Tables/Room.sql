@@ -6,6 +6,7 @@
     [location]           NVARCHAR (50)  NOT NULL,
     [VideoConferencing ] BIT            NOT NULL,
     [MonitorScreen]      BIT            NOT NULL,
+    [decommission]       BIT            NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
