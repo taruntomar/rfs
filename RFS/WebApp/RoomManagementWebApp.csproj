@@ -265,6 +265,8 @@
     <Content Include="Content\img\monitor.svg" />
     <Content Include="Content\img\myprofile.svg" />
     <Content Include="Content\img\projector.svg" />
+    <Content Include="Content\img\rename.png" />
+    <Content Include="Content\img\rename.svg" />
     <Content Include="Content\img\room-outline.png" />
     <Content Include="Content\img\room.jpg" />
     <Content Include="Content\img\sittings.svg" />

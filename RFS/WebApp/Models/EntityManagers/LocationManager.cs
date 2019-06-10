@@ -66,6 +66,7 @@ namespace RoomManagement
             var loc = _dbContext.Locations.FirstOrDefault(x => x.Id == id);
             loc.Name = location.Name;
             loc.Country = location.Country;
+            loc.enabled = location.enabled;
             _dbContext.SaveChanges();
         }
     }

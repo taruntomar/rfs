@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -35,7 +37,7 @@ namespace RFS_API.Controllers
         {
             var username = new TApiAuth().GetLoggedInUsername(Request);
             if(string.IsNullOrEmpty(username))
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
            
             var bookings = _bookingManager.GetBookingDoneByUser(username);
@@ -45,12 +47,15 @@ namespace RFS_API.Controllers
             return result;
         }
         // GET api/<controller>
-        public IEnumerable<Booking> Get(string roomId, DateTime startDateTime, DateTime endDateTime)
+        public HttpResponseMessage Get(string roomId, DateTime startDateTime, DateTime endDateTime)
         {
-            if(IsAuth())
-            return _bookingManager.GetBookingForRoom(roomId, startDateTime, endDateTime);
-
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            if (IsAuth()) {
+                IEnumerable<Booking> bookings = _bookingManager.GetBookingForRoom(roomId, startDateTime, endDateTime);
+                HttpResponseMessage response = Request.CreateResponse<IEnumerable<Booking>>(HttpStatusCode.OK, bookings);
+                return response;
+            }
+            
+            return new HttpResponseMessage(HttpStatusCode.Unauthorized);
         }
 
         private bool IsAuth()
@@ -59,12 +64,20 @@ namespace RFS_API.Controllers
         }
 
         // GET api/<controller>/5
-        public Booking Get(string id)
+        public HttpResponseMessage Get(string id)
         {
             if (IsAuth())
-                return _bookingManager.GetBookingById(id);
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
-
+            {
+                var booking = _bookingManager.GetBookingById(id);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new ObjectContent<Booking>(booking, new JsonMediaTypeFormatter(), "application/json");
+                response.StatusCode = HttpStatusCode.OK;            
+                return response;
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
         }
 
 
@@ -105,16 +118,19 @@ namespace RFS_API.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(string id, [FromBody]Booking booking)
+        public HttpResponseMessage Put(string id, [FromBody]Booking booking)
         {
             if (IsAuth())
+            {
                 _bookingManager.UpdateBooking(id, booking);
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            return new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
         }
 
         // DELETE api/<controller>/5
-        public async Task DeleteAsync(string id)
+        public async Task<HttpResponseMessage> DeleteAsync(string id)
         {
             if (IsAuth())
             {
@@ -123,10 +139,11 @@ namespace RFS_API.Controllers
                 var room = _roomManager.GetRoomById(booking.RoomId);
                 var user = _userManager.GetUserFromMailId(booking.createdBy);
                 await SendEmailExecute(booking, room, user, "cancelled");
+                return new HttpResponseMessage(HttpStatusCode.OK);
 
             }
             else
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
         }
     }

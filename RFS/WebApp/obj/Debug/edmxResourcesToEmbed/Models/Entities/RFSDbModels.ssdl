@@ -20,6 +20,7 @@
     <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Country" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="enabled" Type="bit" />
   </EntityType>
   <EntityType Name="Room">
     <Key>

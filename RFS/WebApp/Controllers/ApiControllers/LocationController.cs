@@ -20,11 +20,39 @@ namespace RFS.Controllers
             _userManager = userManager;
         }
         // GET api/<controller>
-        public IEnumerable<Location> Get()
+        public HttpResponseMessage Get(HttpRequestMessage request)
         {
-            string username = User.Identity.Name;
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+            var locations = _locationManager.GetAllLocations().Where(x=>(x.enabled.HasValue && x.enabled.Value));
+            HttpResponseMessage response = request.CreateResponse<IEnumerable<Location>>(HttpStatusCode.OK, locations);
+            return response;
+        }
 
-            return _locationManager.GetAllLocations();
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/locations/manage")]
+        public HttpResponseMessage GetForManage(HttpRequestMessage request)
+        {
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+            var user = _userManager.GetUserFromMailId(useremail);
+            if (user.isAdmin.HasValue && user.isAdmin.Value)
+            {
+                var locations = _locationManager.GetAllLocations();
+                HttpResponseMessage response = request.CreateResponse<IEnumerable<Location>>(HttpStatusCode.OK, locations);
+                return response;
+            }
+            else
+            {
+                HttpResponseMessage response = request.CreateResponse(HttpStatusCode.Unauthorized);
+                return response;
+            }
         }
 
         // GET api/<controller>/5
@@ -58,9 +86,29 @@ namespace RFS.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(string id, [FromBody]Location location)
+
+        public HttpResponseMessage Put(HttpRequestMessage httpRequest, string id, [FromBody]Location location)
         {
-            _locationManager.UpdateLocationProperties(id, location);
+            var useremail = new TApiAuth().GetLoggedInUsername(Request);
+            if (string.IsNullOrEmpty(useremail))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+            var user = _userManager.GetUserFromMailId(useremail);
+            if (user.isAdmin.HasValue && user.isAdmin.Value)
+            {
+                //check if user is admin
+                location.Id = Guid.NewGuid().ToString();
+                _locationManager.UpdateLocationProperties(id, location);
+                var response = httpRequest.CreateResponse("Update successful");
+                response.StatusCode = System.Net.HttpStatusCode.Created;
+                return response;
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
+            
         }
 
         // DELETE api/<controller>/5

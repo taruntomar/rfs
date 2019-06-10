@@ -17,5 +17,6 @@ namespace RFS.Models.Entities
         public string Id { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
+        public Nullable<bool> enabled { get; set; }
     }
 }

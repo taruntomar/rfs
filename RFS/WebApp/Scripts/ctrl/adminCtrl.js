@@ -57,7 +57,7 @@
     $scope.rooms = null;
     $scope.selectedRoom = null;
     $scope.getAllLocations = function () {
-        $http.get(myApp.rmshost + '/api/Locations').
+        $http.get(myApp.rmshost + '/api/locations/manage').
             then(function (response) {
                 $scope.locations = response.data;
                 $scope.selectedRoom = null;
@@ -91,6 +91,66 @@
             $scope.status = 'You didn\'t name your dog.';
         });
     };
+    $scope.renameLocation = function (ev,loc) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+            .title('rename location')
+            .textContent('{city}-{short-address} is a good way to name.')
+            .placeholder('location Name')
+            .ariaLabel('Location name')
+            .initialValue('')
+            .targetEvent(ev)
+            .required(true)
+            .ok('Okay!')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function (result) {
+            loc.Name = result;
+            $http.put(myApp.rmshost + '/api/locations/' + loc.Id, loc).then(function (response) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('location Updated.')
+                        .position("bottom right")
+                        .hideDelay(4000))
+                    .then(function () {
+                        //$log.log('user profile updated.');
+                    }).catch(function () {
+                        //$log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            }, function (response) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Update failed.')
+                        .position("bottom right")
+                        .hideDelay(4000))
+                    .then(function () {
+                        //$log.log('user profile updated.');
+                    }).catch(function () {
+                        //$log.log('Toast failed or was forced to close early by another toast.');
+                    });
+                });
+        }, function () {
+            $scope.status = 'You didn\'t name your dog.';
+        });
+    };
+    $scope.locationAlter = function (ev,loc) {
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure want to enable/disable location '+loc.Name+'?')
+            .textContent('It will affect the room search results.')
+            .ariaLabel('Enable/Disable Location')
+            .targetEvent(ev)
+            .ok('Yes')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+
+            $http.put(myApp.rmshost + '/api/locations/'+loc.Id, loc).then(function (response) {
+               // $scope.getAllLocations();
+            });
+        }, function () {
+            // $scope.status = 'You decided to keep your debt.';
+        });
+    };
     $scope.addRoom = function (ev) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.prompt()
@@ -110,6 +170,28 @@
             });
         }, function () {
             $scope.status = 'You didn\'t name your dog.';
+        });
+    };
+    $scope.renameRoom = function (ev,room) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+            .title('rename Room')
+            .textContent('Any unique and pretty name will work.')
+            .placeholder('room Name')
+            .ariaLabel('room name')
+            .initialValue('')
+            .targetEvent(ev)
+            .required(true)
+            .ok('Okay!')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function (result) {
+            room.RoomName = result;
+            $http.put(myApp.rmshost + '/api/rooms/', room).then(function (response) {
+                $scope.getAllLocations();
+            });
+        }, function () {
+            $scope.status = 'You didn\'t name your room.';
         });
     };
     $scope.selectedLocIndex = null;

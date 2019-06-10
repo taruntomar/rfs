@@ -18,6 +18,7 @@
     <EntitySetMapping Name="Locations">
       <EntityTypeMapping TypeName="rfsModel.Location">
         <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="enabled" ColumnName="enabled" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Country" ColumnName="Country" />
