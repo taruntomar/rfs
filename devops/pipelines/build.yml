@@ -1,0 +1,63 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- releases/rfsmono/1.0
+
+pool:
+ name: Hosted VS2017
+ demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
+variables:
+ solution: '**/*.sln'
+ buildPlatform: 'Any CPU'
+ buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.4.1'
+  inputs:
+   versionSpec: 4.4.1
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+   restoreSolution: '$(Parameters.solution)'
+- task: VSBuild@1
+  displayName: 'Build solution RFS/WebApp/RoomManagementWebApp.csproj'
+  inputs:
+  solution: RFS/WebApp/RoomManagementWebApp.csproj
+  msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:OutputPath="$(build.artifactstagingdirectory)\\" /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+  platform: '$(BuildPlatform)'
+  configuration: '$(BuildConfiguration)'
+  msbuildArchitecture: x64
+- task: MSBuild@1
+  displayName: 'Build solution RFS/db/RoomManagementDatabasse.sqlproj'
+  inputs:
+   solution: RFS/db/RoomManagementDatabasse.sqlproj
+   msbuildArchitecture: x64
+   msbuildArguments: '/p:OutputPath="$(build.artifactstagingdirectory)\\"'
+- task: VSTest@2
+  displayName: 'Test Assemblies'
+  inputs:
+   testAssemblyVer2: |
+    **\$(BuildConfiguration)\*test*.dll
+    !**\obj\**
+   platform: '$(BuildPlatform)'
+   configuration: '$(BuildConfiguration)'
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    PublishSymbols: false
+  continueOnError: true
+- task: PublishBuildArtifacts@1
+ displayName: 'Publish Artifact'
+ inputs:
+  PathtoPublish: '$(build.artifactstagingdirectory)'
+  ArtifactName: '$(Parameters.ArtifactName)'
+  condition: succeededOrFailed()

@@ -1,0 +1,77 @@
+6/10/2019 11:33:34 AM	This log contains information about the import schema operation into project 'RoomManagementDatabasse' on computer 'IE3BLTB01GJC2' by user 'H332670'.
+6/10/2019 11:33:34 AM	Import of database schema has started.
+6/10/2019 11:33:45 AM	Gathering database options
+6/10/2019 11:33:45 AM	Gathering users
+6/10/2019 11:33:45 AM	Gathering roles
+6/10/2019 11:33:45 AM	Gathering application roles
+6/10/2019 11:33:45 AM	Gathering role memberships
+6/10/2019 11:33:45 AM	Gathering filegroups
+6/10/2019 11:33:45 AM	Gathering full-text catalogs
+6/10/2019 11:33:45 AM	Gathering assemblies
+6/10/2019 11:33:45 AM	Gathering certificates
+6/10/2019 11:33:45 AM	Gathering asymmetric keys
+6/10/2019 11:33:45 AM	Gathering symmetric keys
+6/10/2019 11:33:45 AM	Gathering encrypted symmetric keys
+6/10/2019 11:33:45 AM	Gathering schemas
+6/10/2019 11:33:45 AM	Gathering XML schema collections
+6/10/2019 11:33:45 AM	Gathering user-defined data types
+6/10/2019 11:33:45 AM	Gathering user-defined types
+6/10/2019 11:33:45 AM	Gathering table types
+6/10/2019 11:33:45 AM	Gathering unique keys for table types
+6/10/2019 11:33:45 AM	Gathering primary keys for table types
+6/10/2019 11:33:45 AM	Gathering indexes for table types
+6/10/2019 11:33:45 AM	Gathering check constraints for table types
+6/10/2019 11:33:45 AM	Gathering default constraints for table types
+6/10/2019 11:33:45 AM	Gathering partition functions
+6/10/2019 11:33:45 AM	Gathering partition schemes
+6/10/2019 11:33:45 AM	Gathering functions
+6/10/2019 11:33:45 AM	Gathering encrypted functions
+6/10/2019 11:33:45 AM	Gathering aggregates
+6/10/2019 11:33:45 AM	Gathering procedures
+6/10/2019 11:33:45 AM	Gathering encrypted procedures
+6/10/2019 11:33:45 AM	Gathering tables
+6/10/2019 11:33:45 AM	Gathering primary keys
+6/10/2019 11:33:46 AM	Gathering unique constraints
+6/10/2019 11:33:46 AM	Gathering foreign keys
+6/10/2019 11:33:46 AM	Gathering default constraints
+6/10/2019 11:33:46 AM	Gathering check constraints
+6/10/2019 11:33:46 AM	Gathering views
+6/10/2019 11:33:46 AM	Gathering encrypted views
+6/10/2019 11:33:46 AM	Gathering indexes
+6/10/2019 11:33:46 AM	Gathering statistics
+6/10/2019 11:33:46 AM	Gathering full-text index stoplists
+6/10/2019 11:33:46 AM	Gathering search property lists
+6/10/2019 11:33:46 AM	Gathering search properties
+6/10/2019 11:33:46 AM	Gathering full-text indexes
+6/10/2019 11:33:46 AM	Gathering column store indexes
+6/10/2019 11:33:46 AM	Gathering spatial indexes
+6/10/2019 11:33:46 AM	Gathering XML indexes
+6/10/2019 11:33:46 AM	Gathering Selective XML indexes
+6/10/2019 11:33:46 AM	Gathering encrypted triggers
+6/10/2019 11:33:46 AM	Gathering triggers
+6/10/2019 11:33:46 AM	Gathering encrypted and clr ddl triggers
+6/10/2019 11:33:46 AM	Gathering ddl triggers
+6/10/2019 11:33:46 AM	Gathering synonyms
+6/10/2019 11:33:46 AM	Gathering defaults
+6/10/2019 11:33:46 AM	Gathering data constraint uddt bindings
+6/10/2019 11:33:46 AM	Gathering rules
+6/10/2019 11:33:46 AM	Gathering data constraint uddt bindings
+6/10/2019 11:33:46 AM	Gathering message types
+6/10/2019 11:33:46 AM	Gathering queues
+6/10/2019 11:33:46 AM	Gathering contracts
+6/10/2019 11:33:46 AM	Gathering services
+6/10/2019 11:33:46 AM	Gathering event notifications
+6/10/2019 11:33:46 AM	Gathering remote service bindings
+6/10/2019 11:33:46 AM	Gathering broker priorities
+6/10/2019 11:33:46 AM	Gathering signatures
+6/10/2019 11:33:46 AM	Gathering data compression options
+6/10/2019 11:33:46 AM	Gathering sequence types
+6/10/2019 11:33:46 AM	Gathering extended properties
+6/10/2019 11:33:46 AM	Gathering credentials
+6/10/2019 11:33:46 AM	Gathering logins
+6/10/2019 11:33:46 AM	Gathering server audits
+6/10/2019 11:33:47 AM	Scanning project for duplicate elements
+6/10/2019 11:33:47 AM	Finished duplicate element processing
+6/10/2019 11:33:48 AM	Finished importing database.
+6/10/2019 11:33:48 AM	A summary of the import was saved to the following location: C:\dev\rfs\RFS\RFS\db\Import Schema Logs\RoomManagementDataba_20190610060334.log
+6/10/2019 11:33:48 AM	Click Finish to continue...

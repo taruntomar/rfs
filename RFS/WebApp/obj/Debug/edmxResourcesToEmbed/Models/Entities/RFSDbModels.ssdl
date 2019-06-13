@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="rfsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoomId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="starttime" Type="datetime" Nullable="false" />
+    <Property Name="endtime" Type="datetime" Nullable="false" />
+    <Property Name="createdOn" Type="datetime" />
+    <Property Name="createdBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="isCancelled" Type="bit" />
+    <Property Name="CancelledDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Country" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="enabled" Type="bit" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoomName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Projector" Type="bit" Nullable="false" />
+    <Property Name="Sitting" Type="int" Nullable="false" />
+    <Property Name="location" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VideoConferencing " Type="bit" Nullable="false" />
+    <Property Name="MonitorScreen" Type="bit" Nullable="false" />
+    <Property Name="decommission" Type="bit" />
+  </EntityType>
+  <EntityType Name="RoomPictures">
+    <Key>
+      <PropertyRef Name="PictureName" />
+    </Key>
+    <Property Name="RoomId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PictureName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="picture" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="RoomProfilePic">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoomId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="data" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ext" Type="nvarchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfilePic">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="data" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ext" Type="nvarchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="password" Type="text" Nullable="false" />
+    <Property Name="salt" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="logincode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="location" Type="nvarchar" MaxLength="50" />
+    <Property Name="phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActivated" Type="bit" />
+    <Property Name="isAdmin" Type="bit" />
+    <Property Name="IsVerified" Type="bit" />
+    <Property Name="VerificationCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="passResetCode" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_RoomProfilePic_Room">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="RoomProfilePic" Type="Self.RoomProfilePic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RoomProfilePic">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfilePic_users">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="UserProfilePic" Type="Self.UserProfilePic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfilePic">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="rfsModelStoreContainer">
+    <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomPictures" EntityType="Self.RoomPictures" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomProfilePic" EntityType="Self.RoomProfilePic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfilePic" EntityType="Self.UserProfilePic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_RoomProfilePic_Room" Association="Self.FK_RoomProfilePic_Room">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="RoomProfilePic" EntitySet="RoomProfilePic" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfilePic_users" Association="Self.FK_UserProfilePic_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="UserProfilePic" EntitySet="UserProfilePic" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,53 @@
+rfsadmin
+Resideo#123
+
+==================
+Server=tcp:rfs-dbserver.database.windows.net,1433;Initial Catalog=rms-db;Persist Security Info=False;User ID=rfsadmin;Password=Resideo#123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
+===================
+keyavault
+https://rfskeyvault.vault.azure.net/
+rfs-dbconnectionstring
+
+========================
+subscriptionId
+758985e9-795d-46b7-81a1-fc9a9fd7b3a7
+
+=================
+deploy initial database
+set access permissions to webapp
+
+
+C:\Users\H332670> Connect-AzureAD
+
+Account                   Environment TenantId                             TenantDomain                  AccountType
+-------                   ----------- --------                             ------------                  -----------
+Tarun.Tomar@Honeywell.com AzureCloud  96ece526-9c7d-48b0-8daf-8b93c90a5d18 HoneywellProd.onmicrosoft.com User       
+
+
+
+C:\Users\H332670> New-AzureADApplication
+cmdlet New-AzureADApplication at command pipeline position 1
+Supply values for the following parameters:
+DisplayName: VSTS-Client
+
+ObjectId                             AppId                                DisplayName
+--------                             -----                                -----------
+a256d4db-93cf-446c-9c07-45a971051ed7 24180d11-e942-43af-b42c-52b8049a0ecd VSTS-Client
+
+C:\Users\H332670> New-AzureADServicePrincipal -AppId 24180d11-e942-43af-b42c-52b8049a0ecd
+
+ObjectId                             AppId                                DisplayName
+--------                             -----                                -----------
+41283d45-dbc6-4981-9274-694afc34fb8a 24180d11-e942-43af-b42c-52b8049a0ecd VSTS-Client
+
+sp password: 0a0c56c1-3c0e-4560-a123-64f92611eed1
+
+C:\Users\H332670> New-AzureRmADSpCredential -ObjectId 41283d45-dbc6-4981-9274-694afc34fb8a
+cmdlet New-AzureRmADSpCredential at command pipeline position 1
+Supply values for the following parameters:
+(Type !? for Help.)
+
+StartDate             EndDate               KeyId                                Type    
+---------             -------               -----                                ----    
+3/14/2019 10:17:14 AM 3/14/2020 10:17:14 AM 65442246-45ed-49f4-aecc-6561a39288ab Password

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="dbconnectionstring-Web.config Connection String" description="dbconnectionstring Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Entities.RoomsModel.csdl|res://*/Entities.RoomsModel.ssdl|res://*/Entities.RoomsModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.;initial catalog=RoomManagementDatabasse;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\dev\\rfs\\RFS\\RFS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='dbconnectionstring']/@connectionString" />
+  </parameter>
+  <parameter name="RoomManagementDatabasseEntities-Web.config Connection String" description="RoomManagementDatabasseEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.Entities.RoomsModel.csdl|res://*/Models.Entities.RoomsModel.ssdl|res://*/Models.Entities.RoomsModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.;initial catalog=rfs;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\dev\\rfs\\RFS\\RFS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='RoomManagementDatabasseEntities']/@connectionString" />
+  </parameter>
+  <parameter name="rfsEntities-Web.config Connection String" description="rfsEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.Entities.RFSDbModels.csdl|res://*/Models.Entities.RFSDbModels.ssdl|res://*/Models.Entities.RFSDbModels.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.;initial catalog=rfs;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\dev\\rfs\\RFS\\RFS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='rfsEntities']/@connectionString" />
+  </parameter>
+</parameters>

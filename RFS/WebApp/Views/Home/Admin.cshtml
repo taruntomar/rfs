@@ -1,0 +1,227 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<md-tabs md-dynamic-height md-border-bottom>
+
+    <md-tab label="Users">
+        <div layout-gt-sm="row" layout="column">
+            <div flex-gt-sm="33" flex ng-cloak>
+
+
+                <md-content style="overflow: hidden;">
+                    <md-list class="md-dense" flex>
+                        <md-subheader class="md-no-sticky" style="height: 50px; padding:0px;
+   ">
+                            <div md-theme="docs-dark" layout-gt-sm="row" layout-padding style="box-shadow: inset 0 0 2px 1px silver; padding-top: 10px;  height:50px">
+                                <div flex-gt-sm="80" flex ng-cloak style="padding: 0px; ">
+                                    <md-input-container style="      width: -webkit-fill-available;
+    height: 80px;
+    padding: 0px;
+    margin: 0px">
+                                        <label>Search</label>
+                                        <input ng-model="searchPattern">
+                                    </md-input-container>
+                                </div>
+                                <div flex-gt-sm="20" layout-gt-sm="row" ng-cloak style="padding: 0px;">
+                                    <md-button style="margin-left: 4px;" class="md-raised  toolbarbutton" ng-click="searchUser()">Find</md-button>
+                                    @*<md-button style="    margin-left: 4px;" class="md-raised toolbarbutton">+</md-button><md-button style="    margin-left: 4px;
+    margin-right: 4px;" class="md-raised  toolbarbutton">-</md-button>*@
+                                </div>
+
+                            </div>
+
+                        </md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="user in users" ng-click="userSelected($index,user)" ng-class="{selectedLocIndex: selecteduserIndex===$index}">
+                            <img ng-src="/api/user/{{user.Id}}/dp" class="md-avatar" alt="{{item.who}}" />
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{ user.Name }}</h3>
+                                <h4>{{user.email}}</h4>
+                                <h4>{{user.location}}</h4>
+                                <p></p>
+                            </div>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                    </md-list>
+                </md-content>
+            </div>
+            <md-divider></md-divider>
+            <div flex-gt-sm="33" flex ng-show="selectedUser">
+
+                <md-content style="margin:15px;">
+                    <img class="userImage" style="width: 150px;
+    height: 150px;  border-radius: 50%; " ng-src="/api/user/{{selectedUser.Id}}/dp" />
+                    <div layout-gt-sm="row" style="padding:5px;">
+                        <div style="font-weight:bold">Name: </div>  <div>  {{selectedUser.Name}}</div>
+                    </div>
+                    <div layout-gt-sm="row" style="padding:5px;">
+                        <div style="font-weight:bold">Email: </div>  <div>  {{selectedUser.email}}</div>
+                    </div>
+                    <div layout-gt-sm="row" style="padding:5px;">
+                        <div style="font-weight:bold">location: </div>  <div>  {{selectedUser.location}}</div>
+                    </div>
+                    <div layout-gt-sm="row" style="padding:5px;">
+                        <div style="font-weight:bold">phone: </div>  <div>  {{selectedUser.phone}}</div>
+                    </div>
+                    <div layout-gt-sm="row" style="padding:5px;">
+                        <div style="font-weight:bold">isAdmin: </div>  <div>  {{selectedUser.isAdmin}}</div>
+                    </div>
+                    <div layout-gt-sm="row" style="padding:5px;">
+                        <div>
+                            <md-switch style="margin-left:5px;" ng-model="selectedUser.IsActivated" aria-label="Switch 1" ng-change="changeUserActivation()">
+                                Activate
+                            </md-switch>
+                        </div>
+                    </div>
+
+
+                </md-content>
+
+            </div>
+
+        </div>
+    </md-tab>
+    <md-tab label="Locations/Rooms">
+        <div layout-gt-sm="row" layout="column">
+            <div flex-gt-sm="30" flex ng-cloak>
+
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div layout="row" class="md-toolbar-tools">
+                       <span style="color:white">Locations </span>
+                        <md-button class="md-fab md-mini" style="background-color:transparent;font-size:xx-large" ng-click="addLocation($event)">+</md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-content>
+                    <md-list flex>
+                        <md-subheader class="md-no-sticky">{{locations.length}} locations are available</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="loc in locations" ng-click="locationSelected($index,loc)" ng-class="{selectedLocIndex: selectedLocIndex===$index}">
+                            <img ng-src="/Content/img/location.png" class="md-avatar" alt="{{item.who}}" />
+                            <div class="md-list-item-text" layout="column">
+                                <p>
+                                    <h3>{{ loc.Name }}</h3>
+                                    <h4>Country: {{loc.Country}}</h4>
+                                </p>
+                                <md-button class="md-secondary" ng-click="renameLocation($event,loc)">
+                                   @* <img ng-src="/Content/img/rename.png" class="md-avatar"  />*@
+                                    <md-icon md-svg-icon="/Content/img/rename.svg" alt="Rename"></md-icon>
+                                </md-button>
+                                <md-switch class="md-secondary" ng-model="loc.enabled" ng-change="locationAlter($event,loc)"></md-switch>
+
+                            </div>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                    </md-list>
+                </md-content>
+            </div>
+            <md-divider></md-divider>
+            <div flex-gt-sm="20" flex ng-show="rooms">
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div layout="row" class="md-toolbar-tools">
+                        <span style="color:white">Rooms </span>
+                        <md-button class="md-fab md-mini" style="background-color:transparent;font-size:xx-large" ng-click="addRoom($event)" >+</md-button>
+                    </div>
+                </md-toolbar>
+
+                <md-content>
+
+                    <md-list class="md-dense" ng-model="selectedRoom">
+                        <md-subheader class="md-no-sticky">{{rooms.length}} rooms are available at {{selectedLocation.Name}}</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="room in rooms" ng-click="roomSelected($index,room)" ng-class="{selectedLocIndex: selectedRoomIndex===$index}">
+                            <img ng-src="/api/rooms/{{room.Id}}/dp" class="md-avatar" alt="{{item.who}}" />
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{ room.RoomName }}</h3>
+                                @*<div layout="row" style="float:left">
+                                    <md-icon style="margin: 2px;" ng-show="room.MonitorScreen" md-svg-src="~/Content/img/monitor.svg" class="s48" aria-label="Cart"></md-icon>
+                                    <md-icon style="margin:2px;" ng-show="room.Projector" md-svg-src="~/Content/img/projector.svg" class="s48" aria-label="Cart"></md-icon>
+                                    <md-icon style="margin:2px;filter: invert(48%);" ng-show="room.VideoConferencing" md-svg-src="~/Content/img/videoconferencing.svg" class="s48" aria-label="Cart"></md-icon>
+                                    <md-icon style="margin:2px;" md-svg-src="~/Content/img/sittings.svg" class="s48" aria-label="Cart"></md-icon>
+                                    <div style="font-size:15px">[{{room.Sitting}}]</div></td>
+                                    
+                                </div>*@
+                            </div>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                    </md-list>
+                </md-content>
+
+            </div>
+            <md-divider></md-divider>
+            <div flex-gt-sm="50" flex ng-show="selectedRoom">
+               
+                <md-content>
+                    <div layout="row" style="padding:30px">
+                        <div flex-gt-sm="30" id="profilepicdiv" style="position: relative;
+  ">
+                            <img class="roomImage" style="width: 150px;
+    height: 150px;  border-radius: 50%; " ng-src="/api/rooms/{{selectedRoom.Id}}/dp" />
+
+                            <div id="changedpbutton">
+                                <input class="ng-hide" id="input-file-id" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" type="file" />
+                                <label for="input-file-id" class="md-button">Update Pic</label>
+                            </div>
+                            @*<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)" />*@
+                        </div>
+                        <div style="padding: 10px;">
+                            <div style="font-size: xx-large;">{{ selectedRoom.RoomName }}</div>
+
+                            <div layout="row" style="float:left;margin-top:15px">
+                                <md-icon style="    margin-top: 5px;" md-svg-src="~/Content/img/sittings.svg" class="s48" aria-label="Cart"></md-icon>
+                                <md-input-container>
+                                    <input mdInput type="number" placeholder="Sitting" ng-model="selectedRoom.Sitting" ng-value="selectedRoom.Sitting">
+                                </md-input-container>
+                            </div>
+
+                            <div style="margin-top:110px">
+                                <div layout="row" style="float: left;padding: 3">
+                                    <md-icon md-svg-src="~/Content/img/projector.svg" class="s48" aria-label="Cart"></md-icon>
+                                    <div style="font-size:16px;    margin-left: 5px;">Projector:</div>
+                                </div>
+                                <md-switch style="margin-left:5px;" ng-model="selectedRoom.Projector" aria-label="Switch 1" ng-change="changeUserActivation()">
+
+                                </md-switch>
+                            </div>
+                            <div>
+                                <div layout="row" style="float: left;padding: 3">
+                                    <md-icon md-svg-src="~/Content/img/monitor.svg" class="s48" aria-label="Cart"></md-icon>
+                                    <div style="font-size:16px;     margin-left: 5px;">Monitor Screen:</div>
+                                </div>
+                                <md-switch style="margin-left:5px;" ng-model="selectedRoom.MonitorScreen" aria-label="Switch 1" ng-change="changeUserActivation()">
+
+                                </md-switch>
+                            </div>
+                            <div>
+                                <div layout="row" style="float: left;padding: 3">
+                                    <md-icon md-svg-src="~/Content/img/videoconferencing.svg" class="s48" aria-label="Cart"></md-icon>
+                                    <div style="font-size:16px;    margin-left: 5px;">VideoConferencing:</div>
+                                </div>
+                                <md-switch style="margin-left:5px;" ng-model="selectedRoom.VideoConferencing_" aria-label="Switch 1" ng-change="changeUserActivation()">
+
+                                </md-switch>
+                            </div>
+                            <div layout="row"style="float:left">
+                                <div>Status: </div><div><div style="color:green" ng-hide="selectedRoom.decommission">In Servie</div><div style="color:red" ng-show="selectedRoom.decommission">Out of Servie (Decommissioned)</div></div>
+                            </div>
+                            <br />
+                            <div style="float:left;margin:2px">
+                                <md-button class="md-raised" ng-click="updateRoom()">Update</md-button>
+                                <md-button class="md-warn md-raised md-hue-2" ng-hide="selectedRoom.decommission" ng-click="decommissionRoom($event)">Decommission</md-button>
+                                <md-button class="md-warn md-raised md-hue-2" ng-show="selectedRoom.decommission" ng-click="commissionBackRoom($event)">Commission Back</md-button>
+                            </div>
+
+                        </div>
+                    </div>
+                </md-content>
+
+            </div>
+        </div>
+    </md-tab>
+    @*<md-tab label="Statistics">
+
+    </md-tab>
+    <md-tab label="Settings">
+
+    </md-tab>*@
+</md-tabs>

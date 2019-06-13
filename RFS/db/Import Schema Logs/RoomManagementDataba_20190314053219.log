@@ -1,0 +1,77 @@
+3/14/2019 11:02:19 AM	This log contains information about the import schema operation into project 'RoomManagementDatabasse' on computer 'IE3BLTB01GJC2' by user 'H332670'.
+3/14/2019 11:02:19 AM	Import of database schema has started.
+3/14/2019 11:02:25 AM	Gathering database options
+3/14/2019 11:02:25 AM	Gathering users
+3/14/2019 11:02:25 AM	Gathering roles
+3/14/2019 11:02:25 AM	Gathering application roles
+3/14/2019 11:02:25 AM	Gathering role memberships
+3/14/2019 11:02:25 AM	Gathering filegroups
+3/14/2019 11:02:25 AM	Gathering full-text catalogs
+3/14/2019 11:02:25 AM	Gathering assemblies
+3/14/2019 11:02:25 AM	Gathering certificates
+3/14/2019 11:02:25 AM	Gathering asymmetric keys
+3/14/2019 11:02:25 AM	Gathering symmetric keys
+3/14/2019 11:02:25 AM	Gathering encrypted symmetric keys
+3/14/2019 11:02:25 AM	Gathering schemas
+3/14/2019 11:02:25 AM	Gathering XML schema collections
+3/14/2019 11:02:25 AM	Gathering user-defined data types
+3/14/2019 11:02:26 AM	Gathering user-defined types
+3/14/2019 11:02:26 AM	Gathering table types
+3/14/2019 11:02:26 AM	Gathering unique keys for table types
+3/14/2019 11:02:26 AM	Gathering primary keys for table types
+3/14/2019 11:02:26 AM	Gathering indexes for table types
+3/14/2019 11:02:26 AM	Gathering check constraints for table types
+3/14/2019 11:02:26 AM	Gathering default constraints for table types
+3/14/2019 11:02:26 AM	Gathering partition functions
+3/14/2019 11:02:26 AM	Gathering partition schemes
+3/14/2019 11:02:26 AM	Gathering functions
+3/14/2019 11:02:26 AM	Gathering encrypted functions
+3/14/2019 11:02:26 AM	Gathering aggregates
+3/14/2019 11:02:26 AM	Gathering procedures
+3/14/2019 11:02:26 AM	Gathering encrypted procedures
+3/14/2019 11:02:26 AM	Gathering tables
+3/14/2019 11:02:26 AM	Gathering primary keys
+3/14/2019 11:02:26 AM	Gathering unique constraints
+3/14/2019 11:02:26 AM	Gathering foreign keys
+3/14/2019 11:02:26 AM	Gathering default constraints
+3/14/2019 11:02:26 AM	Gathering check constraints
+3/14/2019 11:02:26 AM	Gathering views
+3/14/2019 11:02:26 AM	Gathering encrypted views
+3/14/2019 11:02:26 AM	Gathering indexes
+3/14/2019 11:02:26 AM	Gathering statistics
+3/14/2019 11:02:26 AM	Gathering full-text index stoplists
+3/14/2019 11:02:26 AM	Gathering search property lists
+3/14/2019 11:02:26 AM	Gathering search properties
+3/14/2019 11:02:26 AM	Gathering full-text indexes
+3/14/2019 11:02:26 AM	Gathering column store indexes
+3/14/2019 11:02:26 AM	Gathering spatial indexes
+3/14/2019 11:02:26 AM	Gathering XML indexes
+3/14/2019 11:02:26 AM	Gathering Selective XML indexes
+3/14/2019 11:02:26 AM	Gathering encrypted triggers
+3/14/2019 11:02:26 AM	Gathering triggers
+3/14/2019 11:02:26 AM	Gathering encrypted and clr ddl triggers
+3/14/2019 11:02:26 AM	Gathering ddl triggers
+3/14/2019 11:02:26 AM	Gathering synonyms
+3/14/2019 11:02:26 AM	Gathering defaults
+3/14/2019 11:02:26 AM	Gathering data constraint uddt bindings
+3/14/2019 11:02:26 AM	Gathering rules
+3/14/2019 11:02:26 AM	Gathering data constraint uddt bindings
+3/14/2019 11:02:26 AM	Gathering message types
+3/14/2019 11:02:26 AM	Gathering queues
+3/14/2019 11:02:26 AM	Gathering contracts
+3/14/2019 11:02:26 AM	Gathering services
+3/14/2019 11:02:26 AM	Gathering event notifications
+3/14/2019 11:02:26 AM	Gathering remote service bindings
+3/14/2019 11:02:26 AM	Gathering broker priorities
+3/14/2019 11:02:26 AM	Gathering signatures
+3/14/2019 11:02:26 AM	Gathering data compression options
+3/14/2019 11:02:26 AM	Gathering sequence types
+3/14/2019 11:02:26 AM	Gathering extended properties
+3/14/2019 11:02:26 AM	Gathering credentials
+3/14/2019 11:02:26 AM	Gathering logins
+3/14/2019 11:02:26 AM	Gathering server audits
+3/14/2019 11:02:27 AM	Scanning project for duplicate elements
+3/14/2019 11:02:27 AM	Finished duplicate element processing
+3/14/2019 11:02:28 AM	Finished importing database.
+3/14/2019 11:02:28 AM	A summary of the import was saved to the following location: C:\dev\rfs\RFS\RoomManagementDatabasse\Import Schema Logs\RoomManagementDataba_20190314053219.log
+3/14/2019 11:02:28 AM	Click Finish to continue...
