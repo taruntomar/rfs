@@ -33,6 +33,7 @@ namespace RFS.Controllers
             return View("ResetPassword", "~/Views/Shared/_SignupLayout.cshtml", null);
         }
 
+
         public ActionResult ResetPasswordForm(string email, string code)
         {
 
