@@ -1,8 +1,6 @@
 ﻿RFS/.vs/RFS
 RFS/packages
-RFS/WebApp/bin/
-RFS/WebApp/obj/
-RFS/db/bin/
-RFS/db/obj/
+RFS/*/bin/
+RFS/*/obj/
 RFS/db/RoomManagementDatabasse.dbmdl
 RFS/db/RoomManagementDatabasse.jfm
