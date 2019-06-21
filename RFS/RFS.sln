@@ -7,10 +7,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomManagementWebApp", "Web
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54F2C018-2005-45D4-BACE-39CEAB2FC92C}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
 		README.md = README.md
+		..\rfsapi.md = ..\rfsapi.md
 	EndProjectSection
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "RoomManagementDatabasse", "db\RoomManagementDatabasse.sqlproj", "{609D594A-6242-4516-AB9A-3283445D5A9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "devops", "devops", "{B9A64D97-36BF-4F0E-9B17-D089734D3209}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{40BECF7B-250A-4AA8-B1C8-1BFF37B94028}"
+	ProjectSection(SolutionItems) = preProject
+		..\devops\pipelines\build.yml = ..\devops\pipelines\build.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{C70A31C5-1305-4D14-8C87-415745089FE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,9 +39,17 @@ Global
 		{609D594A-6242-4516-AB9A-3283445D5A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{609D594A-6242-4516-AB9A-3283445D5A9B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{609D594A-6242-4516-AB9A-3283445D5A9B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C70A31C5-1305-4D14-8C87-415745089FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70A31C5-1305-4D14-8C87-415745089FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70A31C5-1305-4D14-8C87-415745089FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70A31C5-1305-4D14-8C87-415745089FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9A64D97-36BF-4F0E-9B17-D089734D3209} = {54F2C018-2005-45D4-BACE-39CEAB2FC92C}
+		{40BECF7B-250A-4AA8-B1C8-1BFF37B94028} = {B9A64D97-36BF-4F0E-9B17-D089734D3209}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A45962D5-943C-4838-835D-905F4FC7EB4D}
