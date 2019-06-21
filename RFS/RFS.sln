@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomManagementWebApp", "WebApp\RoomManagementWebApp.csproj", "{B755791A-EA9F-4654-BB8D-0CC26B2450ED}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54F2C018-2005-45D4-BACE-39CEAB2FC92C}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
@@ -23,16 +21,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{C70A31C5-1305-4D14-8C87-415745089FE8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnds", "FrontEnds", "{C95BF52F-9AA2-4434-BCC4-1FA93442BBFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAuthNIdentity", "TAuthNIdentity\TAuthNIdentity.csproj", "{D6031ECF-823C-40C9-B308-27BD50A4F261}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopFrontEnd", "WebApp\DesktopFrontEnd.csproj", "{B755791A-EA9F-4654-BB8D-0CC26B2450ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backends", "Backends", "{1DCED214-1181-4032-A15D-B826E269CAC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{2A8CA81B-3EC1-4084-A470-9E37A54D228B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{609D594A-6242-4516-AB9A-3283445D5A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{609D594A-6242-4516-AB9A-3283445D5A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{609D594A-6242-4516-AB9A-3283445D5A9B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{C70A31C5-1305-4D14-8C87-415745089FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C70A31C5-1305-4D14-8C87-415745089FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C70A31C5-1305-4D14-8C87-415745089FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6031ECF-823C-40C9-B308-27BD50A4F261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6031ECF-823C-40C9-B308-27BD50A4F261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6031ECF-823C-40C9-B308-27BD50A4F261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6031ECF-823C-40C9-B308-27BD50A4F261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B755791A-EA9F-4654-BB8D-0CC26B2450ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +62,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B9A64D97-36BF-4F0E-9B17-D089734D3209} = {54F2C018-2005-45D4-BACE-39CEAB2FC92C}
 		{40BECF7B-250A-4AA8-B1C8-1BFF37B94028} = {B9A64D97-36BF-4F0E-9B17-D089734D3209}
+		{C70A31C5-1305-4D14-8C87-415745089FE8} = {1DCED214-1181-4032-A15D-B826E269CAC9}
+		{D6031ECF-823C-40C9-B308-27BD50A4F261} = {2A8CA81B-3EC1-4084-A470-9E37A54D228B}
+		{B755791A-EA9F-4654-BB8D-0CC26B2450ED} = {C95BF52F-9AA2-4434-BCC4-1FA93442BBFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A45962D5-943C-4838-835D-905F4FC7EB4D}
