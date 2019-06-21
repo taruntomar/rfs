@@ -120,7 +120,7 @@ md-toolbar.md-default-theme.md-hue-3:not(.md-menu-toolbar), md-toolbar.md-hue-3:
             color: red;
         }
             body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
 }
 

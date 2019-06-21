@@ -1,8 +1,5 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/RFS/.vs/RFS
-/RFS/packages
-/RFS/WebApp/bin
-/RFS/WebApp/obj
+﻿RFS/.vs/RFS
+RFS/packages
+RFS/WebApp/bin/
+RFS/WebApp/obj/
+RFS/db/RoomManagementDatabasse.dbmdl
