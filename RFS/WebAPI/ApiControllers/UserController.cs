@@ -11,9 +11,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using TAuthNIdentity;
+using System.Web.Http.Cors;
 
 namespace RFS.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UserController : ApiController
     {
         IUserManager _userManager = null;

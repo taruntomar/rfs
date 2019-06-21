@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace RFS.Models
+namespace TAuthNIdentity
 {
     public class TApiAuth : ApiController
     {

@@ -10,7 +10,7 @@ using WebAPI.Models.Entities;
 
 namespace WebAPI
 {
-    public class MvcApplication : NinjectHttpApplication
+    public class WebApiApplication : NinjectHttpApplication
     {
         protected override void OnApplicationStarted()
         {

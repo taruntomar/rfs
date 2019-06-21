@@ -1,7 +1,7 @@
 ﻿using DataLayer.Models;
 using System.Net.Http;
 
-namespace RFS.Models
+namespace TAuthNIdentity
 {
     public interface ITAuth
     {

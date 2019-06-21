@@ -46,7 +46,8 @@ function compareTo() {
 
 compareTo.$inject = [];
 myApp.directive('compareTo', compareTo);
-myApp.rmshost = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+//myApp.rmshost = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+myApp.rmshost = rmshost; 
 myApp.directive('mdInputContainer', function ($timeout) {
     return function ($scope, element) {
         var ua = navigator.userAgent;

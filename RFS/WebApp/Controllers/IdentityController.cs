@@ -1,20 +1,14 @@
-﻿using DataLayer;
-using DataLayer.Models;
-using RFS.Models;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
-using System.Web.Http;
+﻿using System.Configuration;
 using System.Web.Mvc;
 
 namespace RFS.Controllers
 {
     public class IdentityController : Controller
     {
+        public IdentityController()
+        {
+            ViewBag.Host = ConfigurationManager.AppSettings["webapihost"];
+        }
         public ActionResult Index()
         {
             return View("Index", "~/Views/Shared/_LoginLayout.cshtml", null);

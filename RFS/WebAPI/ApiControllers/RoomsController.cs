@@ -12,9 +12,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using TAuthNIdentity;
+using System.Web.Http.Cors;
 
 namespace RFS_API.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class RoomsController : ApiController
     {
         IRoomManager _roomManager = null;

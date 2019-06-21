@@ -7,9 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TAuthNIdentity;
+using System.Web.Http.Cors;
 
 namespace RFS.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LocationsController : ApiController
     {
         ILocationManager _locationManager = null;

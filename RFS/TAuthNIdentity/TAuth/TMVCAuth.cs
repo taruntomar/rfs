@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
-namespace RFS.Models
+namespace TAuthNIdentity
 {
     public class TMVCAuth : Controller, ITAuth
     {

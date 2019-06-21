@@ -1,7 +1,6 @@
 ﻿using RFS.Models;
 using WebAPI.Models.Entities;
 using RoomManagement;
-using RoomManagement.Entities;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -11,12 +10,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
+using TAuthNIdentity;
+using System.Web.Http.Cors;
 
 namespace RFS_API.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BookingController : ApiController
     {
         IBookingManager _bookingManager = null;

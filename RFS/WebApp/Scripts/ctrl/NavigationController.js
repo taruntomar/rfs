@@ -1,5 +1,7 @@
 ﻿myApp.controller('NavigationController', ['$window', '$scope', '$http', function ($window, $parentscope, $http, $mdDialog) {
 
+
+
     var originatorEv;
     $parentscope.isAdmin = false;
     $parentscope.openMenu = function ($mdMenu, ev) {
