@@ -28,7 +28,7 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast'
     };
     $scope.resetPasswordForUser = function () {
         $scope.passwordResetStart = true;
-        $http.post('/api/ResetPassowrd', $scope.user).
+        $http.post(myApp.rmshost +'/api/ResetPassowrd', $scope.user).
             then(function (response) {
                 if (response.status === 200) {
                     $scope.passwordResetDone = true;
@@ -46,7 +46,7 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast'
             password: $scope.user.password
         };
         $scope.loginStarted = true;
-        $http.post('/api/Login', credentials).
+        $http.post(myApp.rmshost+'/api/Login', credentials).
             then(function (response) {
                 if (response.status === 200) {
                     $scope.loginStarted = false;
@@ -70,7 +70,7 @@ myApp.controller('IdentityController', ['$window', '$scope', '$http', '$mdToast'
         if (!($scope.user.password === $scope.user.checkpassword))
             return;
         $scope.signupStart = true;
-        $http.post('/api/Signup', $scope.user).
+        $http.post(myApp.rmshost +'/api/Signup', $scope.user).
             then(function (response) {
                 $scope.signupStart = false;
                 $scope.signupSucces = true;

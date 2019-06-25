@@ -4,18 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Resideo Facility</title>
-    <style>
-    </style>
+    <script>
+           var rmshost = "@ViewBag.Host";
+    </script>
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-    <link href="~/_frameworks/bootstrap-datetimepicker-4.17.45/bootstrap-datetimepicker.min.js" rel="stylesheet" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
     <link href="~/Content/css/Site.css" rel="stylesheet" />
     <link rel="SHORTCUT ICON" href="~/favicon.ico" />
-    <script src="~/_frameworks/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="~/_frameworks/moment-2.9.0.js/moment-with-locales.min.js"></script>
-
-    <script src="~/_frameworks/bootstrap-datetimepicker-4.17.45/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
@@ -25,19 +25,8 @@
 
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
-    <script src="~/_frameworks/bootstrap-4.2.1/js/bootstrap.min.js"></script>
 </head>
-@*<head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - Resideo Facility</title>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-        <link href="~/_frameworks/bootstrap-datetimepicker-4.17.45/bootstrap-datetimepicker.min.js" rel="stylesheet" />
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
-        <link href="~/Content/css/Site.css" rel="stylesheet" />
-
-    </head>*@
 <body style="background-color: red; height:auto">
 
     <div class="container body-content" style=" 0px 0px 1px 0 black; width:50%  " flex-sm-xs>
@@ -49,18 +38,7 @@
     </div>
 
     @RenderSection("scripts", required: false)
-    @*<script src="~/_frameworks/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-        <script src="~/_frameworks/moment-2.9.0.js/moment-with-locales.min.js"></script>
-        <script src="~/_frameworks/bootstrap-4.2.1/js/bootstrap.min.js"></script>
-        <script src="~/_frameworks/bootstrap-datetimepicker-4.17.45/bootstrap-datetimepicker.min.js"></script>
-        <!-- Angular Material requires Angular.js Libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-
-        <!-- Angular Material Library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>*@
+  
     <script src="~/Scripts/ctrl/RoomBookingController.js"></script>
     <script src="~/Scripts/ctrl/AccountVerificationController.js"></script>
     <script src="~/Scripts/ctrl/adminCtrl.js"></script>

@@ -1,7 +1,0 @@
-namespace RFS_ActiveDirectory_WebApp.Areas.HelpPage.ModelDescriptions
-{
-    public class CollectionModelDescription : ModelDescription
-    {
-        public ModelDescription ElementDescription { get; set; }
-    }
-}

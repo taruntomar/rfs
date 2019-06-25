@@ -1,16 +1,17 @@
-﻿using DataLayer;
-using RFS.Models;
-using System;
-using System.Collections.Generic;
+﻿
+
 using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using TAuthNIdentity;
 
 namespace RFS.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+            ViewBag.Host = ConfigurationManager.AppSettings["webapihost"];
+        }
         public ActionResult Index()
         {
             
