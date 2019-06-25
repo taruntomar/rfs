@@ -1,11 +1,12 @@
-﻿using RoomBookingWebAPIs.Models;
-using RoomBookingWebAPIs.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TarunLab.RFS.RoomBooking.DataLayer.Models.POCO;
+using TarunLab.RFS.RoomBooking.DataLayer.Paging;
+using TarunLab.RFS.RoomBooking.DataLayer.UnitOfWork.EF;
 
-namespace RoomBookingWebAPIs
+namespace TarunLab.RFS.RoomBooking.DataLayer.Repositories
 {
     public class BookingRepository: IBookingRepository
     {
@@ -26,5 +27,7 @@ namespace RoomBookingWebAPIs
             throw new NotImplementedException();
             //return _rfsdbcontext.Bookings.FirstOrDefault(x => x.Id == roomId);
         }
+
+       
     }
 }

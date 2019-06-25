@@ -1,7 +1,8 @@
-﻿using RoomBookingWebAPIs.Models;
+﻿
 using System;
+using TarunLab.RFS.RoomBooking.DataLayer.Models.POCO;
 
-namespace RoomBookingWebAPIs
+namespace TarunLab.RFS.RoomBooking.DataLayer.Repositories
 {
     public interface IBookingRepository
     {

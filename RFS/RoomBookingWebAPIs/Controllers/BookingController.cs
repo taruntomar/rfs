@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RoomBookingWebAPIs.Models;
+using TarunLab.RFS.RoomBooking.DataLayer.Models.POCO;
+using TarunLab.RFS.RoomBooking.DataLayer.Repositories;
 
 namespace RoomBookingWebAPIs.Controllers
 {

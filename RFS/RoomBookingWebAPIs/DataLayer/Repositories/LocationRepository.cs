@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RoomBookingWebAPIs.Repositories
+namespace TarunLab.RFS.RoomBooking.DataLayer.Repositories
 {
-    interface IUnitOfWork:IDisposable
+    public class LocationRepository:ILocationRepository
     {
-        void SaveChanges();
     }
 }

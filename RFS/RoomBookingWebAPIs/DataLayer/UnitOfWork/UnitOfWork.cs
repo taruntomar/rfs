@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RoomBookingWebAPIs.Repositories
+namespace TarunLab.RFS.RoomBooking.DataLayer.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

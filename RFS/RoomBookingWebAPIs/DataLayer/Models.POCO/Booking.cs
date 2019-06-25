@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RoomBookingWebAPIs.Models
+namespace TarunLab.RFS.RoomBooking.DataLayer.Models.POCO
 {
+    // persistet ignorance class
     public class Booking
     {
         public Booking()
