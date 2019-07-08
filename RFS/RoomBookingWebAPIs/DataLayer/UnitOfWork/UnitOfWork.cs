@@ -1,26 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using TarunLab.RFS.RoomBooking.DataLayer.Repositories;
+using TarunLab.RFS.RoomBooking.DataLayer.UnitOfWork;
+using TarunLab.RFS.RoomBooking.DataLayer.UnitOfWork.EF;
 
-namespace TarunLab.RFS.RoomBooking.DataLayer.UnitOfWork
+namespace RoomBookingWebAPIs.DataLayer.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _dbContext;
-        public UnitOfWork(DbContext dbContext)
+        private RFSDbContext _dbContext;
+        private ILocationRepository _locationRepository = null;
+        public UnitOfWork(RFSDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public void Dispose()
+        public ILocationRepository GetLocationRepository()
         {
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.SaveChanges();
+            if (_locationRepository == null)
+                _locationRepository = new LocationRepository(_dbContext);
+            return _locationRepository;
         }
     }
 }

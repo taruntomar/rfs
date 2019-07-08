@@ -1,0 +1,1 @@
+C:\dev\github\rfs\RFS\APIModel\ApiModel\obj\x64\Debug\ApiModel.sfproj.CoreCompileInputs.cache
